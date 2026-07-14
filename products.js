@@ -5,7 +5,8 @@ const products = [
     name:"Pringles Paprika",
     category:"Chips",
     price:2.99,
-    image:"img/products/pringles.png"
+    image:"img/products/pringles.png",
+    badge:"Bestseller"
 },
 
 {
@@ -13,7 +14,8 @@ const products = [
     name:"Haribo Goldbären",
     category:"Süßigkeiten",
     price:1.79,
-    image:"img/products/haribo.png"
+    image:"img/products/haribo.png",
+    badge:"Top"
 },
 
 {
@@ -21,7 +23,8 @@ const products = [
     name:"Coca-Cola 0,5 L",
     category:"Getränke",
     price:2.49,
-    image:"img/products/coke.png"
+    image:"img/products/coke.png",
+    badge:"Neu"
 },
 
 {
@@ -29,7 +32,8 @@ const products = [
     name:"Oreo Original",
     category:"Kekse",
     price:2.29,
-    image:"img/products/oreo.png"
+    image:"img/products/oreo.png",
+    badge:"Top"
 }
 
 ];
