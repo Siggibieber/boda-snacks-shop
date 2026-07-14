@@ -844,3 +844,94 @@ color:#d5d5d5;
 line-height:1.8;
 
 }
+/* ===========================
+SO FUNKTIONIERT'S
+=========================== */
+
+.how-it-works{
+
+padding:140px 0;
+
+background:#101010;
+
+}
+
+.steps{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+
+gap:35px;
+
+margin-top:70px;
+
+}
+
+.step{
+
+background:#171717;
+
+padding:50px 40px;
+
+border-radius:30px;
+
+text-align:center;
+
+border:1px solid rgba(255,255,255,.05);
+
+transition:.35s;
+
+}
+
+.step:hover{
+
+transform:translateY(-10px);
+
+border-color:var(--gold);
+
+}
+
+.step-number{
+
+width:70px;
+
+height:70px;
+
+margin:auto;
+
+margin-bottom:30px;
+
+border-radius:50%;
+
+background:var(--gold);
+
+color:#000;
+
+font-size:28px;
+
+font-weight:800;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+.step h3{
+
+font-size:28px;
+
+margin-bottom:20px;
+
+}
+
+.step p{
+
+line-height:1.8;
+
+color:#d6d6d6;
+
+}
