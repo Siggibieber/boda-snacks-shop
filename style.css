@@ -775,3 +775,72 @@ color:var(--gold);
 margin-bottom:30px;
 
 }
+/* ===========================
+WARUM BODA
+=========================== */
+
+.why-boda{
+
+padding:140px 0;
+
+background:#090909;
+
+}
+
+.why-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+gap:35px;
+
+}
+
+.why-grid article{
+
+background:#171717;
+
+padding:45px;
+
+border-radius:30px;
+
+border:1px solid rgba(255,255,255,.05);
+
+text-align:center;
+
+transition:.35s;
+
+}
+
+.why-grid article:hover{
+
+transform:translateY(-10px);
+
+border-color:var(--gold);
+
+}
+
+.icon{
+
+font-size:55px;
+
+margin-bottom:25px;
+
+}
+
+.why-grid h3{
+
+font-size:28px;
+
+margin-bottom:18px;
+
+}
+
+.why-grid p{
+
+color:#d5d5d5;
+
+line-height:1.8;
+
+}
