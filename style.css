@@ -682,3 +682,96 @@ height:180px;
 }
 
 }
+/* ===========================
+SNACKBOXEN
+=========================== */
+
+.snack-boxes{
+
+padding:140px 0;
+
+background:#101010;
+
+}
+
+.box-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+
+gap:40px;
+
+}
+
+.box-card{
+
+background:#181818;
+
+border-radius:30px;
+
+overflow:hidden;
+
+border:1px solid rgba(255,255,255,.06);
+
+transition:.4s;
+
+}
+
+.box-card:hover{
+
+transform:translateY(-10px);
+
+border-color:var(--gold);
+
+box-shadow:0 30px 70px rgba(0,0,0,.4);
+
+}
+
+.box-card img{
+
+width:100%;
+
+height:260px;
+
+object-fit:cover;
+
+}
+
+.box-content{
+
+padding:35px;
+
+}
+
+.box-content h3{
+
+font-size:30px;
+
+margin-bottom:20px;
+
+}
+
+.box-content p{
+
+line-height:1.8;
+
+color:#d9d9d9;
+
+margin-bottom:25px;
+
+}
+
+.box-content span{
+
+display:block;
+
+font-size:34px;
+
+font-weight:800;
+
+color:var(--gold);
+
+margin-bottom:30px;
+
+}
