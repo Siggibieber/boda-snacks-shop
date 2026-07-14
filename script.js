@@ -154,6 +154,53 @@ function renderCart(){
     total.toFixed(2).replace(".",",")+" €";
 
 }
+<div class="cart-item">
+
+    <img src="${item.image}">
+
+    <div class="cart-info">
+
+        <h4>${item.name}</h4>
+
+        <div class="cart-price">
+
+            ${item.price.toFixed(2).replace(".",",")} €
+
+        </div>
+
+        <div class="quantity">
+
+            <button onclick="decrease(${index})">
+
+                −
+
+            </button>
+
+            <span>
+
+                ${item.quantity || 1}
+
+            </span>
+
+            <button onclick="increase(${index})">
+
+                +
+
+            </button>
+
+        </div>
+
+        <span class="remove-item"
+
+            onclick="removeItem(${index})">
+
+            Entfernen
+
+        </span>
+
+    </div>
+
+</div>
 
 /* -------------------------------
    Produkt löschen
