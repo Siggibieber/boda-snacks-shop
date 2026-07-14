@@ -485,4 +485,47 @@ closeSidebar();
 // ===========================
 
 console.log("✅ BODA Snacks Shop geladen");
-   
+/* ===========================
+FILTER
+=========================== */
+
+.product-filter{
+
+display:flex;
+
+justify-content:center;
+
+flex-wrap:wrap;
+
+gap:15px;
+
+margin-bottom:50px;
+
+}
+
+.filter-btn{
+
+padding:14px 24px;
+
+background:#171717;
+
+border:1px solid rgba(255,255,255,.08);
+
+color:white;
+
+border-radius:50px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.filter-btn:hover,
+.filter-btn.active{
+
+background:var(--gold);
+
+color:black;
+
+}
