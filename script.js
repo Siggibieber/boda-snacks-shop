@@ -1,118 +1,192 @@
-/* =======================================
+/* =========================================
    BODA Snacks Shop
-   Version 1.0
-======================================= */
+========================================= */
+
+const cartButton = document.querySelector(".cart-btn");
+const cartSidebar = document.getElementById("cartSidebar");
+const cartOverlay = document.getElementById("cartOverlay");
+const closeCart = document.getElementById("closeCart");
 
 let cart = JSON.parse(localStorage.getItem("boda-cart")) || [];
 
 const cartCounter = document.querySelector(".cart-btn span");
+const cartItems = document.getElementById("cartItems");
+const cartTotal = document.getElementById("cartTotal");
 
-updateCart();
+/* -------------------------------
+   Warenkorb öffnen
+-------------------------------- */
 
-document.querySelectorAll(".product-btn").forEach((button) => {
+cartButton.addEventListener("click", () => {
 
-    button.addEventListener("click", function (e) {
+    cartSidebar.classList.add("active");
+    cartOverlay.classList.add("active");
+
+});
+
+/* -------------------------------
+   Warenkorb schließen
+-------------------------------- */
+
+closeCart.addEventListener("click", closeSidebar);
+
+cartOverlay.addEventListener("click", closeSidebar);
+
+function closeSidebar(){
+
+    cartSidebar.classList.remove("active");
+    cartOverlay.classList.remove("active");
+
+}
+
+/* -------------------------------
+   Produkt hinzufügen
+-------------------------------- */
+
+document.querySelectorAll(".product-btn").forEach(button=>{
+
+    button.addEventListener("click",(e)=>{
 
         e.preventDefault();
 
-        const card = this.closest(".product-card");
+        const card = button.closest(".product-card");
 
         const product = {
 
-            name: card.querySelector("h3").innerText,
+            name:card.querySelector("h3").innerText,
 
-            price: card.querySelector(".price").innerText,
+            price:parseFloat(
 
-            image: card.querySelector("img").src
+                card.querySelector(".price")
+                .innerText
+                .replace("€","")
+                .replace(",",".")
+                .trim()
+
+            ),
+
+            image:card.querySelector("img").src
 
         };
 
         cart.push(product);
 
-        localStorage.setItem("boda-cart", JSON.stringify(cart));
+        saveCart();
 
-        updateCart();
-
-        animateButton(this);
+        renderCart();
 
     });
 
 });
 
-function updateCart() {
+/* -------------------------------
+   Warenkorb anzeigen
+-------------------------------- */
 
-    if (cartCounter) {
+function renderCart(){
 
-        cartCounter.innerText = cart.length;
+    cartCounter.innerText = cart.length;
 
-    }
+    if(cart.length===0){
 
-}
+        cartItems.innerHTML=`
 
-function animateButton(button) {
+            <div class="empty-cart">
 
-    button.innerHTML = "✓ Hinzugefügt";
+                <h3>Dein Warenkorb ist leer</h3>
 
-    button.style.background = "#32b768";
-    button.style.color = "#fff";
+                <p>Lege deine Lieblingssnacks hinein.</p>
 
-    setTimeout(() => {
+            </div>
 
-        button.innerHTML = "In den Warenkorb";
+        `;
 
-        button.style.background = "";
-        button.style.color = "";
+        cartTotal.innerText="0,00 €";
 
-    }, 1400);
-
-}
-
-/* =======================================
-   Header beim Scrollen
-======================================= */
-
-window.addEventListener("scroll", () => {
-
-    const header = document.querySelector("header");
-
-    if (window.scrollY > 60) {
-
-        header.style.background = "rgba(9,9,9,.88)";
-
-        header.style.padding = "15px 0";
+        return;
 
     }
 
-    else {
+    let html="";
 
-        header.style.background = "rgba(9,9,9,.45)";
+    let total=0;
 
-        header.style.padding = "20px 0";
+    cart.forEach((item,index)=>{
 
-    }
+        total += item.price;
 
-});
+        html +=`
 
-/* =======================================
-   Smooth Fade
-======================================= */
+        <div class="cart-item">
 
-const observer = new IntersectionObserver((entries)=>{
+            <img src="${item.image}">
 
-    entries.forEach(entry=>{
+            <div class="cart-info">
 
-        if(entry.isIntersecting){
+                <h4>${item.name}</h4>
 
-            entry.target.classList.add("show");
+                <div class="cart-price">
 
-        }
+                    ${item.price.toFixed(2).replace(".",",")} €
+
+                </div>
+
+                <span class="remove-item"
+
+                    onclick="removeItem(${index})">
+
+                    Entfernen
+
+                </span>
+
+            </div>
+
+        </div>
+
+        `;
 
     });
 
-});
+    cartItems.innerHTML = html;
 
-document.querySelectorAll(".category-card,.product-card").forEach((el)=>{
+    cartTotal.innerText =
 
-    observer.observe(el);
+    total.toFixed(2).replace(".",",")+" €";
 
-});
+}
+
+/* -------------------------------
+   Produkt löschen
+-------------------------------- */
+
+function removeItem(index){
+
+    cart.splice(index,1);
+
+    saveCart();
+
+    renderCart();
+
+}
+
+/* -------------------------------
+   Local Storage
+-------------------------------- */
+
+function saveCart(){
+
+    localStorage.setItem(
+
+        "boda-cart",
+
+        JSON.stringify(cart)
+
+    );
+
+}
+
+/* -------------------------------
+   Start
+-------------------------------- */
+
+renderCart();
