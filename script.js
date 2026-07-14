@@ -237,3 +237,46 @@ function saveCart(){
 -------------------------------- */
 
 renderCart();
+/* ===========================
+Produktfilter
+=========================== */
+
+document.querySelectorAll(".filter-btn").forEach(button=>{
+
+button.addEventListener("click",()=>{
+
+document.querySelectorAll(".filter-btn").forEach(btn=>{
+
+btn.classList.remove("active");
+
+});
+
+button.classList.add("active");
+
+const category=button.dataset.category;
+
+document.querySelectorAll(".product-card").forEach(card=>{
+
+if(category==="Alle"){
+
+card.style.display="block";
+
+return;
+
+}
+
+if(card.dataset.category===category){
+
+card.style.display="block";
+
+}else{
+
+card.style.display="none";
+
+}
+
+});
+
+});
+
+});
