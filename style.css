@@ -935,3 +935,74 @@ line-height:1.8;
 color:#d6d6d6;
 
 }
+/* ===========================
+VERTRAUEN
+=========================== */
+
+.trust{
+
+padding:140px 0;
+
+background:#090909;
+
+}
+
+.trust-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+
+gap:35px;
+
+margin-top:70px;
+
+}
+
+.trust-card{
+
+background:#171717;
+
+padding:45px;
+
+border-radius:30px;
+
+border:1px solid rgba(255,255,255,.06);
+
+transition:.35s;
+
+text-align:center;
+
+}
+
+.trust-card:hover{
+
+transform:translateY(-10px);
+
+border-color:var(--gold);
+
+}
+
+.trust-icon{
+
+font-size:60px;
+
+margin-bottom:25px;
+
+}
+
+.trust-card h3{
+
+font-size:28px;
+
+margin-bottom:18px;
+
+}
+
+.trust-card p{
+
+color:#d8d8d8;
+
+line-height:1.8;
+
+}
