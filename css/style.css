@@ -3154,30 +3154,25 @@ footer {
 
 .legal-mail {
     display: inline-flex;
-
     align-items: center;
-
     gap: 8px;
-
     padding: 11px 16px;
-
     border-radius: 10px;
 
-    background: var(--teal);
-
+    background: var(--ink);
     color: var(--white);
 
-    font-weight: 900;
+    border: 1px solid var(--gold);
 
+    font-weight: 900;
     font-size: 13px;
 
     transition: 0.2s ease;
 }
 
-
 .legal-mail:hover {
-    background: var(--teal-dark);
-
+    background: #152729;
+    color: var(--gold);
     transform: translateY(-1px);
 }
 
