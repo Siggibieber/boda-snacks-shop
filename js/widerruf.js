@@ -84,3 +84,19 @@ ${name}
     });
 
 });
+/* =========================================================
+   WIDERRUFSFORMULAR DRUCKEN
+========================================================= */
+
+const printWithdrawalButton =
+    document.getElementById("printWithdrawalButton");
+
+if (printWithdrawalButton) {
+
+    printWithdrawalButton.addEventListener("click", function () {
+
+        window.print();
+
+    });
+
+}
