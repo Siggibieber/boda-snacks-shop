@@ -3617,3 +3617,54 @@ footer {
     }
 
 }
+/* =========================================================
+   MOBILE WARENKORB FIX – IPHONE / SAFARI
+========================================================= */
+
+@media (max-width: 600px) {
+
+    #cartPanel {
+        width: 100%;
+        max-width: 100%;
+
+        height: 100dvh;
+        max-height: 100dvh;
+
+        display: flex;
+        flex-direction: column;
+
+        padding-bottom:
+            calc(20px + env(safe-area-inset-bottom));
+    }
+
+
+    #cartItems {
+        flex: 1;
+
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+
+        padding-bottom: 20px;
+    }
+
+
+    .cart-summary {
+        flex-shrink: 0;
+
+        position: sticky;
+        bottom: 0;
+
+        background: #ffffff;
+
+        padding-bottom:
+            calc(12px + env(safe-area-inset-bottom));
+
+        z-index: 5;
+    }
+
+
+    #checkoutButton {
+        width: 100%;
+    }
+
+}
