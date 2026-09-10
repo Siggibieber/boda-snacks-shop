@@ -3799,3 +3799,66 @@ footer {
         0 4px 14px
         rgba(214, 173, 61, 0.12);
 }
+/* =========================================================
+   BODA KATEGORIE-LEISTE – HELLGRÜN / MINT
+========================================================= */
+
+.category-nav {
+    background: #eef8f4 !important;
+    border-top: 1px solid #dfece7 !important;
+    border-bottom: 1px solid #d7e8e2 !important;
+}
+
+.nav-chip {
+    background: #ffffff !important;
+    color: var(--ink) !important;
+
+    border: 1px solid #cfe3dc !important;
+
+    box-shadow:
+        0 2px 8px
+        rgba(30, 65, 65, 0.04);
+}
+
+.nav-chip:hover {
+    background: #e6f4ef !important;
+
+    color: var(--teal-dark) !important;
+
+    border-color: #9fcfc4 !important;
+}
+
+.nav-chip.active {
+    background: #dff1ea !important;
+
+    color: var(--teal-dark) !important;
+
+    border-color: #8fc7ba !important;
+
+    box-shadow:
+        0 4px 14px
+        rgba(18, 139, 132, 0.10);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .category-nav {
+        background: #eef8f4 !important;
+    }
+
+    .category-nav .nav-chip {
+        background: #ffffff !important;
+        color: var(--ink) !important;
+        border-color: #cfe3dc !important;
+    }
+
+    .category-nav .nav-chip.active {
+        background: #dff1ea !important;
+        color: var(--teal-dark) !important;
+        border-color: #8fc7ba !important;
+    }
+
+}
