@@ -438,22 +438,157 @@
                 <!-- =========================================
                      06 MUSTER
                 ========================================== -->
+<section id="formular">
 
-                <section id="formular">
+    <span class="legal-number">
+        06
+    </span>
 
-                    <span class="legal-number">
-                        06
-                    </span>
+    <h2>
+        Widerrufsformular
+    </h2>
 
-                    <h2>
-                        Muster-Widerrufsformular
-                    </h2>
+    <p>
+        Du kannst deinen Widerruf direkt hier vorbereiten.
+        Nach dem Klick öffnet sich dein E-Mail-Programm
+        mit einer fertig ausgefüllten Nachricht an BODA Snacks.
+    </p>
 
-                    <p>
-                        Wenn du den Vertrag widerrufen möchtest,
-                        kannst du beispielsweise folgende Angaben
-                        verwenden:
-                    </p>
+
+    <form id="withdrawalForm" class="withdrawal-form">
+
+        <div class="form-grid">
+
+            <div class="form-field">
+                <label for="withdrawalName">
+                    Vor- und Nachname *
+                </label>
+
+                <input
+                    type="text"
+                    id="withdrawalName"
+                    required
+                    autocomplete="name"
+                >
+            </div>
+
+
+            <div class="form-field">
+                <label for="withdrawalEmail">
+                    E-Mail-Adresse *
+                </label>
+
+                <input
+                    type="email"
+                    id="withdrawalEmail"
+                    required
+                    autocomplete="email"
+                >
+            </div>
+
+
+            <div class="form-field">
+                <label for="withdrawalOrder">
+                    Bestellnummer
+                </label>
+
+                <input
+                    type="text"
+                    id="withdrawalOrder"
+                    placeholder="z. B. BODA-123456"
+                >
+            </div>
+
+
+            <div class="form-field">
+                <label for="withdrawalOrderDate">
+                    Bestellt am
+                </label>
+
+                <input
+                    type="date"
+                    id="withdrawalOrderDate"
+                >
+            </div>
+
+
+            <div class="form-field">
+                <label for="withdrawalReceivedDate">
+                    Ware erhalten am
+                </label>
+
+                <input
+                    type="date"
+                    id="withdrawalReceivedDate"
+                >
+            </div>
+
+        </div>
+
+
+        <div class="form-field">
+
+            <label for="withdrawalAddress">
+                Anschrift *
+            </label>
+
+            <textarea
+                id="withdrawalAddress"
+                rows="3"
+                required
+                placeholder="Straße, Hausnummer, PLZ und Ort"
+            ></textarea>
+
+        </div>
+
+
+        <div class="form-field">
+
+            <label for="withdrawalProducts">
+                Welche Ware möchtest du widerrufen? *
+            </label>
+
+            <textarea
+                id="withdrawalProducts"
+                rows="5"
+                required
+                placeholder="Bitte Produkt oder Produkte eintragen"
+            ></textarea>
+
+        </div>
+
+
+        <label class="checkbox-row">
+
+            <input
+                type="checkbox"
+                id="withdrawalConfirm"
+                required
+            >
+
+            <span>
+                Ich möchte den oben genannten Kaufvertrag widerrufen.
+            </span>
+
+        </label>
+
+
+        <button
+            type="submit"
+            class="legal-mail withdrawal-button"
+        >
+            ✉ Widerruf per E-Mail vorbereiten
+        </button>
+
+
+        <p class="withdrawal-note">
+            Nach dem Klick wird noch nichts automatisch versendet.
+            Du kannst die E-Mail vor dem Absenden nochmals überprüfen.
+        </p>
+
+    </form>
+
+</section>
 
 
                     <div class="legal-contact">
