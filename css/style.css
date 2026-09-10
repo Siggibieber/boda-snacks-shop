@@ -3668,3 +3668,90 @@ footer {
     }
 
 }
+/* =========================================================
+   BODA KATEGORIE-LEISTE – EIGENER LOOK
+========================================================= */
+
+.category-nav {
+    background: var(--ink);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+.category-nav .container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+
+.category-nav .container::-webkit-scrollbar {
+    display: none;
+}
+
+
+.nav-chip {
+    flex: 0 0 auto;
+
+    padding: 9px 15px;
+
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+
+    background: transparent;
+
+    color: rgba(255, 255, 255, 0.82);
+
+    font-size: 12px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+.nav-chip:hover {
+    background: rgba(255, 255, 255, 0.08);
+
+    color: #ffffff;
+
+    border-color: rgba(214, 173, 61, 0.55);
+}
+
+
+.nav-chip.active {
+    background: var(--gold);
+
+    color: var(--ink);
+
+    border-color: var(--gold);
+
+    box-shadow:
+        0 5px 18px
+        rgba(214, 173, 61, 0.18);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .category-nav .container {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .nav-chip {
+        padding: 8px 13px;
+        font-size: 11px;
+    }
+
+}
