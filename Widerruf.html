@@ -611,58 +611,196 @@
                             kontakt@boda-snacks.de
                         </p>
 
+            <!-- =========================================================
+     ALTERNATIVE: WIDERRUF AUSFÜLLEN UND DRUCKEN
+========================================================= -->
 
-                        <p>
-                            Hiermit widerrufe ich den von mir
-                            abgeschlossenen Vertrag über den Kauf
-                            der folgenden Ware(n):
-                        </p>
+<div class="withdrawal-alternative">
 
+    <div class="withdrawal-divider">
+        <span>ODER</span>
+    </div>
 
-                        <p>
-                            ______________________________
-                        </p>
+    <div class="withdrawal-print-card" id="printWithdrawalArea">
 
+        <div class="withdrawal-print-head">
 
-                        <p>
-                            Bestellt am / erhalten am:
-                        </p>
+            <div>
+                <span class="legal-number">PDF</span>
 
+                <h3>
+                    Lieber schriftlich widerrufen?
+                </h3>
 
-                        <p>
-                            ______________________________
-                        </p>
+                <p>
+                    Fülle das Formular aus und drucke es anschließend aus
+                    oder speichere es als PDF.
+                </p>
+            </div>
 
-
-                        <p>
-                            Name:
-                        </p>
-
-
-                        <p>
-                            ______________________________
-                        </p>
+        </div>
 
 
-                        <p>
-                            Anschrift:
-                        </p>
+        <div class="print-recipient">
+
+            <strong>Empfänger</strong>
+
+            <p>
+                BODA Snacks GbR<br>
+                Andreas Boda &amp; Sandra Boda<br>
+                Erlenweg 34<br>
+                75175 Pforzheim
+            </p>
+
+        </div>
 
 
-                        <p>
-                            ______________________________
-                        </p>
+        <p class="withdrawal-statement">
+            Hiermit widerrufe ich den von mir abgeschlossenen Vertrag
+            über den Kauf der folgenden Ware(n):
+        </p>
 
 
-                        <p>
-                            Datum:
-                        </p>
+        <div class="form-field">
+
+            <label for="printProducts">
+                Ware / Produkte *
+            </label>
+
+            <textarea
+                id="printProducts"
+                rows="4"
+                placeholder="z. B. 2 × Chips Paprika, 1 × Energy Drink"
+            ></textarea>
+
+        </div>
 
 
-                        <p>
-                            ______________________________
-                        </p>
+        <div class="form-grid">
 
+            <div class="form-field">
+
+                <label for="printOrder">
+                    Bestellnummer
+                </label>
+
+                <input
+                    type="text"
+                    id="printOrder"
+                    placeholder="z. B. BODA-123456"
+                >
+
+            </div>
+
+
+            <div class="form-field">
+
+                <label for="printOrderDate">
+                    Bestellt am
+                </label>
+
+                <input
+                    type="date"
+                    id="printOrderDate"
+                >
+
+            </div>
+
+
+            <div class="form-field">
+
+                <label for="printReceivedDate">
+                    Ware erhalten am
+                </label>
+
+                <input
+                    type="date"
+                    id="printReceivedDate"
+                >
+
+            </div>
+
+
+            <div class="form-field">
+
+                <label for="printName">
+                    Vor- und Nachname *
+                </label>
+
+                <input
+                    type="text"
+                    id="printName"
+                    autocomplete="name"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="form-field">
+
+            <label for="printAddress">
+                Anschrift *
+            </label>
+
+            <textarea
+                id="printAddress"
+                rows="3"
+                placeholder="Straße, Hausnummer, PLZ und Ort"
+            ></textarea>
+
+        </div>
+
+
+        <div class="form-field">
+
+            <label for="printEmail">
+                E-Mail-Adresse
+            </label>
+
+            <input
+                type="email"
+                id="printEmail"
+                autocomplete="email"
+            >
+
+        </div>
+
+
+        <div class="print-signature-fields">
+
+            <div>
+                <span>Ort, Datum</span>
+                <div class="signature-line"></div>
+            </div>
+
+            <div>
+                <span>Unterschrift</span>
+                <div class="signature-line"></div>
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="legal-mail withdrawal-print-button"
+            id="printWithdrawalButton"
+        >
+            🖨️ Formular drucken / als PDF speichern
+        </button>
+
+        <p class="withdrawal-note no-print">
+            Dein Browser öffnet den Druckdialog.
+            Dort kannst du das Formular drucken oder als PDF speichern.
+        </p>
+
+    </div>
+
+
+                       
+                        
                     </div>
 
 
