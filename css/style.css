@@ -3755,3 +3755,47 @@ footer {
     }
 
 }
+/* =========================================================
+   BODA KATEGORIE-LEISTE – SEHR HELL
+========================================================= */
+
+.category-nav {
+    background: #fbfcfa;
+    border-top: 1px solid #edf1ef;
+    border-bottom: 1px solid #e4ece9;
+}
+
+
+.nav-chip {
+    background: #ffffff;
+
+    color: var(--ink);
+
+    border: 1px solid #dfe8e5;
+
+    box-shadow:
+        0 2px 8px
+        rgba(30, 65, 65, 0.04);
+}
+
+
+.nav-chip:hover {
+    background: #f7fbfa;
+
+    border-color: #b8d8d2;
+
+    color: var(--teal-dark);
+}
+
+
+.nav-chip.active {
+    background: #f5ecd0;
+
+    color: var(--ink);
+
+    border-color: var(--gold);
+
+    box-shadow:
+        0 4px 14px
+        rgba(214, 173, 61, 0.12);
+}
