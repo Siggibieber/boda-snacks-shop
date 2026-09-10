@@ -3369,3 +3369,166 @@ footer {
 
     color: var(--muted) !important;
 }
+/* =========================================================
+   WIDERRUF - ALTERNATIVE DRUCKVERSION
+========================================================= */
+
+.withdrawal-alternative {
+    margin-top: 45px;
+}
+
+.withdrawal-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    margin: 35px 0;
+}
+
+.withdrawal-divider::before,
+.withdrawal-divider::after {
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background: var(--line);
+}
+
+.withdrawal-divider span {
+    color: var(--muted);
+
+    font-size: 11px;
+    font-weight: 900;
+
+    letter-spacing: 0.12em;
+}
+
+.withdrawal-print-card {
+    padding: 28px;
+
+    border: 1px solid var(--line);
+
+    border-radius: 18px;
+
+    background: #fafcfb;
+}
+
+.withdrawal-print-head h3 {
+    margin: 12px 0 8px;
+
+    font-size: 24px;
+
+    color: var(--ink);
+}
+
+.withdrawal-print-head p {
+    margin-top: 0;
+}
+
+.print-recipient {
+    margin: 25px 0;
+
+    padding: 18px 20px;
+
+    border-left: 4px solid var(--gold);
+
+    border-radius: 10px;
+
+    background: #ffffff;
+}
+
+.print-recipient p {
+    margin-bottom: 0;
+}
+
+.withdrawal-statement {
+    margin: 25px 0 18px;
+}
+
+.print-signature-fields {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 40px;
+
+    margin: 50px 0 30px;
+}
+
+.print-signature-fields span {
+    display: block;
+
+    margin-bottom: 25px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+.signature-line {
+    border-bottom: 1px solid #555555;
+}
+
+.withdrawal-print-button {
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   DRUCKANSICHT
+========================================================= */
+
+@media print {
+
+    body * {
+        visibility: hidden !important;
+    }
+
+    #printWithdrawalArea,
+    #printWithdrawalArea * {
+        visibility: visible !important;
+    }
+
+    #printWithdrawalArea {
+        position: absolute;
+
+        left: 0;
+        top: 0;
+
+        width: 100%;
+
+        padding: 20px;
+
+        border: none;
+
+        background: #ffffff;
+    }
+
+    .no-print,
+    .withdrawal-print-button,
+    .withdrawal-print-head p,
+    .withdrawal-print-head .legal-number {
+        display: none !important;
+    }
+
+    .withdrawal-print-head h3 {
+        font-size: 28px;
+    }
+
+    #printWithdrawalArea input,
+    #printWithdrawalArea textarea {
+        border: 1px solid #aaaaaa !important;
+
+        background: #ffffff !important;
+
+        box-shadow: none !important;
+    }
+
+    .print-signature-fields {
+        margin-top: 60px;
+    }
+
+}
