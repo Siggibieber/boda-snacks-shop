@@ -1,1 +1,715 @@
+<!DOCTYPE html>
+<html lang="de">
 
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="BODA Snacks – Bestellung abschließen."
+    >
+
+    <title>Checkout | BODA Snacks</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     TESTHINWEIS
+========================================================= -->
+
+<div class="demo-note">
+    BODA Snacks Shop · Testversion · Keine echte Bestellung
+</div>
+
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="site-header">
+
+    <div class="container header-row checkout-header">
+
+
+        <a
+            href="index.html"
+            class="logo"
+            aria-label="Zurück zum BODA Snacks Shop"
+        >
+            BODA<span>.</span>
+
+            <small>
+                SNACKS · SHOP
+            </small>
+        </a>
+
+
+        <a
+            href="index.html"
+            class="btn btn-secondary"
+        >
+            ← Weiter einkaufen
+        </a>
+
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     CHECKOUT
+========================================================= -->
+
+<main class="checkout-page">
+
+    <div class="container">
+
+
+        <!-- ÜBERSCHRIFT -->
+
+        <div class="checkout-title">
+
+            <div class="eyebrow">
+                CHECKOUT
+            </div>
+
+            <h1>
+                Bestellung abschließen
+            </h1>
+
+            <p>
+                Prüfe deine Bestellung und gib deine Lieferdaten ein.
+            </p>
+
+        </div>
+
+
+
+        <!-- =================================================
+             CHECKOUT GRID
+        ================================================= -->
+
+        <div class="checkout-grid">
+
+
+            <!-- =============================================
+                 LINKE SEITE
+            ============================================== -->
+
+            <div class="checkout-main">
+
+
+                <!-- =========================================
+                     01 KONTAKT
+                ========================================== -->
+
+                <section class="checkout-card">
+
+                    <div class="checkout-step-title">
+
+                        <span>01</span>
+
+                        <div>
+                            <h2>Kontaktdaten</h2>
+
+                            <p>
+                                Damit wir dich zu deiner Bestellung erreichen können.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+                        <div class="form-field full">
+
+                            <label for="email">
+                                E-Mail-Adresse *
+                            </label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="name@beispiel.de"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-field full">
+
+                            <label for="phone">
+                                Telefonnummer
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                placeholder="Optional"
+                            >
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =========================================
+                     02 LIEFERADRESSE
+                ========================================== -->
+
+                <section class="checkout-card">
+
+                    <div class="checkout-step-title">
+
+                        <span>02</span>
+
+                        <div>
+
+                            <h2>
+                                Lieferadresse
+                            </h2>
+
+                            <p>
+                                Wohin dürfen deine Snacks geliefert werden?
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+
+                        <div class="form-field">
+
+                            <label for="firstname">
+                                Vorname *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="firstname"
+                                name="firstname"
+                                autocomplete="given-name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-field">
+
+                            <label for="lastname">
+                                Nachname *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="lastname"
+                                name="lastname"
+                                autocomplete="family-name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-field full">
+
+                            <label for="company">
+                                Firma
+                            </label>
+
+                            <input
+                                type="text"
+                                id="company"
+                                name="company"
+                                placeholder="Optional"
+                            >
+
+                        </div>
+
+
+                        <div class="form-field address-field">
+
+                            <label for="street">
+                                Straße *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="street"
+                                name="street"
+                                autocomplete="address-line1"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-field house-field">
+
+                            <label for="houseNumber">
+                                Hausnr. *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="houseNumber"
+                                name="houseNumber"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-field zip-field">
+
+                            <label for="zip">
+                                PLZ *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="zip"
+                                name="zip"
+                                inputmode="numeric"
+                                autocomplete="postal-code"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-field city-field">
+
+                            <label for="city">
+                                Ort *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="city"
+                                name="city"
+                                autocomplete="address-level2"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-field full">
+
+                            <label for="country">
+                                Land
+                            </label>
+
+                            <select
+                                id="country"
+                                name="country"
+                            >
+                                <option value="DE">
+                                    Deutschland
+                                </option>
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-field full">
+
+                            <label for="note">
+                                Hinweis zur Bestellung
+                            </label>
+
+                            <textarea
+                                id="note"
+                                name="note"
+                                rows="4"
+                                placeholder="Optional"
+                            ></textarea>
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =========================================
+                     03 VERSAND
+                ========================================== -->
+
+                <section class="checkout-card">
+
+                    <div class="checkout-step-title">
+
+                        <span>03</span>
+
+                        <div>
+
+                            <h2>
+                                Versand
+                            </h2>
+
+                            <p>
+                                Deine aktuell verfügbare Versandart.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <label class="selection-card active">
+
+                        <input
+                            type="radio"
+                            name="shipping"
+                            value="standard"
+                            checked
+                        >
+
+                        <div>
+
+                            <strong>
+                                Standardversand
+                            </strong>
+
+                            <small>
+                                Versandkosten abhängig vom Warenwert
+                            </small>
+
+                        </div>
+
+
+                        <span id="checkoutShippingLabel">
+                            4,99 €
+                        </span>
+
+                    </label>
+
+                </section>
+
+
+
+                <!-- =========================================
+                     04 ZAHLUNGSART
+                ========================================== -->
+
+                <section class="checkout-card">
+
+                    <div class="checkout-step-title">
+
+                        <span>04</span>
+
+                        <div>
+
+                            <h2>
+                                Zahlungsart
+                            </h2>
+
+                            <p>
+                                In dieser Testversion wird keine Zahlung durchgeführt.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="payment-options">
+
+
+                        <label class="selection-card active">
+
+                            <input
+                                type="radio"
+                                name="payment"
+                                value="paypal"
+                                checked
+                            >
+
+                            <div>
+
+                                <strong>
+                                    PayPal
+                                </strong>
+
+                                <small>
+                                    Demo-Auswahl
+                                </small>
+
+                            </div>
+
+                        </label>
+
+
+
+                        <label class="selection-card">
+
+                            <input
+                                type="radio"
+                                name="payment"
+                                value="card"
+                            >
+
+                            <div>
+
+                                <strong>
+                                    Kredit- / Debitkarte
+                                </strong>
+
+                                <small>
+                                    Demo-Auswahl
+                                </small>
+
+                            </div>
+
+                        </label>
+
+
+
+                        <label class="selection-card">
+
+                            <input
+                                type="radio"
+                                name="payment"
+                                value="invoice"
+                            >
+
+                            <div>
+
+                                <strong>
+                                    Rechnung
+                                </strong>
+
+                                <small>
+                                    Demo-Auswahl
+                                </small>
+
+                            </div>
+
+                        </label>
+
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =========================================
+                     RECHTLICHE BESTÄTIGUNG
+                ========================================== -->
+
+                <section class="checkout-card">
+
+                    <label class="checkbox-row">
+
+                        <input
+                            type="checkbox"
+                            id="terms"
+                            required
+                        >
+
+                        <span>
+                            Ich bestätige, dass dies aktuell nur eine
+                            Testversion des BODA Snacks Shops ist.
+                        </span>
+
+                    </label>
+
+
+                    <label class="checkbox-row">
+
+                        <input
+                            type="checkbox"
+                            id="privacy"
+                            required
+                        >
+
+                        <span>
+                            Ich habe die Hinweise zum Datenschutz zur Kenntnis genommen.
+                        </span>
+
+                    </label>
+
+                </section>
+
+
+            </div>
+
+
+
+            <!-- =============================================
+                 RECHTE SEITE – BESTELLÜBERSICHT
+            ============================================== -->
+
+            <aside class="checkout-summary">
+
+                <div class="checkout-summary-card">
+
+
+                    <h2>
+                        Deine Bestellung
+                    </h2>
+
+
+                    <div
+                        id="checkoutItems"
+                        class="checkout-items"
+                    >
+
+                        <p>
+                            Warenkorb wird geladen …
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="checkout-totals">
+
+
+                        <div>
+
+                            <span>
+                                Warenwert
+                            </span>
+
+                            <strong id="checkoutSubtotal">
+                                0,00 €
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Versand
+                            </span>
+
+                            <strong id="checkoutShipping">
+                                0,00 €
+                            </strong>
+
+                        </div>
+
+
+                        <div class="grand-total">
+
+                            <span>
+                                Gesamt
+                            </span>
+
+                            <strong id="checkoutTotal">
+                                0,00 €
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div
+                        class="checkout-warning"
+                        id="checkoutWarning"
+                    >
+                    </div>
+
+
+
+                    <button
+                        type="button"
+                        id="placeOrderButton"
+                        class="checkout-order-button"
+                    >
+                        Testbestellung abschließen
+                    </button>
+
+
+
+                    <p class="checkout-demo-hint">
+
+                        Dies ist ausschließlich eine Demo.
+                        Es wird keine Bestellung übermittelt
+                        und keine Zahlung ausgeführt.
+
+                    </p>
+
+
+                </div>
+
+            </aside>
+
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <div class="container">
+
+        <div class="copyright">
+
+            © 2026 BODA Snacks · Testversion
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script src="js/products.js"></script>
+<script src="js/checkout.js"></script>
+
+
+</body>
+
+</html>
