@@ -1,1 +1,209 @@
+<!DOCTYPE html>
+<html lang="de">
 
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="BODA Snacks – Testbestellung abgeschlossen."
+    >
+
+    <title>Vielen Dank | BODA Snacks</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     TESTHINWEIS
+========================================================= -->
+
+<div class="demo-note">
+    BODA Snacks Shop · Testversion · Keine echte Bestellung
+</div>
+
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="site-header">
+
+    <div class="container header-row thankyou-header">
+
+        <a
+            href="index.html"
+            class="logo"
+            aria-label="BODA Snacks Shop Startseite"
+        >
+            BODA<span>.</span>
+
+            <small>
+                SNACKS · SHOP
+            </small>
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     BESTÄTIGUNG
+========================================================= -->
+
+<main class="thankyou-page">
+
+    <div class="container">
+
+
+        <section class="thankyou-box">
+
+
+            <div class="thankyou-icon">
+                ✓
+            </div>
+
+
+            <div class="eyebrow">
+                TESTBESTELLUNG ABGESCHLOSSEN
+            </div>
+
+
+            <h1>
+                Danke für deine Bestellung!
+            </h1>
+
+
+            <p class="thankyou-lead">
+                Dein kompletter BODA-Shop-Bestellablauf
+                wurde erfolgreich getestet.
+            </p>
+
+
+
+            <div class="order-number-box">
+
+                <span>
+                    Test-Bestellnummer
+                </span>
+
+                <strong id="orderNumber">
+                    Wird geladen …
+                </strong>
+
+            </div>
+
+
+
+            <div class="demo-warning">
+
+                <strong>
+                    Wichtig:
+                </strong>
+
+                Dies war ausschließlich eine Demo.
+                Es wurde keine echte Bestellung übermittelt,
+                keine Zahlung durchgeführt
+                und keine Bestellung gespeichert.
+
+            </div>
+
+
+
+            <div class="thankyou-actions">
+
+                <a
+                    href="index.html"
+                    class="btn btn-primary"
+                >
+                    Zurück zum Shop
+                </a>
+
+            </div>
+
+
+        </section>
+
+
+    </div>
+
+</main>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <div class="container">
+
+        <div class="copyright">
+            © 2026 BODA Snacks · Testversion
+        </div>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =========================================================
+     BESTELLNUMMER LADEN
+========================================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        const orderNumber =
+            sessionStorage.getItem(
+                "bodaDemoOrderNumber"
+            );
+
+
+        const orderNumberElement =
+            document.getElementById(
+                "orderNumber"
+            );
+
+
+        if (orderNumber) {
+
+            orderNumberElement.textContent =
+                orderNumber;
+
+        } else {
+
+            orderNumberElement.textContent =
+                "BODA-TEST";
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
