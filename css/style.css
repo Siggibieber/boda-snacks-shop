@@ -4960,3 +4960,19 @@ dialog::backdrop {
     }
 
 }
+/* Kategorienbereich hell / weiß */
+.category-nav,
+.categories,
+.category-bar,
+.filter-bar,
+.shop-filters,
+.product-categories {
+    background: #ffffff !important;
+}
+
+/* Falls der komplette Bereich dahinter eingefärbt ist */
+.category-section,
+.shop-section,
+.products-section {
+    background: #ffffff !important;
+}
