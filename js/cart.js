@@ -1,664 +1,162 @@
 /* =========================================================
    BODA SNACKS SHOP
    Warenkorb
+
+   Benötigt:
+   - products.js
+   - core.js
+   - die neue index.html
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-
-    /* =====================================================
-       EINSTELLUNGEN
-    ===================================================== */
-
-    const MINIMUM_ORDER = 25.00;
-    const FREE_SHIPPING_FROM = 49.00;
-    const SHIPPING_COST = 4.99;
-
-    const STORAGE_KEY = "bodaShopCart";
+    "use strict";
 
 
     /* =====================================================
-       ELEMENTE
+       ELEMENTE UND GEMEINSAME FUNKTIONEN
     ===================================================== */
 
-    const openCartButton =
-        document.getElementById("openCart");
+    const B = window.Boda;
 
-    const closeCartButton =
-        document.getElementById("closeCart");
-
-    const cartPanel =
+    const panel =
         document.getElementById("cartPanel");
 
-    const cartOverlay =
-        document.getElementById("cartOverlay");
+    if (!panel || !B) {
+        return;
+    }
 
-    const cartItems =
+    const items =
         document.getElementById("cartItems");
 
-    const cartCount =
-        document.getElementById("cartCount");
-
-    const cartSubtotal =
-        document.getElementById("cartSubtotal");
-
-    const shippingCost =
-        document.getElementById("shippingCost");
-
-    const cartTotal =
-        document.getElementById("cartTotal");
-
-    const minimumText =
-        document.getElementById("minimumText");
-
-    const minimumProgress =
-        document.getElementById("minimumProgress");
-
-    const checkoutButton =
+    const checkout =
         document.getElementById("checkoutButton");
+
+    const opener =
+        document.getElementById("openCart");
 
     const toast =
         document.getElementById("toast");
 
+    let toastTimer;
+
 
     /* =====================================================
-       WARENKORB LADEN
+       KURZE STATUSMELDUNG
     ===================================================== */
 
-    let cart = loadCart();
+    function message(text) {
+        clearTimeout(toastTimer);
+
+        toast.textContent = text;
+
+        toast.classList.add("show");
+
+        toastTimer = setTimeout(() => {
+            toast.classList.remove("show");
+        }, 3500);
+    }
 
 
-    function loadCart() {
+    /* =====================================================
+       WARENKORB ANZEIGEN
+    ===================================================== */
 
-        try {
+    function render() {
+        const cart = B.getCart();
 
-            const savedCart =
-                localStorage.getItem(STORAGE_KEY);
+        const sum = B.totals();
 
-            if (!savedCart) {
-                return [];
+        const focused = document.activeElement;
+
+        const focusKey = items.contains(focused)
+            ? {
+                id: focused.dataset.id,
+                action: focused.dataset.action
             }
+            : null;
 
-            const parsed =
-                JSON.parse(savedCart);
 
-            if (!Array.isArray(parsed)) {
-                return [];
-            }
+        /* PRODUKTE ODER LEERZUSTAND */
 
-            return parsed;
+        items.innerHTML = cart.length
+            ? cart.map(row => {
+                const p = B.product(row.id);
 
-        } catch (error) {
-
-            console.warn(
-                "Warenkorb konnte nicht geladen werden.",
-                error
-            );
-
-            return [];
-
-        }
-
-    }
-
-
-    /* =====================================================
-       WARENKORB SPEICHERN
-    ===================================================== */
-
-    function saveCart() {
-
-        localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(cart)
-        );
-
-    }
-
-
-    /* =====================================================
-       PREIS FORMATIEREN
-    ===================================================== */
-
-    function formatPrice(price) {
-
-        return new Intl.NumberFormat(
-            "de-DE",
-            {
-                style: "currency",
-                currency: "EUR"
-            }
-        ).format(price);
-
-    }
-
-
-    /* =====================================================
-       PRODUKT FINDEN
-    ===================================================== */
-
-    function getProduct(productId) {
-
-        return BODA_PRODUCTS.find(
-            product =>
-                product.id === Number(productId)
-        );
-
-    }
-
-
-    /* =====================================================
-       WARENKORB ÖFFNEN
-    ===================================================== */
-
-    function openCart() {
-
-        cartPanel.classList.add("show");
-        cartOverlay.classList.add("show");
-
-        document.body.classList.add(
-            "cart-open"
-        );
-
-    }
-
-
-    /* =====================================================
-       WARENKORB SCHLIESSEN
-    ===================================================== */
-
-    function closeCart() {
-
-        cartPanel.classList.remove("show");
-        cartOverlay.classList.remove("show");
-
-        document.body.classList.remove(
-            "cart-open"
-        );
-
-    }
-
-
-    /* =====================================================
-       PRODUKT HINZUFÜGEN
-    ===================================================== */
-
-    function addToCart(productId) {
-
-        const product =
-            getProduct(productId);
-
-        if (!product) {
-            return;
-        }
-
-
-        const existingItem =
-            cart.find(
-                item =>
-                    item.id === product.id
-            );
-
-
-        if (existingItem) {
-
-            existingItem.quantity += 1;
-
-        } else {
-
-            cart.push({
-                id: product.id,
-                quantity: 1
-            });
-
-        }
-
-
-        saveCart();
-
-        renderCart();
-
-        showToast(
-            `${product.name} wurde hinzugefügt.`
-        );
-
-    }
-
-
-    /* =====================================================
-       MENGE ÄNDERN
-    ===================================================== */
-
-    function changeQuantity(
-        productId,
-        change
-    ) {
-
-        const item =
-            cart.find(
-                cartItem =>
-                    cartItem.id
-                    ===
-                    Number(productId)
-            );
-
-
-        if (!item) {
-            return;
-        }
-
-
-        item.quantity += change;
-
-
-        /*
-         * Wenn Menge 0 erreicht,
-         * Produkt entfernen.
-         */
-
-        if (item.quantity <= 0) {
-
-            cart =
-                cart.filter(
-                    cartItem =>
-                        cartItem.id
-                        !==
-                        Number(productId)
+                const unitPriceCents = Math.round(
+                    p.price * 100
                 );
 
-        }
-
-
-        saveCart();
-
-        renderCart();
-
-    }
-
-
-    /* =====================================================
-       PRODUKT ENTFERNEN
-    ===================================================== */
-
-    function removeFromCart(productId) {
-
-        cart =
-            cart.filter(
-                item =>
-                    item.id
-                    !==
-                    Number(productId)
-            );
-
-
-        saveCart();
-
-        renderCart();
-
-    }
-
-
-    /* =====================================================
-       WARENWERT BERECHNEN
-    ===================================================== */
-
-    function calculateSubtotal() {
-
-        return cart.reduce(
-            (sum, item) => {
-
-                const product =
-                    getProduct(item.id);
-
-                if (!product) {
-                    return sum;
-                }
-
-                return (
-                    sum
-                    +
-                    product.price
-                    *
-                    item.quantity
-                );
-
-            },
-            0
-        );
-
-    }
-
-
-    /* =====================================================
-       VERSAND BERECHNEN
-    ===================================================== */
-
-    function calculateShipping(
-        subtotal
-    ) {
-
-        /*
-         * Leerer Warenkorb
-         */
-
-        if (subtotal <= 0) {
-            return 0;
-        }
-
-
-        /*
-         * Kostenloser Versand
-         */
-
-        if (
-            subtotal
-            >=
-            FREE_SHIPPING_FROM
-        ) {
-
-            return 0;
-
-        }
-
-
-        return SHIPPING_COST;
-
-    }
-
-
-    /* =====================================================
-       ARTIKELANZAHL
-    ===================================================== */
-
-    function calculateItemCount() {
-
-        return cart.reduce(
-            (sum, item) =>
-                sum + item.quantity,
-            0
-        );
-
-    }
-
-
-    /* =====================================================
-       WARENKORB PRODUKTBILD
-    ===================================================== */
-
-    function createCartImage(product) {
-
-        if (product.image) {
-
-            return `
-                <img
-                    src="${product.image}"
-                    alt="${product.name}"
-                >
-            `;
-
-        }
-
-
-        return `
-            <div
-                style="
-                    --c: ${product.color};
-                "
-            ></div>
-        `;
-
-    }
-
-
-    /* =====================================================
-       WARENKORB PRODUKT
-    ===================================================== */
-
-    function createCartItem(item) {
-
-        const product =
-            getProduct(item.id);
-
-
-        if (!product) {
-            return "";
-        }
-
-
-        const itemTotal =
-            product.price
-            *
-            item.quantity;
-
-
-        return `
-            <div
-                class="cart-item"
-                data-cart-id="${product.id}"
-            >
-
-                <div class="cart-thumb">
-
-                    ${createCartImage(product)}
-
-                </div>
-
-
-                <div>
-
-                    <h4>
-                        ${product.name}
-                    </h4>
-
-
-                    <div class="item-price">
-
-                        ${formatPrice(product.price)}
-
-                        ·
-
-                        ${product.size}
+                const itemTotalCents =
+                    unitPriceCents * row.quantity;
+
+                const maximumReached =
+                    row.quantity >= B.config.maxQuantity;
+
+                return `
+                    <div class="cart-item">
+
+                        <div class="cart-thumb">
+                            ${B.artwork(p)}
+                        </div>
+
+                        <div>
+
+                            <h4>
+                                ${B.escape(p.name)}
+                            </h4>
+
+                            <p class="item-price">
+                                ${B.escape(p.size)} ·
+                                ${B.money(unitPriceCents)} / Stück
+                            </p>
+
+                            <div class="qty">
+
+                                <button
+                                    type="button"
+                                    data-action="minus"
+                                    data-id="${p.id}"
+                                    aria-label="Einmal weniger ${B.escape(p.name)}"
+                                >
+                                    −
+                                </button>
+
+                                <span aria-label="Menge">
+                                    ${row.quantity}
+                                </span>
+
+                                <button
+                                    type="button"
+                                    data-action="plus"
+                                    data-id="${p.id}"
+                                    aria-label="Einmal mehr ${B.escape(p.name)}"
+                                    ${maximumReached ? "disabled" : ""}
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <button
+                                class="remove"
+                                type="button"
+                                data-action="remove"
+                                data-id="${p.id}"
+                                aria-label="${B.escape(p.name)} entfernen"
+                            >
+                                Entfernen
+                            </button>
+
+                        </div>
+
+                        <strong>
+                            ${B.money(itemTotalCents)}
+                        </strong>
 
                     </div>
-
-
-                    <div class="qty">
-
-                        <button
-                            type="button"
-                            data-action="minus"
-                            data-id="${product.id}"
-                            aria-label="Menge reduzieren"
-                        >
-                            −
-                        </button>
-
-
-                        <span>
-                            ${item.quantity}
-                        </span>
-
-
-                        <button
-                            type="button"
-                            data-action="plus"
-                            data-id="${product.id}"
-                            aria-label="Menge erhöhen"
-                        >
-                            +
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <div>
-
-                    <strong>
-                        ${formatPrice(itemTotal)}
-                    </strong>
-
-
-                    <button
-                        class="remove"
-                        type="button"
-                        data-action="remove"
-                        data-id="${product.id}"
-                    >
-                        Entfernen
-                    </button>
-
-                </div>
-
-            </div>
-        `;
-
-    }
-
-
-    /* =====================================================
-       MINDESTBESTELLWERT
-    ===================================================== */
-
-    function updateMinimumOrder(
-        subtotal
-    ) {
-
-        const missing =
-            Math.max(
-                0,
-                MINIMUM_ORDER - subtotal
-            );
-
-
-        const percentage =
-            Math.min(
-                100,
-                (
-                    subtotal
-                    /
-                    MINIMUM_ORDER
-                )
-                *
-                100
-            );
-
-
-        minimumProgress.style.width =
-            `${percentage}%`;
-
-
-        if (subtotal <= 0) {
-
-            minimumText.textContent =
-                `noch ${formatPrice(MINIMUM_ORDER)}`;
-
-        }
-
-        else if (missing > 0) {
-
-            minimumText.textContent =
-                `noch ${formatPrice(missing)}`;
-
-        }
-
-        else {
-
-            minimumText.textContent =
-                "erreicht ✓";
-
-        }
-
-    }
-
-
-    /* =====================================================
-       CHECKOUT BUTTON
-    ===================================================== */
-
-    function updateCheckoutButton(
-        subtotal
-    ) {
-
-        if (
-            subtotal
-            >=
-            MINIMUM_ORDER
-        ) {
-
-            checkoutButton.classList.remove(
-                "disabled"
-            );
-
-            checkoutButton.textContent =
-                "Zur Kasse";
-
-            checkoutButton.setAttribute(
-                "aria-disabled",
-                "false"
-            );
-
-        } else {
-
-            checkoutButton.classList.add(
-                "disabled"
-            );
-
-            checkoutButton.textContent =
-                "Mindestbestellwert noch nicht erreicht";
-
-            checkoutButton.setAttribute(
-                "aria-disabled",
-                "true"
-            );
-
-        }
-
-    }
-
-
-    /* =====================================================
-       WARENKORB RENDERN
-    ===================================================== */
-
-    function renderCart() {
-
-        /*
-         * Nicht mehr vorhandene Produkte
-         * aus Warenkorb entfernen.
-         */
-
-        cart =
-            cart.filter(
-                item =>
-                    getProduct(item.id)
-                    &&
-                    item.quantity > 0
-            );
-
-
-        saveCart();
-
-
-        /* =================================================
-           ARTIKELZAHL
-        ================================================= */
-
-        const itemCount =
-            calculateItemCount();
-
-
-        cartCount.textContent =
-            itemCount;
-
-
-        /* =================================================
-           LEERER WARENKORB
-        ================================================= */
-
-        if (cart.length === 0) {
-
-            cartItems.innerHTML = `
+                `;
+            }).join("")
+            : `
                 <div class="empty-cart">
 
                     <h3>
@@ -666,286 +164,350 @@ document.addEventListener("DOMContentLoaded", () => {
                     </h3>
 
                     <p>
-                        Such dir ein paar Snacks aus.
+                        Schließe den Warenkorb und suche
+                        dir Snacks zum Ausprobieren aus.
                     </p>
 
                 </div>
             `;
 
+
+        /* ARTIKELANZAHL */
+
+        document.getElementById(
+            "cartCount"
+        ).textContent = sum.count;
+
+        opener.setAttribute(
+            "aria-label",
+            `Testwarenkorb öffnen, ${sum.count} Artikel`
+        );
+
+
+        /* PREISE */
+
+        document.getElementById(
+            "cartSubtotal"
+        ).textContent = B.money(sum.subtotal);
+
+        document.getElementById(
+            "shippingCost"
+        ).textContent = B.money(sum.shipping);
+
+        document.getElementById(
+            "cartTotal"
+        ).textContent = B.money(sum.total);
+
+
+        /* MINDESTWARENWERT */
+
+        document.getElementById(
+            "minimumText"
+        ).textContent = sum.missing
+            ? `Noch ${B.money(sum.missing)}`
+            : "Erreicht";
+
+        const progress = Math.min(
+            100,
+            sum.subtotal / B.config.minimumCents * 100
+        );
+
+        document.getElementById(
+            "minimumProgress"
+        ).style.width = `${progress}%`;
+
+
+        /* WECHSEL ZUR TESTÜBERSICHT */
+
+        const disabled =
+            Boolean(sum.missing) ||
+            !sum.count ||
+            !B.canPersist();
+
+        checkout.classList.toggle(
+            "disabled",
+            disabled
+        );
+
+        checkout.setAttribute(
+            "aria-disabled",
+            String(disabled)
+        );
+
+
+        /* KONDITIONEN UND SPEICHERHINWEISE */
+
+        const hint = panel.querySelector(
+            ".cart-hint"
+        );
+
+        if (!B.canPersist()) {
+            hint.textContent =
+                "Dein Browser konnte den Warenkorb nicht " +
+                "speichern. Die Testübersicht ist deshalb " +
+                "gesperrt. Bitte erlaube Website-Speicher " +
+                "und ändere die Menge erneut.";
         } else {
+            const depositHint = sum.unknownDeposit
+                ? (
+                    "Pfand noch offen; nicht vollständig " +
+                    "in dieser Demo-Summe enthalten. "
+                )
+                : "";
 
-            cartItems.innerHTML =
-                cart
-                    .map(createCartItem)
-                    .join("");
-
+            hint.textContent =
+                `${B.conditions()} ` +
+                depositHint +
+                "Keine echte Bestellung.";
         }
 
 
-        /* =================================================
-           SUMMEN
-        ================================================= */
+        /* TASTATURFOKUS NACH MENGENÄNDERUNG ERHALTEN */
 
-        const subtotal =
-            calculateSubtotal();
-
-
-        const shipping =
-            calculateShipping(
-                subtotal
+        if (focusKey) {
+            const next = items.querySelector(
+                `[data-id="${Number(focusKey.id)}"]` +
+                `[data-action="${focusKey.action}"]` +
+                ":not(:disabled)"
             );
 
+            const fallback =
+                items.querySelector("button") ||
+                document.getElementById("closeCart");
 
-        const total =
-            subtotal + shipping;
-
-
-        cartSubtotal.textContent =
-            formatPrice(subtotal);
-
-
-        shippingCost.textContent =
-            shipping === 0
-            && subtotal > 0
-
-                ? "Kostenlos"
-
-                : formatPrice(shipping);
-
-
-        cartTotal.textContent =
-            formatPrice(total);
-
-
-        /* =================================================
-           MINDESTBESTELLWERT
-        ================================================= */
-
-        updateMinimumOrder(
-            subtotal
-        );
-
-
-        /* =================================================
-           CHECKOUT
-        ================================================= */
-
-        updateCheckoutButton(
-            subtotal
-        );
-
-
-        /*
-         * Warenkorbdaten für Checkout
-         * zusätzlich speichern.
-         */
-
-        localStorage.setItem(
-            "bodaCartSubtotal",
-            subtotal.toFixed(2)
-        );
-
-        localStorage.setItem(
-            "bodaShipping",
-            shipping.toFixed(2)
-        );
-
-        localStorage.setItem(
-            "bodaCartTotal",
-            total.toFixed(2)
-        );
-
+            (next || fallback).focus();
+        }
     }
 
 
     /* =====================================================
-       TOAST MELDUNG
+       PRODUKT HINZUFÜGEN
+       Wird von shop.js aufgerufen.
     ===================================================== */
 
-    let toastTimer;
+    window.bodaAddToCart = id => {
+        const p = B.product(id);
 
-
-    function showToast(message) {
-
-        if (!toast) {
+        if (!p) {
             return;
         }
 
+        const cart = B.getCart();
 
-        toast.textContent =
-            message;
+        const row = cart.find(item => {
+            return item.id === p.id;
+        });
 
-
-        toast.classList.add(
-            "show"
-        );
-
-
-        clearTimeout(
-            toastTimer
-        );
-
-
-        toastTimer =
-            setTimeout(
-                () => {
-
-                    toast.classList.remove(
-                        "show"
-                    );
-
-                },
-                1800
+        if (
+            row &&
+            row.quantity >= B.config.maxQuantity
+        ) {
+            message(
+                "Maximal 99 Stück je Musterprodukt."
             );
 
-    }
-
-
-    /* =====================================================
-       WARENKORB BUTTONS
-    ===================================================== */
-
-    openCartButton.addEventListener(
-        "click",
-        openCart
-    );
-
-
-    closeCartButton.addEventListener(
-        "click",
-        closeCart
-    );
-
-
-    cartOverlay.addEventListener(
-        "click",
-        closeCart
-    );
-
-
-    /* =====================================================
-       ESC TASTE
-    ===================================================== */
-
-    document.addEventListener(
-        "keydown",
-        event => {
-
-            if (
-                event.key === "Escape"
-            ) {
-
-                closeCart();
-
-            }
-
+            return;
         }
-    );
 
-
-    /* =====================================================
-       PLUS / MINUS / ENTFERNEN
-    ===================================================== */
-
-    cartItems.addEventListener(
-        "click",
-        event => {
-
-            const button =
-                event.target.closest(
-                    "[data-action]"
-                );
-
-
-            if (!button) {
-                return;
-            }
-
-
-            const productId =
-                Number(
-                    button.dataset.id
-                );
-
-
-            const action =
-                button.dataset.action;
-
-
-            if (action === "plus") {
-
-                changeQuantity(
-                    productId,
-                    1
-                );
-
-            }
-
-
-            if (action === "minus") {
-
-                changeQuantity(
-                    productId,
-                    -1
-                );
-
-            }
-
-
-            if (action === "remove") {
-
-                removeFromCart(
-                    productId
-                );
-
-            }
-
+        if (row) {
+            row.quantity += 1;
+        } else {
+            cart.push({
+                id: p.id,
+                quantity: 1
+            });
         }
-    );
+
+        const saved = B.save(cart);
+
+        message(
+            saved
+                ? `${p.name} im Testwarenkorb.`
+                : (
+                    "Warenkorb nur vorübergehend verfügbar. " +
+                    "Speichern wurde vom Browser blockiert."
+                )
+        );
+    };
 
 
     /* =====================================================
-       CHECKOUT SCHUTZ
+       WARENKORB ÖFFNEN
     ===================================================== */
 
-    checkoutButton.addEventListener(
-        "click",
-        event => {
+    opener.addEventListener("click", () => {
+        panel.removeAttribute("inert");
 
-            const subtotal =
-                calculateSubtotal();
+        panel.removeAttribute("aria-hidden");
+
+        panel.classList.add("show");
+
+        panel.showModal();
+
+        document.body.classList.add(
+            "cart-open"
+        );
+
+        opener.setAttribute(
+            "aria-expanded",
+            "true"
+        );
+
+        document.getElementById(
+            "closeCart"
+        ).focus();
+    });
 
 
-            if (
-                subtotal
-                <
-                MINIMUM_ORDER
-            ) {
+    /* =====================================================
+       WARENKORB SCHLIESSEN
+    ===================================================== */
 
-                event.preventDefault();
+    document
+        .getElementById("closeCart")
+        .addEventListener("click", () => {
+            panel.close();
+        });
 
-                showToast(
-                    `Mindestbestellwert: ${formatPrice(MINIMUM_ORDER)}`
-                );
+    /*
+     * Dieses Ereignis wird auch ausgelöst,
+     * wenn der native Dialog per Escape geschlossen wird.
+     */
 
-            }
+    panel.addEventListener("close", () => {
+        panel.classList.remove("show");
 
+        document.body.classList.remove(
+            "cart-open"
+        );
+
+        opener.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+        panel.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        panel.setAttribute("inert", "");
+
+        opener.focus();
+    });
+
+
+    /* KLICK AUF DEN HINTERGRUND LINKS NEBEN DEM WARENKORB */
+
+    panel.addEventListener("click", event => {
+        const leftEdge =
+            panel.getBoundingClientRect().left;
+
+        if (
+            event.target === panel &&
+            event.clientX < leftEdge
+        ) {
+            panel.close();
         }
+    });
+
+
+    /* =====================================================
+       MENGEN ÄNDERN ODER ARTIKEL ENTFERNEN
+    ===================================================== */
+
+    items.addEventListener("click", event => {
+        const button = event.target.closest(
+            "[data-action]"
+        );
+
+        if (!button || button.disabled) {
+            return;
+        }
+
+        const id = Number(
+            button.dataset.id
+        );
+
+        const cart = B.getCart();
+
+        const row = cart.find(item => {
+            return item.id === id;
+        });
+
+        if (!row) {
+            return;
+        }
+
+        if (button.dataset.action === "remove") {
+            row.quantity = 0;
+        }
+
+        if (button.dataset.action === "minus") {
+            row.quantity -= 1;
+        }
+
+        if (button.dataset.action === "plus") {
+            row.quantity += 1;
+        }
+
+        /*
+         * core.js entfernt Einträge mit Menge 0
+         * und benachrichtigt die Anzeige automatisch.
+         */
+
+        B.save(cart);
+    });
+
+
+    /* =====================================================
+       TESTÜBERSICHT NUR MIT GÜLTIGEM WARENKORB
+    ===================================================== */
+
+    checkout.addEventListener("click", event => {
+        const sum = B.totals();
+
+        if (
+            sum.missing ||
+            !sum.count ||
+            !B.canPersist()
+        ) {
+            event.preventDefault();
+
+            const hint = panel.querySelector(
+                ".cart-hint"
+            );
+
+            hint.textContent = !B.canPersist()
+                ? (
+                    "Speichern nicht möglich. Bitte erlaube " +
+                    "Website-Speicher, bevor du zur " +
+                    "Testübersicht gehst."
+                )
+                : (
+                    "Für die Testübersicht fehlen noch " +
+                    `${B.money(sum.missing)} Warenwert. ` +
+                    "Mindestwarenwert: " +
+                    `${B.money(B.config.minimumCents)}.`
+                );
+        }
+    });
+
+
+    /* =====================================================
+       AUF WARENKORBÄNDERUNGEN REAGIEREN
+    ===================================================== */
+
+    window.addEventListener(
+        "boda:cartchange",
+        render
     );
 
 
     /* =====================================================
-       FUNKTION FÜR shop.js FREIGEBEN
+       START
     ===================================================== */
 
-    window.bodaAddToCart =
-        addToCart;
-
-
-    /* =====================================================
-       ERSTER START
-    ===================================================== */
-
-    renderCart();
+    render();
 
 });
