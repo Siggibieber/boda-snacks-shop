@@ -4869,3 +4869,8 @@ dialog::backdrop {
     }
 
 }
+.required-note {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    opacity: 0.65;
+}
