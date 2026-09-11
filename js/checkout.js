@@ -396,7 +396,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
+const pforzheimZipCodes = [
+    "75172",
+    "75173",
+    "75175",
+    "75177",
+    "75179",
+    "75180",
+    "75181"
+];
 
+function validPforzheimAddress(zipCode, city) {
+
+    const normalizedCity =
+        city
+            .trim()
+            .toLowerCase();
+
+    return (
+        normalizedCity === "pforzheim" &&
+        pforzheimZipCodes.includes(zipCode)
+    );
+}
     /* =====================================================
        TEST-BESTELLNUMMER
     ===================================================== */
