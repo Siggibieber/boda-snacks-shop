@@ -13,10 +13,10 @@
 
     <meta
         name="description"
-        content="Deine Testübersicht – BODA Snacks Shop-Vorschau."
+        content="BODA Snacks Test-Checkout."
     >
 
-    <title>Deine Testübersicht | BODA Snacks</title>
+    <title>Checkout Test | BODA Snacks</title>
 
     <link
         rel="stylesheet"
@@ -34,7 +34,7 @@
 <!-- TESTHINWEIS -->
 
 <div class="demo-note">
-    Shop-Vorschau · Keine Bestellung oder Zahlung möglich
+    TESTMODUS · Keine echte Bestellung oder Zahlung
 </div>
 
 
@@ -68,54 +68,356 @@
 </header>
 
 
-<!-- TESTÜBERSICHT -->
-
 <main
     id="mainContent"
     class="service-page container"
 >
 
-    <h1>Deine Testübersicht</h1>
+    <h1>Checkout</h1>
 
     <p class="notice">
-        Hier kannst du deine Auswahl prüfen.
-        Es werden keine Bestellung und keine Zahlung ausgelöst.
-        Du brauchst keine Adresse oder Zahlungsdaten einzugeben.
+        Dies ist der vollständige Test-Checkout von BODA Snacks.
+        Alle Eingaben bleiben ausschließlich in deinem Browser.
+        Es wird keine echte Bestellung übertragen und keine Zahlung ausgeführt.
     </p>
 
-    <p
-        class="shop-conditions"
-        data-shop-conditions
-    ></p>
 
     <div class="checkout-grid">
 
-        <!-- ARTIKEL -->
 
-        <section class="checkout-card">
+        <!-- LINKE SEITE -->
 
-            <h2>Deine Auswahl</h2>
-
-            <div
-                id="checkoutItems"
-                class="checkout-items"
-            ></div>
-
-            <a
-                class="btn btn-secondary"
-                href="index.html"
-            >
-                Warenkorb im Shop ändern
-            </a>
-
-        </section>
+        <div>
 
 
-        <!-- KOSTEN UND TESTABSCHLUSS -->
+            <!-- KONTAKTDATEN -->
+
+            <section class="checkout-card">
+
+                <h2>1. Deine Daten</h2>
+
+                <div class="checkout-form-grid">
+
+                    <label>
+                        Vorname
+                        <input
+                            type="text"
+                            id="firstName"
+                            autocomplete="given-name"
+                            required
+                        >
+                    </label>
+
+                    <label>
+                        Nachname
+                        <input
+                            type="text"
+                            id="lastName"
+                            autocomplete="family-name"
+                            required
+                        >
+                    </label>
+
+                    <label>
+                        E-Mail
+                        <input
+                            type="email"
+                            id="email"
+                            autocomplete="email"
+                            required
+                        >
+                    </label>
+
+                    <label>
+                        Telefon
+                        <input
+                            type="tel"
+                            id="phone"
+                            autocomplete="tel"
+                        >
+                    </label>
+
+                </div>
+
+            </section>
+
+
+            <!-- ADRESSE -->
+
+            <section class="checkout-card">
+
+                <h2>2. Lieferadresse</h2>
+
+                <div class="checkout-form-grid">
+
+                    <label class="checkout-full">
+                        Straße und Hausnummer
+                        <input
+                            type="text"
+                            id="street"
+                            autocomplete="street-address"
+                            required
+                        >
+                    </label>
+
+                    <label>
+                        PLZ
+                        <input
+                            type="text"
+                            id="zip"
+                            inputmode="numeric"
+                            autocomplete="postal-code"
+                            required
+                        >
+                    </label>
+
+                    <label>
+                        Ort
+                        <input
+                            type="text"
+                            id="city"
+                            autocomplete="address-level2"
+                            required
+                        >
+                    </label>
+
+                </div>
+
+            </section>
+
+
+            <!-- LIEFERUNG -->
+
+            <section class="checkout-card">
+
+                <h2>3. Lieferung</h2>
+
+                <div class="checkout-options">
+
+                    <label class="checkout-option">
+
+                        <input
+                            type="radio"
+                            name="delivery"
+                            value="standard"
+                            checked
+                        >
+
+                        <span>
+                            <strong>Standardversand</strong>
+                            <small>
+                                Versand gemäß aktueller Shopberechnung
+                            </small>
+                        </span>
+
+                    </label>
+
+
+                    <label class="checkout-option">
+
+                        <input
+                            type="radio"
+                            name="delivery"
+                            value="local"
+                        >
+
+                        <span>
+                            <strong>Lokale Lieferung</strong>
+                            <small>
+                                Testoption für den Raum Pforzheim
+                            </small>
+                        </span>
+
+                    </label>
+
+                </div>
+
+            </section>
+
+
+            <!-- ZAHLUNG -->
+
+            <section class="checkout-card">
+
+                <h2>4. Zahlungsart</h2>
+
+                <p class="checkout-test-warning">
+                    Bitte ausschließlich Testdaten verwenden.
+                    Es findet keine echte Zahlung statt.
+                </p>
+
+                <div class="checkout-options">
+
+                    <label class="checkout-option">
+
+                        <input
+                            type="radio"
+                            name="payment"
+                            value="card"
+                            checked
+                        >
+
+                        <span>
+                            <strong>Kreditkarte</strong>
+                            <small>Simulation</small>
+                        </span>
+
+                    </label>
+
+
+                    <label class="checkout-option">
+
+                        <input
+                            type="radio"
+                            name="payment"
+                            value="paypal"
+                        >
+
+                        <span>
+                            <strong>PayPal</strong>
+                            <small>Simulation</small>
+                        </span>
+
+                    </label>
+
+
+                    <label class="checkout-option">
+
+                        <input
+                            type="radio"
+                            name="payment"
+                            value="cash"
+                        >
+
+                        <span>
+                            <strong>Bar bei lokaler Lieferung</strong>
+                            <small>Simulation</small>
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+                <!-- KARTENDATEN TEST -->
+
+                <div id="cardFields">
+
+                    <h3>Test-Kartendaten</h3>
+
+                    <p>
+                        Keine echten Kreditkartendaten eingeben.
+                    </p>
+
+                    <div class="checkout-form-grid">
+
+                        <label class="checkout-full">
+                            Karteninhaber
+                            <input
+                                type="text"
+                                id="cardName"
+                                placeholder="Max Mustermann"
+                            >
+                        </label>
+
+                        <label class="checkout-full">
+                            Test-Kartennummer
+                            <input
+                                type="text"
+                                id="cardNumber"
+                                inputmode="numeric"
+                                maxlength="19"
+                                placeholder="4242 4242 4242 4242"
+                            >
+                        </label>
+
+                        <label>
+                            Gültig bis
+                            <input
+                                type="text"
+                                id="cardExpiry"
+                                maxlength="5"
+                                placeholder="12/30"
+                            >
+                        </label>
+
+                        <label>
+                            Test-CVC
+                            <input
+                                type="text"
+                                id="cardCvc"
+                                inputmode="numeric"
+                                maxlength="3"
+                                placeholder="123"
+                            >
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PAYPAL TEST -->
+
+                <div
+                    id="paypalInfo"
+                    class="payment-test-info"
+                    hidden
+                >
+                    <strong>PayPal-Test</strong>
+
+                    <p>
+                        Im späteren Live-Shop würde hier die Weiterleitung
+                        zu PayPal erfolgen.
+                    </p>
+                </div>
+
+
+                <!-- BARZAHLUNG TEST -->
+
+                <div
+                    id="cashInfo"
+                    class="payment-test-info"
+                    hidden
+                >
+                    <strong>Barzahlung-Test</strong>
+
+                    <p>
+                        Zahlung würde bei einer lokalen Lieferung erfolgen.
+                    </p>
+                </div>
+
+            </section>
+
+
+            <!-- ARTIKEL -->
+
+            <section class="checkout-card">
+
+                <h2>5. Deine Bestellung</h2>
+
+                <div
+                    id="checkoutItems"
+                    class="checkout-items"
+                ></div>
+
+                <a
+                    class="btn btn-secondary"
+                    href="index.html"
+                >
+                    Warenkorb ändern
+                </a>
+
+            </section>
+
+        </div>
+
+
+        <!-- RECHTE SEITE -->
 
         <aside class="checkout-summary-card">
 
-            <h2>Beispielkosten</h2>
+            <h2>Zusammenfassung</h2>
 
             <div class="checkout-totals">
 
@@ -130,22 +432,18 @@
                 </div>
 
                 <div class="grand-total">
-                    <span>Demo-Summe</span>
+                    <span>Gesamtsumme</span>
                     <strong id="checkoutTotal">–</strong>
                 </div>
 
             </div>
 
+
             <p id="depositNote"></p>
 
-            <p>
-                Testpreise. Steuerliche Preisangaben und
-                endgültige Verkaufskonditionen sind noch
-                nicht festgelegt.
-                Es findet keine Lieferung statt.
-            </p>
 
             <form id="demoCheckoutForm">
+
 
                 <label class="demo-consent">
 
@@ -155,10 +453,44 @@
                         required
                     >
 
-                    Ich habe verstanden, dass dieser Test
-                    keine Bestellung auslöst.
+                    Ich akzeptiere die
+                    <a href="AGB.html" target="_blank">
+                        AGB
+                    </a>.
 
                 </label>
+
+
+                <label class="demo-consent">
+
+                    <input
+                        type="checkbox"
+                        id="privacy"
+                        required
+                    >
+
+                    Ich habe die
+                    <a href="Datenschutz.html" target="_blank">
+                        Datenschutzhinweise
+                    </a>
+                    gelesen.
+
+                </label>
+
+
+                <label class="demo-consent">
+
+                    <input
+                        type="checkbox"
+                        id="demoConsent"
+                        required
+                    >
+
+                    Ich habe verstanden, dass dies nur eine
+                    Testbestellung ist und keine Zahlung erfolgt.
+
+                </label>
+
 
                 <p
                     id="checkoutWarning"
@@ -167,26 +499,32 @@
                     aria-live="polite"
                 ></p>
 
+
                 <button
                     class="checkout-order-button"
                     id="placeOrderButton"
                     type="submit"
                     disabled
                 >
-                    Test abschließen – ohne Bestellung
+                    Zahlungspflichtig bestellen
+                    <small>
+                        TESTMODUS – keine echte Bestellung
+                    </small>
                 </button>
 
             </form>
 
-            <p>
+
+            <p class="checkout-legal-links">
+
                 <a href="Datenschutz.html">
-                    Datenschutzhinweise
+                    Datenschutz
                 </a>
 
                 ·
 
                 <a href="AGB.html">
-                    AGB-Entwurf
+                    AGB
                 </a>
 
                 ·
@@ -194,6 +532,7 @@
                 <a href="Widerruf.html">
                     Widerruf
                 </a>
+
             </p>
 
         </aside>
@@ -201,27 +540,113 @@
     </div>
 
 
-    <!-- ERGEBNIS DES TESTS -->
+    <!-- BESTELLBESTÄTIGUNG -->
 
-    <p
-        id="demoResult"
-        class="notice"
-        role="status"
+    <section
+        id="orderConfirmation"
+        class="checkout-card order-confirmation"
         tabindex="-1"
         hidden
-    ></p>
+    >
+
+        <div class="order-success-icon">
+            ✓
+        </div>
+
+        <h2>
+            Testbestellung erfolgreich
+        </h2>
+
+        <p>
+            So würde die Bestellbestätigung für deinen Kunden aussehen.
+        </p>
+
+
+        <div class="order-number-box">
+
+            <span>Test-Bestellnummer</span>
+
+            <strong id="orderNumber">
+                –
+            </strong>
+
+        </div>
+
+
+        <div class="confirmation-grid">
+
+            <div>
+
+                <h3>Kunde</h3>
+
+                <p id="confirmationCustomer"></p>
+
+            </div>
+
+
+            <div>
+
+                <h3>Lieferadresse</h3>
+
+                <p id="confirmationAddress"></p>
+
+            </div>
+
+
+            <div>
+
+                <h3>Zahlungsart</h3>
+
+                <p id="confirmationPayment"></p>
+
+            </div>
+
+
+            <div>
+
+                <h3>Gesamtsumme</h3>
+
+                <p>
+                    <strong id="confirmationTotal"></strong>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <h3>Bestellte Artikel</h3>
+
+        <div id="confirmationItems"></div>
+
+
+        <p class="notice">
+            TESTMODUS: Es wurde keine echte Bestellung versendet,
+            kein Vertrag geschlossen und kein Geld abgebucht.
+        </p>
+
+
+        <button
+            type="button"
+            class="btn btn-primary"
+            id="newTestOrder"
+        >
+            Neue Testbestellung
+        </button>
+
+    </section>
+
 
     <noscript>
+
         <p>
-            Für die Testübersicht wird JavaScript benötigt.
-            Es wurden keine Daten versendet.
+            Für den Checkout wird JavaScript benötigt.
         </p>
+
     </noscript>
 
 </main>
 
-
-<!-- FOOTER -->
 
 <footer>
 
@@ -243,15 +668,13 @@
         </nav>
 
         <p class="copyright">
-            © 2026 BODA Snacks GbR · Shop-Vorschau
+            © 2026 BODA Snacks GbR · Shop-Test
         </p>
 
     </div>
 
 </footer>
 
-
-<!-- JAVASCRIPT: REIHENFOLGE BEIBEHALTEN -->
 
 <script src="js/products.js"></script>
 <script src="js/core.js"></script>
