@@ -14,39 +14,39 @@
         content="BODA Snacks – Snacks, Süßigkeiten, Getränke und Snackboxen bequem online entdecken."
     >
 
-    <title>BODA Snacks Shop | Du hast den Hunger, wir die Snacks.</title>
+    <!-- Während der Testphase nicht für Suchmaschinen freigeben -->
+    <meta name="robots" content="noindex, nofollow">
 
-    <!-- CSS -->
+    <title>
+        BODA Snacks Shop | Du hast den Hunger, wir die Snacks.
+    </title>
+
     <link
         rel="stylesheet"
-        href="css/style.css"
+        href="css/style.css?v=20260911"
     >
 </head>
 
-
 <body>
 
+<a class="skip-link" href="#mainContent">
+    Zum Inhalt
+</a>
 
-<!-- =========================================================
-     HINWEIS TESTVERSION
-========================================================= -->
+
+<!-- TESTHINWEIS -->
 
 <div class="demo-note">
-    BODA Snacks Shop · Testversion
+    Shop-Vorschau · Musterprodukte ·
+    Keine Bestellung oder Zahlung möglich
 </div>
 
 
-
-<!-- =========================================================
-     HEADER
-========================================================= -->
+<!-- HEADER -->
 
 <header class="site-header">
 
     <div class="container header-row">
-
-
-        <!-- LOGO -->
 
         <a
             href="index.html"
@@ -54,19 +54,13 @@
             aria-label="BODA Snacks Shop Startseite"
         >
             BODA<span>.</span>
-<small>
-    <span class="logo-snacks">SNACKS</span> · SHOP
-</small>
+
+            <small>
+                <span class="logo-snacks">SNACKS</span> · SHOP
+            </small>
         </a>
 
-
-
-        <!-- SUCHE -->
-
-        <form
-            class="search"
-            id="searchForm"
-        >
+        <form class="search" id="searchForm">
 
             <input
                 type="search"
@@ -81,917 +75,621 @@
 
         </form>
 
-
-
-        <!-- WARENKORB -->
-
         <button
             class="cart-btn"
             id="openCart"
             type="button"
+            aria-haspopup="dialog"
+            aria-controls="cartPanel"
+            aria-expanded="false"
         >
-
             🛒 Warenkorb
 
-            <span
-                class="cart-count"
-                id="cartCount"
-            >
+            <span class="cart-count" id="cartCount">
                 0
             </span>
-
         </button>
-
 
     </div>
 
 </header>
 
 
-
-<!-- =========================================================
-     KATEGORIE NAVIGATION
-========================================================= -->
+<!-- KATEGORIENAVIGATION -->
 
 <nav class="category-nav">
 
     <div class="container nav-row">
 
-
-        <button
-            class="nav-chip active"
-            data-category="alle"
-        >
+        <button class="nav-chip active" data-category="alle">
             Alle
         </button>
 
-
-        <button
-            class="nav-chip"
-            data-category="salzig"
-        >
-            Chips & Salziges
+        <button class="nav-chip" data-category="salzig">
+            Chips &amp; Salziges
         </button>
 
-
-        <button
-            class="nav-chip"
-            data-category="suess"
-        >
+        <button class="nav-chip" data-category="suess">
             Süßigkeiten
         </button>
 
-
-        <button
-            class="nav-chip"
-            data-category="schokolade"
-        >
+        <button class="nav-chip" data-category="schokolade">
             Schokolade
         </button>
 
-
-        <button
-            class="nav-chip"
-            data-category="getraenke"
-        >
+        <button class="nav-chip" data-category="getraenke">
             Getränke
         </button>
 
-
-        <button
-            class="nav-chip"
-            data-category="energy"
-        >
+        <button class="nav-chip" data-category="energy">
             Energy
         </button>
 
-
-        <button
-            class="nav-chip"
-            data-category="boxen"
-        >
+        <button class="nav-chip" data-category="boxen">
             Snackboxen
         </button>
 
-
-        <button
-            class="nav-chip"
-            data-category="angebote"
-        >
-            Angebote
+        <button class="nav-chip" data-category="angebote">
+            Snack-Mix
         </button>
-
 
     </div>
 
 </nav>
 
+<noscript>
+    <p class="container notice">
+        Bitte JavaScript aktivieren, um die Produktauswahl
+        und den Testwarenkorb zu nutzen.
+        Kontakt:
+        <a href="mailto:kontakt@boda-snacks.de">
+            kontakt@boda-snacks.de
+        </a>.
+    </p>
+</noscript>
 
 
-<!-- =========================================================
-     HAUPTINHALT
-========================================================= -->
+<main id="mainContent">
 
-<main>
+    <!-- HERO -->
 
+    <section class="hero">
 
+        <div class="container hero-grid">
 
-<!-- =========================================================
-     HERO
-========================================================= -->
+            <div class="hero-copy">
 
-<section class="hero">
+                <div class="eyebrow">
+                    DEIN SNACK-SHOP
+                </div>
 
-    <div class="container hero-grid">
+                <h1>
+                    Deine Snacks.<br>
+                    <span>Dein Moment.</span>
+                </h1>
 
+                <p>
+                    Von knusprig bis süß:
+                    Entdecke deine Lieblingssnacks,
+                    Getränke und Snackboxen für zu Hause,
+                    Büro, Filmabend oder Party.
+                </p>
 
-        <div class="hero-copy">
+                <div class="hero-actions">
 
-            <div class="eyebrow">
-                DEIN SNACK-SHOP
+                    <a
+                        href="#sortiment"
+                        class="btn btn-primary"
+                    >
+                        Snacks entdecken
+                    </a>
+
+                    <a
+                        href="#snackboxen"
+                        class="btn btn-secondary"
+                    >
+                        Snackboxen ansehen
+                    </a>
+
+                </div>
+
+                <div class="trust-row">
+                    <span>Auswahl ausprobieren</span>
+                    <span>Unverbindliche Vorschau</span>
+                    <span>Persönlicher Service</span>
+                </div>
+
             </div>
 
+            <div class="hero-art" aria-hidden="true">
 
-            <h1>
-                Deine Snacks.<br>
-                <span>Dein Moment.</span>
-            </h1>
+                <div class="hero-pack a">
+                    <small>BODA SNACKS</small>
+                    <strong>CRUNCH</strong>
+                    <small>SALZIG</small>
+                </div>
+
+                <div class="hero-pack b">
+                    <small>BODA SNACKS</small>
+                    <strong>SNACK</strong>
+                    <small>TIME</small>
+                </div>
+
+                <div class="hero-pack c">
+                    <small>BODA SNACKS</small>
+                    <strong>SWEET</strong>
+                    <small>MOMENT</small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
 
 
-            <p>
-                Von knusprig bis süß:
-                Entdecke deine Lieblingssnacks,
-                Getränke und Snackboxen für zu Hause,
-                Büro, Filmabend oder Party.
+    <!-- KATEGORIEKARTEN -->
+
+    <section class="categories-section">
+
+        <div class="container">
+
+            <div class="section-head">
+
+                <div>
+                    <div class="eyebrow">ENTDECKEN</div>
+                    <h2>Was darf's sein?</h2>
+                </div>
+
+                <p>
+                    Such dir deine Kategorie aus
+                    und finde schnell deine Lieblingsprodukte.
+                </p>
+
+            </div>
+
+            <div class="category-grid">
+
+                <button
+                    class="category-card"
+                    data-category="salzig"
+                >
+                    <div class="category-icon">🥨</div>
+
+                    <div>
+                        <small>KNUSPRIG</small>
+                        <h3>Chips &amp; Salziges</h3>
+                        <p>Chips, Salzstangen, Nüsse und mehr.</p>
+                    </div>
+
+                    <b>→</b>
+                </button>
+
+                <button
+                    class="category-card"
+                    data-category="suess"
+                >
+                    <div class="category-icon">🍬</div>
+
+                    <div>
+                        <small>SÜSS</small>
+                        <h3>Süßigkeiten</h3>
+                        <p>Fruchtgummi, Bonbons und Klassiker.</p>
+                    </div>
+
+                    <b>→</b>
+                </button>
+
+                <button
+                    class="category-card"
+                    data-category="schokolade"
+                >
+                    <div class="category-icon">🍫</div>
+
+                    <div>
+                        <small>SCHOKOLADE</small>
+                        <h3>Schokolade</h3>
+                        <p>Riegel, Tafeln und Lieblingsmarken.</p>
+                    </div>
+
+                    <b>→</b>
+                </button>
+
+                <button
+                    class="category-card"
+                    data-category="getraenke"
+                >
+                    <div class="category-icon">🥤</div>
+
+                    <div>
+                        <small>ERFRISCHUNG</small>
+                        <h3>Getränke</h3>
+                        <p>Softdrinks, Wasser und Energy.</p>
+                    </div>
+
+                    <b>→</b>
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SORTIMENT -->
+
+    <section class="products-section" id="sortiment">
+
+        <div class="container">
+
+            <div class="section-head">
+
+                <div>
+                    <div class="eyebrow">SORTIMENT</div>
+                    <h2>Unsere Snacks</h2>
+                </div>
+
+                <p>
+                    Stell dir deinen persönlichen
+                    Snack-Vorrat zusammen.
+                </p>
+
+            </div>
+
+            <p
+                class="shop-conditions"
+                data-shop-conditions
+            ></p>
+
+            <p class="product-disclaimer">
+                Musterprodukte und Testpreise.
+                Abbildungen sind Platzhalter.
+                Echte Marken, Zutaten, Allergene und weitere
+                Pflichtangaben folgen vor dem Verkaufsstart.
             </p>
 
+            <div class="toolbar">
 
-            <div class="hero-actions">
+                <div
+                    class="results"
+                    id="productResultCount"
+                    role="status"
+                    aria-live="polite"
+                >
+                    Produkte werden geladen …
+                </div>
+
+                <div class="filter-row">
+
+                    <button
+                        type="button"
+                        class="filter"
+                        data-category="boxen"
+                    >
+                        Boxen
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter"
+                        data-category="angebote"
+                    >
+                        Snack-Mix
+                    </button>
+
+                    <button
+                        class="filter active"
+                        data-category="alle"
+                    >
+                        Alle
+                    </button>
+
+                    <button
+                        class="filter"
+                        data-category="salzig"
+                    >
+                        Salzig
+                    </button>
+
+                    <button
+                        class="filter"
+                        data-category="suess"
+                    >
+                        Süß
+                    </button>
+
+                    <button
+                        class="filter"
+                        data-category="schokolade"
+                    >
+                        Schokolade
+                    </button>
+
+                    <button
+                        class="filter"
+                        data-category="getraenke"
+                    >
+                        Getränke
+                    </button>
+
+                    <button
+                        class="filter"
+                        data-category="energy"
+                    >
+                        Energy
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- Wird durch shop.js mit Produkten gefüllt -->
+
+            <div
+                class="product-grid"
+                id="productGrid"
+                aria-label="Produktauswahl"
+            ></div>
+
+            <div
+                class="empty-products"
+                id="emptyProducts"
+                hidden
+            >
+                <h3>Keine Produkte gefunden</h3>
+
+                <p>
+                    Versuch eine andere Kategorie
+                    oder einen anderen Suchbegriff.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SNACKBOXEN -->
+
+    <section class="packages" id="snackboxen">
+
+        <div class="container">
+
+            <div class="section-head">
+
+                <div>
+                    <div class="eyebrow">BODA BOXEN</div>
+                    <h2>Deine Box-Ideen</h2>
+                </div>
+
+                <p>
+                    Drei Box-Ideen zum Ausprobieren.
+                    Die endgültigen Inhalte stehen noch nicht fest.
+                </p>
+
+            </div>
+
+            <div class="bundle-grid">
+
+                <article class="bundle">
+
+                    <div class="bundle-art">
+                        <small>BODA / SNACKS</small>
+                        <strong>Movie<br>Night</strong>
+                        <span>🍿</span>
+                    </div>
+
+                    <div class="bundle-body">
+
+                        <h3>Movie Night</h3>
+
+                        <p>
+                            Alles für Sofa,
+                            Film und einen entspannten Abend.
+                        </p>
+
+                        <p class="bundle-price">
+                            19,90 € · Testpreis
+                        </p>
+
+                        <button
+                            type="button"
+                            data-product-id="13"
+                        >
+                            Box-Details ansehen
+                        </button>
+
+                    </div>
+
+                </article>
+
+                <article class="bundle">
+
+                    <div class="bundle-art">
+                        <small>BODA / SNACKS</small>
+                        <strong>Party<br>Box</strong>
+                        <span>🎉</span>
+                    </div>
+
+                    <div class="bundle-body">
+
+                        <h3>Partybox</h3>
+
+                        <p>
+                            Snacks für Freunde,
+                            Familie und größere Runden.
+                        </p>
+
+                        <p class="bundle-price">
+                            29,90 € · Testpreis
+                        </p>
+
+                        <button
+                            type="button"
+                            data-product-id="14"
+                        >
+                            Box-Details ansehen
+                        </button>
+
+                    </div>
+
+                </article>
+
+                <article class="bundle">
+
+                    <div class="bundle-art">
+                        <small>BODA / SNACKS</small>
+                        <strong>Büro<br>Vorrat</strong>
+                        <span>☕</span>
+                    </div>
+
+                    <div class="bundle-body">
+
+                        <h3>Büro &amp; Vorrat</h3>
+
+                        <p>
+                            Lieblingssnacks für Arbeitsplatz
+                            und Vorratsschrank.
+                        </p>
+
+                        <p class="bundle-price">
+                            34,90 € · Testpreis
+                        </p>
+
+                        <button
+                            type="button"
+                            data-product-id="15"
+                        >
+                            Box-Details ansehen
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ABLAUF DER VORSCHAU -->
+
+    <section class="delivery">
+
+        <div class="container">
+
+            <div class="section-head">
+
+                <div>
+                    <div class="eyebrow">
+                        SO FUNKTIONIERT DIE VORSCHAU
+                    </div>
+
+                    <h2>Deine Snacks. Dein Weg.</h2>
+                </div>
+
+            </div>
+
+            <div class="steps">
+
+                <article class="step">
+                    <span>01</span>
+                    <h3>Snacks auswählen</h3>
+
+                    <p>
+                        Produkte entdecken
+                        und in den Warenkorb legen.
+                    </p>
+                </article>
+
+                <article class="step">
+                    <span>02</span>
+                    <h3>Warenkorb prüfen</h3>
+
+                    <p>
+                        Mengen und Auswahl
+                        jederzeit verändern.
+                    </p>
+                </article>
+
+                <article class="step">
+                    <span>03</span>
+                    <h3>Testübersicht ansehen</h3>
+
+                    <p>
+                        Auswahl und Beispielkosten prüfen.
+                        Es wird nichts bestellt.
+                    </p>
+                </article>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ABSCHLUSS -->
+
+    <section class="closing">
+
+        <div class="container">
+
+            <div class="closing-box">
+
+                <div class="eyebrow">
+                    BODA SNACKS
+                </div>
+
+                <h2>
+                    DU HAST DEN
+                    <span>HUNGER.</span>
+
+                    <br>
+
+                    WIR DIE
+                    <span>SNACKS.</span>
+                </h2>
+
+                <p>
+                    Alles für deinen nächsten Snack-Moment.
+                </p>
 
                 <a
                     href="#sortiment"
                     class="btn btn-primary"
                 >
-                    Snacks entdecken
-                </a>
-
-
-                <a
-                    href="#snackboxen"
-                    class="btn btn-secondary"
-                >
-                    Snackboxen ansehen
+                    Jetzt Snacks entdecken
                 </a>
 
             </div>
 
-
-            <div class="trust-row">
-
-                <span>
-                    Bekannte Marken
-                </span>
-
-                <span>
-                    Sichere Bestellung
-                </span>
-
-                <span>
-                    Persönlicher Service
-                </span>
-
-            </div>
-
         </div>
 
-
-
-        <!-- HERO GRAFIK -->
-
-        <div
-            class="hero-art"
-            aria-hidden="true"
-        >
-
-            <div class="hero-pack a">
-
-                <small>
-                    BODA SNACKS
-                </small>
-
-                <strong>
-                    CRUNCH
-                </strong>
-
-                <small>
-                    SALZIG
-                </small>
-
-            </div>
-
-
-            <div class="hero-pack b">
-
-                <small>
-                    BODA SNACKS
-                </small>
-
-                <strong>
-                    SNACK
-                </strong>
-
-                <small>
-                    TIME
-                </small>
-
-            </div>
-
-
-            <div class="hero-pack c">
-
-                <small>
-                    BODA SNACKS
-                </small>
-
-                <strong>
-                    SWEET
-                </strong>
-
-                <small>
-                    MOMENT
-                </small>
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     KATEGORIEN
-========================================================= -->
-
-<section class="categories-section">
-
-    <div class="container">
-
-
-        <div class="section-head">
-
-            <div>
-
-                <div class="eyebrow">
-                    ENTDECKEN
-                </div>
-
-                <h2>
-                    Was darf's sein?
-                </h2>
-
-            </div>
-
-
-            <p>
-                Such dir deine Kategorie aus
-                und finde schnell deine Lieblingsprodukte.
-            </p>
-
-        </div>
-
-
-
-        <div class="category-grid">
-
-
-            <button
-                class="category-card"
-                data-category="salzig"
-            >
-
-                <div class="category-icon">
-                    🥨
-                </div>
-
-                <div>
-
-                    <small>
-                        KNUSPRIG
-                    </small>
-
-                    <h3>
-                        Chips & Salziges
-                    </h3>
-
-                    <p>
-                        Chips, Salzstangen,
-                        Nüsse und mehr.
-                    </p>
-
-                </div>
-
-                <b>→</b>
-
-            </button>
-
-
-
-            <button
-                class="category-card"
-                data-category="suess"
-            >
-
-                <div class="category-icon">
-                    🍬
-                </div>
-
-                <div>
-
-                    <small>
-                        SÜSS
-                    </small>
-
-                    <h3>
-                        Süßigkeiten
-                    </h3>
-
-                    <p>
-                        Fruchtgummi,
-                        Bonbons und Klassiker.
-                    </p>
-
-                </div>
-
-                <b>→</b>
-
-            </button>
-
-
-
-            <button
-                class="category-card"
-                data-category="schokolade"
-            >
-
-                <div class="category-icon">
-                    🍫
-                </div>
-
-                <div>
-
-                    <small>
-                        SCHOKOLADE
-                    </small>
-
-                    <h3>
-                        Schokolade
-                    </h3>
-
-                    <p>
-                        Riegel,
-                        Tafeln und Lieblingsmarken.
-                    </p>
-
-                </div>
-
-                <b>→</b>
-
-            </button>
-
-
-
-            <button
-                class="category-card"
-                data-category="getraenke"
-            >
-
-                <div class="category-icon">
-                    🥤
-                </div>
-
-                <div>
-
-                    <small>
-                        ERFRISCHUNG
-                    </small>
-
-                    <h3>
-                        Getränke
-                    </h3>
-
-                    <p>
-                        Softdrinks,
-                        Wasser und Energy.
-                    </p>
-
-                </div>
-
-                <b>→</b>
-
-            </button>
-
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     PRODUKTSORTIMENT
-========================================================= -->
-
-<section
-    class="products-section"
-    id="sortiment"
->
-
-    <div class="container">
-
-
-        <div class="section-head">
-
-            <div>
-
-                <div class="eyebrow">
-                    SORTIMENT
-                </div>
-
-                <h2>
-                    Unsere Snacks
-                </h2>
-
-            </div>
-
-
-            <p>
-                Stell dir deinen persönlichen
-                Snack-Vorrat zusammen.
-            </p>
-
-        </div>
-
-
-
-        <!-- FILTER -->
-
-        <div class="toolbar">
-
-
-            <div
-                class="results"
-                id="productResultCount"
-            >
-                Produkte werden geladen …
-            </div>
-
-
-
-            <div class="filter-row">
-
-
-                <button
-                    class="filter active"
-                    data-category="alle"
-                >
-                    Alle
-                </button>
-
-
-                <button
-                    class="filter"
-                    data-category="salzig"
-                >
-                    Salzig
-                </button>
-
-
-                <button
-                    class="filter"
-                    data-category="suess"
-                >
-                    Süß
-                </button>
-
-
-                <button
-                    class="filter"
-                    data-category="schokolade"
-                >
-                    Schokolade
-                </button>
-
-
-                <button
-                    class="filter"
-                    data-category="getraenke"
-                >
-                    Getränke
-                </button>
-
-
-                <button
-                    class="filter"
-                    data-category="energy"
-                >
-                    Energy
-                </button>
-
-
-            </div>
-
-
-        </div>
-
-
-
-        <!--
-            PRODUKTE WERDEN SPÄTER
-            AUTOMATISCH AUS products.js
-            HIER EINGEFÜGT
-        -->
-
-        <div
-            class="product-grid"
-            id="productGrid"
-        >
-        </div>
-
-
-
-        <div
-            class="empty-products"
-            id="emptyProducts"
-        >
-
-            <h3>
-                Keine Produkte gefunden
-            </h3>
-
-            <p>
-                Versuch eine andere Kategorie
-                oder einen anderen Suchbegriff.
-            </p>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     SNACKBOXEN
-========================================================= -->
-
-<section
-    class="packages"
-    id="snackboxen"
->
-
-    <div class="container">
-
-
-        <div class="section-head">
-
-            <div>
-
-                <div class="eyebrow">
-                    BODA BOXEN
-                </div>
-
-                <h2>
-                    Fertige Snack-Momente
-                </h2>
-
-            </div>
-
-
-            <p>
-                Keine Lust lange auszuwählen?
-                Dann schnapp dir einfach eine fertige Box.
-            </p>
-
-        </div>
-
-
-
-        <div class="bundle-grid">
-
-
-            <article class="bundle">
-
-                <div class="bundle-art">
-
-                    <small>
-                        BODA / SNACKS
-                    </small>
-
-                    <strong>
-                        Movie<br>Night
-                    </strong>
-
-                    <span>
-                        🍿
-                    </span>
-
-                </div>
-
-
-                <div class="bundle-body">
-
-                    <h3>
-                        Movie Night
-                    </h3>
-
-                    <p>
-                        Alles für Sofa,
-                        Film und einen entspannten Abend.
-                    </p>
-
-                    <button
-                        data-category="boxen"
-                    >
-                        Box entdecken →
-                    </button>
-
-                </div>
-
-            </article>
-
-
-
-            <article class="bundle">
-
-                <div class="bundle-art">
-
-                    <small>
-                        BODA / SNACKS
-                    </small>
-
-                    <strong>
-                        Party<br>Box
-                    </strong>
-
-                    <span>
-                        🎉
-                    </span>
-
-                </div>
-
-
-                <div class="bundle-body">
-
-                    <h3>
-                        Partybox
-                    </h3>
-
-                    <p>
-                        Snacks für Freunde,
-                        Familie und größere Runden.
-                    </p>
-
-                    <button
-                        data-category="boxen"
-                    >
-                        Box entdecken →
-                    </button>
-
-                </div>
-
-            </article>
-
-
-
-            <article class="bundle">
-
-                <div class="bundle-art">
-
-                    <small>
-                        BODA / SNACKS
-                    </small>
-
-                    <strong>
-                        Büro<br>Vorrat
-                    </strong>
-
-                    <span>
-                        ☕
-                    </span>
-
-                </div>
-
-
-                <div class="bundle-body">
-
-                    <h3>
-                        Büro & Vorrat
-                    </h3>
-
-                    <p>
-                        Lieblingssnacks für Arbeitsplatz
-                        und Vorratsschrank.
-                    </p>
-
-                    <button
-                        data-category="boxen"
-                    >
-                        Box entdecken →
-                    </button>
-
-                </div>
-
-            </article>
-
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     BESTELLABLAUF
-========================================================= -->
-
-<section class="delivery">
-
-    <div class="container">
-
-
-        <div class="section-head">
-
-            <div>
-
-                <div class="eyebrow">
-                    EINFACH BESTELLEN
-                </div>
-
-                <h2>
-                    Deine Snacks. Dein Weg.
-                </h2>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="steps">
-
-
-            <article class="step">
-
-                <span>
-                    01
-                </span>
-
-                <h3>
-                    Snacks auswählen
-                </h3>
-
-                <p>
-                    Produkte entdecken
-                    und in den Warenkorb legen.
-                </p>
-
-            </article>
-
-
-
-            <article class="step">
-
-                <span>
-                    02
-                </span>
-
-                <h3>
-                    Warenkorb prüfen
-                </h3>
-
-                <p>
-                    Mengen und Auswahl
-                    jederzeit verändern.
-                </p>
-
-            </article>
-
-
-
-            <article class="step">
-
-                <span>
-                    03
-                </span>
-
-                <h3>
-                    Bestellung abschließen
-                </h3>
-
-                <p>
-                    Lieferdaten eingeben
-                    und bequem bestellen.
-                </p>
-
-            </article>
-
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     ABSCHLUSS CTA
-========================================================= -->
-
-<section class="closing">
-
-    <div class="container">
-
-
-        <div class="closing-box">
-
-            <div class="eyebrow">
-                BODA SNACKS
-            </div>
-
-
-            <h2>
-
-                DU HAST DEN
-                <span>HUNGER.</span>
-
-                <br>
-
-                WIR DIE
-                <span>SNACKS.</span>
-
-            </h2>
-
-
-            <p>
-                Alles für deinen nächsten Snack-Moment.
-            </p>
-
-
-            <a
-                href="#sortiment"
-                class="btn btn-primary"
-            >
-                Jetzt Snacks entdecken
-            </a>
-
-        </div>
-
-
-    </div>
-
-</section>
-
+    </section>
 
 </main>
 
 
-
-<!-- =========================================================
-     FOOTER
-========================================================= -->
+<!-- FOOTER -->
 
 <footer>
 
     <div class="container">
 
-
         <div class="footer-grid">
-
 
             <div>
 
                 <div class="logo footer-logo">
-
                     BODA<span>.</span>
 
                     <small>
                         SNACKS · SHOP
                     </small>
-
                 </div>
 
                 <p>
@@ -1001,15 +699,11 @@
 
             </div>
 
-
-
             <div>
 
-                <h4>
-                    Shop
-                </h4>
+                <h4>Shop</h4>
 
-                <a href="#sortiment">
+                <a href="#sortiment" data-category="alle">
                     Alle Produkte
                 </a>
 
@@ -1017,101 +711,66 @@
                     Snackboxen
                 </a>
 
-                <a href="#sortiment">
-                    Angebote
+                <a href="#sortiment" data-category="angebote">
+                    Snack-Mix
                 </a>
 
             </div>
-
-
 
             <div>
 
-                <h4>
-                    Service
-                </h4>
+                <h4>Service</h4>
 
-                <a href="Kontakt.html">
-                Kontakt
-                </a>
-
-               <a href="Lieferung.html">
-                Lieferung
-                </a>
-
-               <a href="FAQ.html">
-                FAQ
-                </a>
+                <a href="Kontakt.html">Kontakt</a>
+                <a href="Lieferung.html">Lieferung</a>
+                <a href="FAQ.html">FAQ</a>
 
             </div>
-
-
 
             <div>
 
-                <h4>
-                    Rechtliches
-                </h4>
+                <h4>Rechtliches</h4>
 
-                <a href="Impressum.html">
-                    Impressum
-                </a>
-
-                <a href="Datenschutz.html">
-                    Datenschutz
-                </a>
-
-                <a href="AGB.html">
-                    AGB
-                </a>
-
-                <a href="Widerruf.html">
-                    Widerruf
-                </a>
+                <a href="Impressum.html">Impressum</a>
+                <a href="Datenschutz.html">Datenschutz</a>
+                <a href="AGB.html">AGB</a>
+                <a href="Widerruf.html">Widerruf</a>
 
             </div>
-
 
         </div>
-
-
 
         <div class="copyright">
-
-            © 2026 BODA Snacks ·
-            Alle Rechte vorbehalten.
-
+            © 2026 BODA Snacks · Alle Rechte vorbehalten.
         </div>
-
 
     </div>
 
 </footer>
 
 
-
-<!-- =========================================================
-     WARENKORB
-========================================================= -->
+<!-- WARENKORB -->
 
 <div
     class="overlay"
     id="cartOverlay"
+    aria-hidden="true"
 ></div>
 
-
-<aside
+<dialog
     class="cart-panel"
     id="cartPanel"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Dein Testwarenkorb"
+    tabindex="-1"
+    inert
+    aria-hidden="true"
 >
-
 
     <div class="cart-head">
 
-        <h2>
-            🛒 Dein Warenkorb
-        </h2>
-
+        <h2>🛒 Dein Warenkorb</h2>
 
         <button
             class="close"
@@ -1124,37 +783,20 @@
 
     </div>
 
-
-
-    <div
-        class="cart-body"
-        id="cartItems"
-    >
+    <div class="cart-body" id="cartItems">
 
         <div class="empty-cart">
-
-            <h3>
-                Dein Warenkorb ist leer
-            </h3>
-
-            <p>
-                Such dir ein paar Snacks aus.
-            </p>
-
+            <h3>Dein Warenkorb ist leer</h3>
+            <p>Such dir ein paar Snacks aus.</p>
         </div>
 
     </div>
 
-
-
     <div class="cart-foot">
-
 
         <div class="progress-label">
 
-            <span>
-                Mindestbestellwert
-            </span>
+            <span>Mindestbestellwert</span>
 
             <span id="minimumText">
                 0,00 €
@@ -1162,105 +804,88 @@
 
         </div>
 
-
         <div class="progress">
-
             <div id="minimumProgress"></div>
-
         </div>
-
-
 
         <div class="summary">
 
-
             <div class="summary-row">
-
-                <span>
-                    Warenwert
-                </span>
-
-                <span id="cartSubtotal">
-                    0,00 €
-                </span>
-
+                <span>Warenwert</span>
+                <span id="cartSubtotal">0,00 €</span>
             </div>
 
-
             <div class="summary-row">
-
-                <span>
-                    Versand
-                </span>
-
-                <span id="shippingCost">
-                    0,00 €
-                </span>
-
+                <span>Versand</span>
+                <span id="shippingCost">0,00 €</span>
             </div>
-
 
             <div class="summary-row total">
-
-                <span>
-                    Gesamt
-                </span>
-
-                <span id="cartTotal">
-                    0,00 €
-                </span>
-
+                <span>Gesamt</span>
+                <span id="cartTotal">0,00 €</span>
             </div>
 
-
         </div>
-
-
 
         <a
             href="checkout.html"
             class="checkout-demo"
             id="checkoutButton"
         >
-            Zur Kasse
+            Zur Testübersicht
         </a>
 
-
         <p class="cart-hint">
-            Aktuell befindet sich der Shop noch
-            in der Testphase.
+            Nur Testpreise. Pfand und steuerliche Preisangaben
+            sind noch nicht für den Verkauf festgelegt.
         </p>
-
 
     </div>
 
-
-</aside>
-
+</dialog>
 
 
-<!-- =========================================================
-     MELDUNG
-========================================================= -->
+<!-- STATUSMELDUNGEN -->
 
 <div
     class="toast"
     id="toast"
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
 >
     Produkt wurde hinzugefügt.
 </div>
 
 
-
-<!-- =========================================================
-     JAVASCRIPT
-========================================================= -->
+<!-- JAVASCRIPT: REIHENFOLGE BEIBEHALTEN -->
 
 <script src="js/products.js"></script>
+<script src="js/core.js"></script>
 <script src="js/shop.js"></script>
 <script src="js/cart.js"></script>
 
 
-</body>
+<!-- PRODUKTDETAILS -->
 
+<dialog
+    id="productDialog"
+    class="product-dialog"
+    aria-labelledby="detailTitle"
+>
+
+    <button
+        type="button"
+        class="close"
+        id="closeProduct"
+        aria-label="Produktdetails schließen"
+    >
+        ×
+    </button>
+
+    <div id="productDetails"></div>
+
+</dialog>
+
+</body>
 </html>
