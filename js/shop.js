@@ -1,557 +1,473 @@
 /* =========================================================
    BODA SNACKS SHOP
-   Shop-Logik
+   Produktanzeige, Suche, Kategorien und Produktdetails
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
+    "use strict";
 
-    const productGrid =
+
+    /* =====================================================
+       GEMEINSAME FUNKTIONEN UND ELEMENTE
+    ===================================================== */
+
+    const B = window.Boda;
+
+    const grid =
         document.getElementById("productGrid");
 
-    const emptyProducts =
-        document.getElementById("emptyProducts");
+    if (!grid || !B) {
+        return;
+    }
 
-    const productResultCount =
-        document.getElementById("productResultCount");
-
-    const searchForm =
-        document.getElementById("searchForm");
-
-    const searchInput =
+    const search =
         document.getElementById("searchInput");
 
-    const filterButtons =
-        document.querySelectorAll(".filter");
+    const empty =
+        document.getElementById("emptyProducts");
 
-    const navButtons =
-        document.querySelectorAll(".nav-chip");
+    const dialog =
+        document.getElementById("productDialog");
 
-    const categoryCards =
-        document.querySelectorAll(".category-card");
+    const detail =
+        document.getElementById("productDetails");
 
-    const bundleButtons =
-        document.querySelectorAll(
-            ".bundle-body button[data-category]"
-        );
+    const categories = {
+        alle: "Alle",
+        salzig: "Chips & Salziges",
+        suess: "Süßigkeiten",
+        schokolade: "Schokolade",
+        getraenke: "Getränke",
+        energy: "Energy",
+        boxen: "Snackboxen",
+        angebote: "Snack-Mix"
+    };
 
-
-    let currentCategory = "alle";
-    let currentSearch = "";
-
-
-    /* =====================================================
-       PREIS FORMATIEREN
-    ===================================================== */
-
-    function formatPrice(price) {
-
-        return new Intl.NumberFormat(
-            "de-DE",
-            {
-                style: "currency",
-                currency: "EUR"
-            }
-        ).format(price);
-
-    }
+    let category = "alle";
 
 
     /* =====================================================
-       PRODUKTBILD
+       SUCHTEXT VEREINHEITLICHEN
     ===================================================== */
 
-    function createProductImage(product) {
-
-        if (product.image) {
-
-            return `
-                <img
-                    src="${product.image}"
-                    alt="${product.name}"
-                    loading="lazy"
-                >
-            `;
-
-        }
-
-
-        return `
-            <div
-                class="mini-pack"
-                style="
-                    --c: ${product.color};
-                    --t: ${product.textColor};
-                "
-            >
-
-                <span>
-                    BODA SNACKS
-                </span>
-
-                <strong>
-                    ${product.packText}
-                </strong>
-
-                <span>
-                    ${product.size}
-                </span>
-
-            </div>
-        `;
-
-    }
-
-
-    /* =====================================================
-       PRODUKTKARTE
-    ===================================================== */
-
-    function createProductCard(product) {
-
-        const badge =
-            product.badge
-                ? `
-                    <div class="badge">
-                        ${product.badge}
-                    </div>
-                `
-                : "";
-
-
-        const oldPrice =
-            product.oldPrice
-                ? `
-                    <span style="
-                        text-decoration: line-through;
-                        color: #899997;
-                        font-size: 12px;
-                        margin-right: 5px;
-                    ">
-                        ${formatPrice(product.oldPrice)}
-                    </span>
-                `
-                : "";
-
-
-        return `
-            <article
-                class="product"
-                data-product-id="${product.id}"
-            >
-
-                ${badge}
-
-                <div class="product-art">
-
-                    ${createProductImage(product)}
-
-                </div>
-
-
-                <div class="product-meta">
-
-                    ${product.brand}
-
-                </div>
-
-
-                <h3>
-                    ${product.name}
-                </h3>
-
-
-                <div class="sub">
-                    ${product.size}
-                </div>
-
-
-                <div class="price-row">
-
-                    <div>
-
-                        ${oldPrice}
-
-                        <span class="price">
-                            ${formatPrice(product.price)}
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <button
-                    class="add-btn"
-                    type="button"
-                    data-add-product="${product.id}"
-                >
-                    In den Warenkorb
-                </button>
-
-            </article>
-        `;
-
-    }
-
-
-    /* =====================================================
-       PRODUKTE FILTERN
-    ===================================================== */
-
-    function getFilteredProducts() {
-
-        return BODA_PRODUCTS.filter(product => {
-
-            const categoryMatches =
-                currentCategory === "alle"
-                ||
-                product.category === currentCategory;
-
-
-            const searchableText = `
-                ${product.name}
-                ${product.brand}
-                ${product.category}
-                ${product.size}
-                ${product.packText}
-            `
-                .toLowerCase()
-                .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, "");
-
-
-            const searchTerm =
-                currentSearch
-                    .toLowerCase()
-                    .normalize("NFD")
-                    .replace(/[\u0300-\u036f]/g, "");
-
-
-            return (
-                categoryMatches
-                &&
-                searchableText.includes(searchTerm)
-            );
-
-        });
-
-    }
+    const normalizeText = value => {
+        return value
+            .toLocaleLowerCase("de")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/ß/g, "ss");
+    };
 
 
     /* =====================================================
        PRODUKTE ANZEIGEN
     ===================================================== */
 
-    function renderProducts() {
+    function render() {
+        const query = normalizeText(
+            search.value.trim()
+        );
 
-        const products =
-            getFilteredProducts();
+        const matches = BODA_PRODUCTS.filter(p => {
+            const matchesCategory =
+                category === "alle" ||
+                p.category === category;
 
-
-        if (products.length === 1) {
-
-            productResultCount.textContent =
-                "1 Produkt gefunden";
-
-        } else {
-
-            productResultCount.textContent =
-                `${products.length} Produkte gefunden`;
-
-        }
-
-
-        if (products.length === 0) {
-
-            productGrid.innerHTML = "";
-
-            emptyProducts.style.display =
-                "block";
-
-            return;
-
-        }
-
-
-        emptyProducts.style.display =
-            "none";
-
-
-        productGrid.innerHTML =
-            products
-                .map(createProductCard)
-                .join("");
-
-
-        /* Warenkorb Buttons */
-
-        const addButtons =
-            productGrid.querySelectorAll(
-                "[data-add-product]"
+            const searchableText = normalizeText(
+                `${p.name} ${p.size} ${categories[p.category]}`
             );
 
+            return (
+                matchesCategory &&
+                searchableText.includes(query)
+            );
+        });
 
-        addButtons.forEach(button => {
+        grid.innerHTML = matches.map(p => {
+            const price = B.money(
+                Math.round(p.price * 100)
+            );
 
-            button.addEventListener(
-                "click",
-                () => {
+            const basePrice =
+                B.basePrice(p) ||
+                "Zusammenstellung noch offen";
 
-                    const productId =
-                        Number(
-                            button.dataset.addProduct
-                        );
+            const depositNotice =
+                p.depositCents == null
+                    ? `
+                        <p class="product-note">
+                            Pfandangabe noch offen
+                        </p>
+                    `
+                    : "";
+
+            return `
+                <article class="product">
+
+                    <div class="product-art">
+                        ${B.artwork(p)}
+                    </div>
+
+                    <p class="product-meta">
+                        Musterprodukt
+                    </p>
+
+                    <h3>
+                        ${B.escape(p.name)}
+                    </h3>
+
+                    <p class="sub">
+                        ${B.escape(p.size)}
+                    </p>
+
+                    <div class="price-row">
+
+                        <strong class="price">
+                            ${price}
+                        </strong>
+
+                        <span>
+                            Testpreis
+                        </span>
+
+                    </div>
+
+                    <p class="base-price">
+                        ${basePrice}
+                    </p>
+
+                    ${depositNotice}
+
+                    <button
+                        class="product-detail-button"
+                        type="button"
+                        data-product-id="${p.id}"
+                        aria-label="Details zu ${B.escape(p.name)}"
+                    >
+                        Produktdetails
+                    </button>
+
+                    <button
+                        class="btn btn-primary add-product"
+                        type="button"
+                        data-add-id="${p.id}"
+                        aria-label="${B.escape(p.name)} in den Testwarenkorb"
+                    >
+                        In den Testwarenkorb
+                    </button>
+
+                </article>
+            `;
+        }).join("");
 
 
-                    if (
-                        typeof window.bodaAddToCart
-                        === "function"
-                    ) {
+        /* LEERZUSTAND */
 
-                        window.bodaAddToCart(
-                            productId
-                        );
+        empty.hidden = matches.length !== 0;
 
-                    }
+        empty.style.display =
+            matches.length ? "none" : "block";
 
+
+        /* ANZAHL DER TREFFER */
+
+        const resultLabel =
+            matches.length === 1
+                ? "Produkt"
+                : "Produkte";
+
+        document.getElementById(
+            "productResultCount"
+        ).textContent =
+            `${matches.length} ${resultLabel} · ` +
+            categories[category];
+
+
+        /* AKTIVE KATEGORIE MARKIEREN */
+
+        document
+            .querySelectorAll("[data-category]")
+            .forEach(element => {
+                const active =
+                    element.dataset.category === category;
+
+                element.classList.toggle(
+                    "active",
+                    active
+                );
+
+                if (element.tagName === "BUTTON") {
+                    element.setAttribute(
+                        "aria-pressed",
+                        String(active)
+                    );
                 }
-            );
-
-        });
-
-    }
-
-
-    /* =====================================================
-       AKTIVE BUTTONS
-    ===================================================== */
-
-    function updateActiveButtons() {
-
-        filterButtons.forEach(button => {
-
-            button.classList.toggle(
-                "active",
-                button.dataset.category
-                === currentCategory
-            );
-
-        });
-
-
-        navButtons.forEach(button => {
-
-            button.classList.toggle(
-                "active",
-                button.dataset.category
-                === currentCategory
-            );
-
-        });
-
-    }
-
-
-    /* =====================================================
-       KATEGORIE AUSWÄHLEN
-    ===================================================== */
-
-    function selectCategory(category) {
-
-        currentCategory =
-            category;
-
-        currentSearch =
-            "";
-
-
-        if (searchInput) {
-
-            searchInput.value =
-                "";
-
-        }
-
-
-        updateActiveButtons();
-
-        renderProducts();
-
-    }
-
-
-    /* =====================================================
-       ZUM SORTIMENT SCROLLEN
-    ===================================================== */
-
-    function scrollToProducts() {
-
-        const assortment =
-            document.getElementById(
-                "sortiment"
-            );
-
-
-        if (assortment) {
-
-            assortment.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
             });
+    }
 
+
+    /* =====================================================
+       PRODUKTDETAILS ÖFFNEN
+    ===================================================== */
+
+    function showProduct(id) {
+        const p = B.product(id);
+
+        if (!p) {
+            return;
         }
 
+        const price = Math.round(
+            p.price * 100
+        );
+
+        const box = [
+            "boxen",
+            "angebote"
+        ].includes(p.category);
+
+        const basePrice = B.basePrice(p);
+
+        const informationTitle =
+            box
+                ? "Was ist enthalten?"
+                : "Lebensmittelinformationen";
+
+        const informationText =
+            box
+                ? (
+                    "Die einzelnen Artikel und Mengen sind " +
+                    "noch nicht festgelegt. Es wird keine " +
+                    "bestimmte Zusammenstellung zugesagt."
+                )
+                : (
+                    "Die genaue Marke, Zutatenliste, " +
+                    "hervorgehobenen Allergene, Nährwerte " +
+                    "und Angaben zum verantwortlichen " +
+                    "Lebensmittelunternehmen liegen noch " +
+                    "nicht vor."
+                );
+
+        const energyNotice =
+            p.category === "energy"
+                ? `
+                    <p>
+                        Koffeingehalt und erforderliche
+                        Warnhinweise müssen anhand des
+                        tatsächlichen Produkts ergänzt werden.
+                    </p>
+                `
+                : "";
+
+        const depositNotice =
+            p.depositCents == null
+                ? `
+                    <p>
+                        Pfand: noch zu klären.
+                        In der Demo-Summe ist kein
+                        unbekanntes Pfand enthalten.
+                    </p>
+                `
+                : "";
+
+        const minimumNotice =
+            price < B.config.minimumCents && box
+                ? `
+                    <p>
+                        Für die Testübersicht fehlen mit
+                        dieser Box allein noch
+                        ${
+                            B.money(
+                                B.config.minimumCents - price
+                            )
+                        }
+                        Warenwert.
+                    </p>
+                `
+                : "";
+
+        detail.innerHTML = `
+            <p class="eyebrow">
+                Musterprodukt · Nicht bestellbar
+            </p>
+
+            <h2 id="detailTitle">
+                ${B.escape(p.name)}
+            </h2>
+
+            <p>
+                ${B.escape(p.size)} ·
+
+                <strong>
+                    ${B.money(price)}
+                </strong>
+
+                Testpreis
+            </p>
+
+            ${
+                basePrice
+                    ? `<p>${basePrice}</p>`
+                    : ""
+            }
+
+            <p>
+                Die Abbildung ist ein Platzhalter.
+                Dieses Produkt dient zum Ausprobieren
+                des Shops.
+            </p>
+
+            <h3>
+                ${informationTitle}
+            </h3>
+
+            <p>
+                ${informationText}
+            </p>
+
+            <p>
+                Diese Vorschau eignet sich nicht zur
+                Beurteilung von Allergien oder
+                Ernährungsanforderungen.
+            </p>
+
+            ${energyNotice}
+
+            ${depositNotice}
+
+            <p data-shop-conditions>
+                ${B.escape(B.conditions())}
+            </p>
+
+            ${minimumNotice}
+
+            <button
+                class="btn btn-primary"
+                type="button"
+                data-add-id="${p.id}"
+            >
+                In den Testwarenkorb
+            </button>
+        `;
+
+        dialog.showModal();
     }
 
 
     /* =====================================================
-       FILTER UNTEN
+       KLICKS AUF KATEGORIEN UND PRODUKTE
     ===================================================== */
 
-    filterButtons.forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                selectCategory(
-                    button.dataset.category
-                );
-
-            }
+    document.addEventListener("click", event => {
+        const filter = event.target.closest(
+            "[data-category]"
         );
 
+        const productButton = event.target.closest(
+            "[data-product-id]"
+        );
+
+        const addButton = event.target.closest(
+            "[data-add-id]"
+        );
+
+
+        /* KATEGORIE AUSWÄHLEN */
+
+        if (
+            filter &&
+            Object.hasOwn(
+                categories,
+                filter.dataset.category
+            )
+        ) {
+            event.preventDefault();
+
+            category = filter.dataset.category;
+
+            search.value = "";
+
+            render();
+
+            document
+                .getElementById("sortiment")
+                .scrollIntoView({
+                    block: "start"
+                });
+        }
+
+
+        /* PRODUKTDETAILS ANZEIGEN */
+
+        else if (productButton) {
+            showProduct(
+                productButton.dataset.productId
+            );
+        }
+
+
+        /* PRODUKT IN DEN TESTWARENKORB LEGEN */
+
+        else if (
+            addButton &&
+            window.bodaAddToCart
+        ) {
+            if (dialog.open) {
+                dialog.close();
+            }
+
+            window.bodaAddToCart(
+                Number(addButton.dataset.addId)
+            );
+        }
     });
 
 
     /* =====================================================
-       FILTER OBEN
+       PRODUKTDETAILS SCHLIESSEN
     ===================================================== */
 
-    navButtons.forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                selectCategory(
-                    button.dataset.category
-                );
-
-                scrollToProducts();
-
-            }
-        );
-
-    });
+    document
+        .getElementById("closeProduct")
+        .addEventListener("click", () => {
+            dialog.close();
+        });
 
 
     /* =====================================================
-       KATEGORIEKARTEN
+       SUCHFORMULAR
     ===================================================== */
 
-    categoryCards.forEach(card => {
+    document
+        .getElementById("searchForm")
+        .addEventListener("submit", event => {
+            event.preventDefault();
 
-        card.addEventListener(
-            "click",
-            () => {
+            category = "alle";
 
-                selectCategory(
-                    card.dataset.category
-                );
+            render();
 
-                scrollToProducts();
+            document
+                .getElementById("sortiment")
+                .scrollIntoView({
+                    block: "start"
+                });
+        });
 
-            }
-        );
 
+    /* SUCHE BEREITS WÄHREND DER EINGABE */
+
+    search.addEventListener("input", () => {
+        category = "alle";
+
+        render();
     });
-
-
-    /* =====================================================
-       SNACKBOXEN
-    ===================================================== */
-
-    bundleButtons.forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                selectCategory(
-                    button.dataset.category
-                );
-
-                scrollToProducts();
-
-            }
-        );
-
-    });
-
-
-    /* =====================================================
-       SUCHE
-    ===================================================== */
-
-    if (searchForm) {
-
-        searchForm.addEventListener(
-            "submit",
-            event => {
-
-                event.preventDefault();
-
-                currentSearch =
-                    searchInput.value.trim();
-
-                currentCategory =
-                    "alle";
-
-                updateActiveButtons();
-
-                renderProducts();
-
-                scrollToProducts();
-
-            }
-        );
-
-    }
-
-
-    if (searchInput) {
-
-        searchInput.addEventListener(
-            "input",
-            () => {
-
-                currentSearch =
-                    searchInput.value.trim();
-
-                if (currentSearch.length > 0) {
-
-                    currentCategory =
-                        "alle";
-
-                }
-
-                updateActiveButtons();
-
-                renderProducts();
-
-            }
-        );
-
-    }
 
 
     /* =====================================================
        START
     ===================================================== */
 
-    updateActiveButtons();
-
-    renderProducts();
+    render();
 
 });
