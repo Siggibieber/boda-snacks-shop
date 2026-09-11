@@ -3862,3 +3862,655 @@ footer {
     }
 
 }
+/* =========================================================
+   BODA SHOP – ERGÄNZUNGEN
+   Produktdetails, mobiler Warenkorb, Kasse und Formulare
+========================================================= */
+
+:root {
+    --teal: #08766f;
+    --muted: #53696c;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+
+/* =========================================================
+   TASTATURBEDIENUNG UND LESBARKEIT
+========================================================= */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+    outline: 3px solid #075fba;
+    outline-offset: 3px;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+.skip-link {
+    position: fixed;
+    left: 12px;
+    top: -100px;
+    z-index: 200;
+    background: #ffffff;
+    padding: 12px;
+    border: 2px solid #20383b;
+}
+
+.skip-link:focus {
+    top: 12px;
+}
+
+#sortiment,
+#snackboxen {
+    scroll-margin-top: 130px;
+}
+
+.demo-note,
+.results,
+.filter,
+.product-meta,
+.product .sub,
+.nav-chip,
+.cart-item h4,
+.cart-item .item-price,
+.qty span,
+.remove,
+.cart-hint,
+.progress-label,
+.product-note,
+.base-price,
+.price-row > span {
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   STARTBEREICH
+========================================================= */
+
+.hero {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.hero h1 {
+    font-size: clamp(36px, 5vw, 66px);
+}
+
+.hero-art {
+    max-height: 380px;
+}
+
+
+/* =========================================================
+   PRODUKTE UND PREISHINWEISE
+========================================================= */
+
+.shop-conditions {
+    padding: 14px 18px;
+    background: var(--teal-soft);
+    border-left: 4px solid var(--teal);
+    font-weight: 700;
+}
+
+.product-disclaimer {
+    max-width: 80ch;
+    color: var(--muted);
+}
+
+.product-grid > *,
+.checkout-grid > *,
+.cart-item > * {
+    min-width: 0;
+}
+
+.product .price-row {
+    margin-top: auto;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.product .product-meta {
+    margin-bottom: 0;
+}
+
+.base-price,
+.product-note {
+    margin: 5px 0;
+    color: var(--muted);
+}
+
+.product-detail-button {
+    min-height: 44px;
+    padding: 8px 0;
+    text-align: left;
+    border: 0;
+    background: none;
+    text-decoration: underline;
+    color: #075e59;
+}
+
+.add-product {
+    width: 100%;
+    min-height: 48px;
+    font-size: 14px;
+    padding: 10px;
+    white-space: normal;
+}
+
+.product-art .mini-pack {
+    max-width: 150px;
+}
+
+.filter,
+.nav-chip,
+.close {
+    min-height: 44px;
+}
+
+.close {
+    min-width: 44px;
+    flex-shrink: 0;
+}
+
+.bundle-price {
+    font-weight: 700;
+    color: var(--ink);
+}
+
+
+/* =========================================================
+   PRODUKTDETAILFENSTER
+========================================================= */
+
+.product-dialog {
+    width: min(620px, calc(100% - 24px));
+    max-height: 90vh;
+    max-height: 90dvh;
+    padding: 26px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    color: var(--ink);
+    overflow: auto;
+}
+
+.product-dialog h2 {
+    margin-top: 12px;
+}
+
+.product-dialog > .close {
+    float: right;
+    margin-left: 12px;
+}
+
+dialog::backdrop {
+    background: rgb(15 35 37 / 55%);
+}
+
+.cart-panel:not([open]),
+.product-dialog:not([open]) {
+    display: none;
+}
+
+
+/* =========================================================
+   WARENKORB – AUCH IM HOCHFORMAT BEDIENBAR
+========================================================= */
+
+.cart-panel {
+    inset: 0 0 0 auto;
+    margin: 0;
+    border: 0;
+    padding: 0;
+
+    width: min(460px, 100%);
+    max-width: 100%;
+
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100dvh;
+
+    color: var(--ink);
+
+    grid-template-rows:
+        auto
+        minmax(80px, 1fr)
+        auto;
+
+    overflow: hidden;
+}
+
+.cart-panel[open] {
+    display: grid;
+}
+
+.cart-head {
+    padding: 14px 18px;
+    padding-top: max(
+        14px,
+        env(safe-area-inset-top)
+    );
+}
+
+.cart-head h2 {
+    font-size: 21px;
+}
+
+.cart-body {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 10px 18px;
+}
+
+.cart-foot {
+    padding:
+        12px
+        18px
+        max(14px, env(safe-area-inset-bottom));
+
+    max-height: 55vh;
+    max-height: 55dvh;
+
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.cart-foot .summary {
+    margin: 10px 0;
+}
+
+.cart-foot .summary-row {
+    padding: 3px 0;
+}
+
+.cart-hint {
+    margin: 10px 0 0;
+    line-height: 1.45;
+}
+
+.cart-item {
+    grid-template-columns:
+        42px
+        minmax(0, 1fr)
+        auto;
+
+    gap: 10px;
+}
+
+.cart-item h4 {
+    overflow-wrap: anywhere;
+}
+
+.cart-thumb {
+    width: 42px;
+    height: 52px;
+}
+
+.cart-thumb .mini-pack span,
+.cart-thumb .mini-pack strong {
+    display: none;
+}
+
+.qty {
+    gap: 10px;
+}
+
+.qty button {
+    width: 44px;
+    height: 44px;
+}
+
+.remove {
+    min-height: 44px;
+}
+
+.empty-cart {
+    padding: 20px 0;
+}
+
+.checkout-demo {
+    min-height: 48px;
+}
+
+.checkout-demo.disabled {
+    pointer-events: auto;
+}
+
+/* Der native Dialog übernimmt den Hintergrund. */
+
+#cartOverlay {
+    display: none;
+}
+
+.toast {
+    max-width: calc(100vw - 24px);
+    white-space: normal;
+}
+
+
+/* =========================================================
+   SERVICE- UND RECHTSSEITEN
+========================================================= */
+
+.service-page {
+    padding-top: 36px;
+    padding-bottom: 56px;
+    min-height: 55vh;
+}
+
+.service-page > p {
+    max-width: 80ch;
+}
+
+.service-page h1 {
+    font-size: clamp(30px, 5vw, 44px);
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+}
+
+.service-page h2 {
+    margin-top: 32px;
+}
+
+.service-page a:not(.btn),
+.legal-document a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.notice {
+    padding: 18px;
+    background: var(--teal-soft);
+    border-left: 4px solid var(--teal);
+}
+
+.service-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 24px;
+}
+
+.service-links a {
+    padding: 12px 0;
+    min-height: 44px;
+    text-decoration: underline;
+}
+
+.contact-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 24px 0;
+}
+
+.service-page details {
+    border-bottom: 1px solid var(--line);
+    padding: 18px 0;
+    max-width: 850px;
+}
+
+.service-page summary {
+    cursor: pointer;
+    font-weight: 700;
+    min-height: 44px;
+}
+
+
+/* =========================================================
+   TESTKASSE
+========================================================= */
+
+.checkout-grid {
+    align-items: start;
+    margin-top: 24px;
+}
+
+.checkout-item {
+    grid-template-columns:
+        50px
+        minmax(0, 1fr)
+        auto;
+}
+
+.checkout-item-image {
+    width: 46px;
+    height: 62px;
+}
+
+.checkout-mini-pack {
+    background: var(--c);
+    color: var(--t);
+    font-size: 10px;
+    width: 40px;
+    height: 54px;
+    overflow: hidden;
+}
+
+.checkout-mini-pack strong,
+.checkout-mini-pack span {
+    display: none;
+}
+
+.checkout-item-info strong {
+    overflow-wrap: anywhere;
+}
+
+.demo-consent {
+    display: flex;
+    align-items: start;
+    gap: 12px;
+    padding: 18px 0;
+}
+
+.demo-consent input {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 22px;
+    margin-top: 3px;
+}
+
+.checkout-order-button {
+    width: 100%;
+    white-space: normal;
+    padding: 14px;
+}
+
+
+/* =========================================================
+   WIDERRUFSFORMULAR
+========================================================= */
+
+.boda-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin: 24px 0;
+}
+
+.boda-form-grid label {
+    display: grid;
+    align-content: start;
+    gap: 6px;
+}
+
+.boda-form-grid input,
+.boda-form-grid textarea,
+#withdrawalOutput {
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid #8da7a4;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+#withdrawalOutput {
+    display: block;
+    margin: 12px 0;
+    resize: vertical;
+}
+
+#printWithdrawalButton {
+    margin-top: 20px;
+}
+
+.print-only {
+    display: none;
+}
+
+
+/* =========================================================
+   SMARTPHONE
+========================================================= */
+
+@media (max-width: 580px) {
+
+    .container {
+        width: calc(100% - 28px);
+    }
+
+    .hero {
+        padding-top: 24px;
+    }
+
+    .hero-art {
+        max-height: 280px;
+    }
+
+    .header-row {
+        gap: 12px;
+    }
+
+    .cart-btn {
+        min-height: 48px;
+    }
+
+    .product-grid {
+        gap: 10px;
+    }
+
+    .product {
+        padding: 10px;
+    }
+
+    .product .price {
+        font-size: 20px;
+    }
+
+    .mini-pack strong {
+        font-size: 16px;
+        overflow-wrap: anywhere;
+    }
+
+    .checkout-grid,
+    .boda-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .checkout-summary-card,
+    .checkout-card {
+        padding: 18px;
+    }
+
+    .toolbar {
+        align-items: start;
+    }
+
+    .service-page {
+        padding-top: 24px;
+    }
+
+    .legal-header .btn {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+}
+
+@media (max-width: 350px) {
+
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* =========================================================
+   REDUZIERTE BEWEGUNG
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+}
+
+
+/* =========================================================
+   DRUCKANSICHT DES WIDERRUFSFORMULARS
+========================================================= */
+
+@media print {
+
+    body {
+        color: #000000;
+        background: #ffffff;
+    }
+
+    header,
+    footer,
+    .demo-note,
+    .skip-link,
+    .service-page > :not(.print-only) {
+        display: none !important;
+    }
+
+    .service-page {
+        width: 100%;
+        padding: 0;
+    }
+
+    .print-only {
+        display: block !important;
+    }
+
+    #withdrawalPrintText {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        font-family: inherit;
+        font-size: 12pt;
+    }
+
+}
