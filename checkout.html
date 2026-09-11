@@ -99,44 +99,68 @@
                 <div class="checkout-form-grid">
 
                     <label>
-                        Vorname
-                        <input
-                            type="text"
-                            id="firstName"
-                            autocomplete="given-name"
-                            required
-                        >
-                    </label>
+    Vorname *
+    <input
+        type="text"
+        id="firstName"
+        autocomplete="given-name"
+        required
+    >
+</label>
 
-                    <label>
-                        Nachname
-                        <input
-                            type="text"
-                            id="lastName"
-                            autocomplete="family-name"
-                            required
-                        >
-                    </label>
+<label>
+    Nachname *
+    <input
+        type="text"
+        id="lastName"
+        autocomplete="family-name"
+        required
+    >
+</label>
 
-                    <label>
-                        E-Mail
-                        <input
-                            type="email"
-                            id="email"
-                            autocomplete="email"
-                            required
-                        >
-                    </label>
+<label>
+    E-Mail *
+    <input
+        type="email"
+        id="email"
+        autocomplete="email"
+        required
+    >
+</label>
 
-                    <label>
-                        Telefon
-                        <input
-                            type="tel"
-                            id="phone"
-                            autocomplete="tel"
-                        >
-                    </label>
+<label class="checkout-full">
+    Straße und Hausnummer *
+    <input
+        type="text"
+        id="street"
+        autocomplete="street-address"
+        required
+    >
+</label>
 
+<label>
+    PLZ *
+    <input
+        type="text"
+        id="zip"
+        inputmode="numeric"
+        autocomplete="postal-code"
+        required
+    >
+</label>
+
+<label>
+    Ort *
+    <input
+        type="text"
+        id="city"
+        autocomplete="address-level2"
+        required
+    >
+</label>
+    <p class="required-note checkout-full">
+    * Pflichtfelder
+</p>
                 </div>
 
             </section>
