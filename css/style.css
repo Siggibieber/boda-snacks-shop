@@ -4874,3 +4874,59 @@ dialog::backdrop {
     font-size: 0.85rem;
     opacity: 0.65;
 }
+/* =========================================================
+   LAUFENDES HINWEISBAND OBEN
+========================================================= */
+
+.top-marquee {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+    background: rgba(0, 0, 0, 0.035);
+}
+
+.top-marquee-track {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 70px;
+
+    min-width: max-content;
+
+    padding: 10px 0;
+
+    animation:
+        boda-marquee
+        22s
+        linear
+        infinite;
+}
+
+.top-marquee-track span {
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+@keyframes boda-marquee {
+
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .top-marquee-track {
+        animation: none;
+    }
+
+}
