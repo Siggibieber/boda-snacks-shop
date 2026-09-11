@@ -1,6 +1,13 @@
 /* =========================================================
    BODA SNACKS SHOP
-   Zentrale Produktdaten
+   Zentrale Produktdaten – Testversion
+
+   price: Preis in Euro
+   netQuantity: Nettomenge in Gramm oder Millilitern
+   quantityUnit: "g" oder "ml"
+   depositCents: Pfand in Cent; null = noch unbekannt
+
+   Fehlende Lebensmittelangaben bleiben ausdrücklich offen.
 ========================================================= */
 
 const BODA_PRODUCTS = [
@@ -20,7 +27,16 @@ const BODA_PRODUCTS = [
         color: "#df5b63",
         textColor: "#ffffff",
         packText: "PAPRIKA",
-        badge: ""
+        badge: "",
+        demo: true,
+        netQuantity: 150,
+        quantityUnit: "g",
+        depositCents: 0,
+        ingredients: null,
+        allergens: null,
+        nutrition: null,
+        foodOperator: null,
+        contents: null
     },
 
     {
@@ -34,7 +50,16 @@ const BODA_PRODUCTS = [
         color: "#e5bd4b",
         textColor: "#20383b",
         packText: "SALTED",
-        badge: ""
+        badge: "",
+        demo: true,
+        netQuantity: 150,
+        quantityUnit: "g",
+        depositCents: 0,
+        ingredients: null,
+        allergens: null,
+        nutrition: null,
+        foodOperator: null,
+        contents: null
     },
 
     {
@@ -48,7 +73,16 @@ const BODA_PRODUCTS = [
         color: "#168b87",
         textColor: "#ffffff",
         packText: "STICKS",
-        badge: "BELIEBT"
+        badge: "",
+        demo: true,
+        netQuantity: 250,
+        quantityUnit: "g",
+        depositCents: 0,
+        ingredients: null,
+        allergens: null,
+        nutrition: null,
+        foodOperator: null,
+        contents: null
     },
 
     {
@@ -62,7 +96,16 @@ const BODA_PRODUCTS = [
         color: "#c98752",
         textColor: "#ffffff",
         packText: "NUTS",
-        badge: ""
+        badge: "",
+        demo: true,
+        netQuantity: 200,
+        quantityUnit: "g",
+        depositCents: 0,
+        ingredients: null,
+        allergens: null,
+        nutrition: null,
+        foodOperator: null,
+        contents: null
     },
 
 
@@ -81,7 +124,16 @@ const BODA_PRODUCTS = [
         color: "#e95e76",
         textColor: "#ffffff",
         packText: "SWEET",
-        badge: ""
+        badge: "",
+        demo: true,
+        netQuantity: 175,
+        quantityUnit: "g",
+        depositCents: 0,
+        ingredients: null,
+        allergens: null,
+        nutrition: null,
+        foodOperator: null,
+        contents: null
     },
 
     {
@@ -93,9 +145,18 @@ const BODA_PRODUCTS = [
         size: "175 g",
         image: "",
         color: "#70b96a",
-        textColor: "#ffffff",
+        textColor: "#20383b",
         packText: "SOUR",
-        badge: "NEU"
+        badge: "",
+        demo: true,
+        netQuantity: 175,
+        quantityUnit: "g",
+        depositCents: 0,
+        ingredients: null,
+        allergens: null,
+        nutrition: null,
+        foodOperator: null,
+        contents: null
     },
 
 
@@ -114,7 +175,16 @@ const BODA_PRODUCTS = [
         color: "#714737",
         textColor: "#ffffff",
         packText: "CHOCO",
-        badge: ""
+        badge: "",
+        demo: true,
+        netQuantity: 50,
+        quantityUnit: "g",
+        depositCents: 0,
+        ingredients: null,
+        allergens: null,
+        nutrition: null,
+        foodOperator: null,
+        contents: null
     },
 
     {
@@ -128,7 +198,16 @@ const BODA_PRODUCTS = [
         color: "#8a5a47",
         textColor: "#ffffff",
         packText: "MILK",
-        badge: ""
+        badge: "",
+        demo: true,
+        netQuantity: 100,
+        quantityUnit: "g",
+        depositCents: 0,
+        ingredients: null,
+        allergens: null,
+        nutrition: null,
+        foodOperator: null,
+        contents: null
     },
 
 
@@ -147,7 +226,16 @@ const BODA_PRODUCTS = [
         color: "#292929",
         textColor: "#ffffff",
         packText: "COLA",
-        badge: ""
+        badge: "",
+        demo: true,
+        netQuantity: 500,
+        quantityUnit: "ml",
+        depositCents: null,
+        ingredients: null,
+        allergens: null,
+        nutrition: null,
+        foodOperator: null,
+        contents: null
     },
 
     {
@@ -159,9 +247,18 @@ const BODA_PRODUCTS = [
         size: "0,5 l",
         image: "",
         color: "#ee973d",
-        textColor: "#ffffff",
+        textColor: "#20383b",
         packText: "ORANGE",
-        badge: ""
+        badge: "",
+        demo: true,
+        netQuantity: 500,
+        quantityUnit: "ml",
+        depositCents: null,
+        ingredients: null,
+        allergens: null,
+        nutrition: null,
+        foodOperator: null,
+        contents: null
     },
 
 
@@ -180,7 +277,16 @@ const BODA_PRODUCTS = [
         color: "#1c393c",
         textColor: "#ffffff",
         packText: "ENERGY",
-        badge: "TOP"
+        badge: "",
+        demo: true,
+        netQuantity: 250,
+        quantityUnit: "ml",
+        depositCents: null,
+        ingredients: null,
+        allergens: null,
+        nutrition: null,
+        foodOperator: null,
+        contents: null
     },
 
     {
@@ -194,7 +300,16 @@ const BODA_PRODUCTS = [
         color: "#8fd5ce",
         textColor: "#20383b",
         packText: "ZERO",
-        badge: ""
+        badge: "",
+        demo: true,
+        netQuantity: 250,
+        quantityUnit: "ml",
+        depositCents: null,
+        ingredients: null,
+        allergens: null,
+        nutrition: null,
+        foodOperator: null,
+        contents: null
     },
 
 
@@ -213,7 +328,16 @@ const BODA_PRODUCTS = [
         color: "#168b87",
         textColor: "#ffffff",
         packText: "MOVIE",
-        badge: "BOX"
+        badge: "",
+        demo: true,
+        netQuantity: null,
+        quantityUnit: null,
+        depositCents: null,
+        ingredients: null,
+        allergens: null,
+        nutrition: null,
+        foodOperator: null,
+        contents: null
     },
 
     {
@@ -227,7 +351,16 @@ const BODA_PRODUCTS = [
         color: "#df5b63",
         textColor: "#ffffff",
         packText: "PARTY",
-        badge: "BOX"
+        badge: "",
+        demo: true,
+        netQuantity: null,
+        quantityUnit: null,
+        depositCents: null,
+        ingredients: null,
+        allergens: null,
+        nutrition: null,
+        foodOperator: null,
+        contents: null
     },
 
     {
@@ -241,27 +374,45 @@ const BODA_PRODUCTS = [
         color: "#d6ad3d",
         textColor: "#20383b",
         packText: "OFFICE",
-        badge: "BOX"
+        badge: "",
+        demo: true,
+        netQuantity: null,
+        quantityUnit: null,
+        depositCents: null,
+        ingredients: null,
+        allergens: null,
+        nutrition: null,
+        foodOperator: null,
+        contents: null
     },
 
 
     /* =====================================================
-       ANGEBOTE
+       SNACK-MIX
+       Interner Kategoriename bleibt "angebote".
     ===================================================== */
 
     {
         id: 16,
-        name: "Snack Deal Mix",
+        name: "Snack Mix",
         brand: "BODA Snacks",
         category: "angebote",
         price: 9.90,
-        oldPrice: 12.90,
         size: "5 Artikel",
         image: "",
         color: "#dc5e65",
         textColor: "#ffffff",
-        packText: "DEAL",
-        badge: "ANGEBOT"
+        packText: "MIX",
+        badge: "",
+        demo: true,
+        netQuantity: null,
+        quantityUnit: null,
+        depositCents: null,
+        ingredients: null,
+        allergens: null,
+        nutrition: null,
+        foodOperator: null,
+        contents: null
     }
 
 ];
