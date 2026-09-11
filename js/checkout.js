@@ -841,6 +841,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 }).join("");
 
+/* ---------------------------------------------
+   WARENKORB NACH ERFOLGREICHER BESTELLUNG LEEREN
+--------------------------------------------- */
+
+B.save([]);
 
             /* ---------------------------------------------
                CHECKOUT AUSBLENDEN
