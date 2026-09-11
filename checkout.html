@@ -542,124 +542,157 @@
 
     <!-- BESTELLBESTÄTIGUNG -->
 
-    <section
-        id="orderConfirmation"
-        class="checkout-card order-confirmation"
-        tabindex="-1"
-        hidden
-    >
+   <section
+    id="orderConfirmation"
+    class="checkout-card order-confirmation"
+    tabindex="-1"
+    hidden
+>
+
+    <div class="confirmation-header">
 
         <div class="order-success-icon">
-            ✓
+            🎉
         </div>
 
-        <h2>
-            Testbestellung erfolgreich
-        </h2>
+        <div>
+            <h2>
+                Vielen Dank für deine Bestellung!
+            </h2>
 
-        <p>
-            So würde die Bestellbestätigung für deinen Kunden aussehen.
-        </p>
-
-
-        <div class="order-number-box">
-
-            <span>Test-Bestellnummer</span>
-
-            <strong id="orderNumber">
-                –
-            </strong>
-
+            <p>
+                Deine Testbestellung wurde erfolgreich erfasst.
+            </p>
         </div>
 
-
-        <div class="confirmation-grid">
-
-            <div>
-
-                <h3>Kunde</h3>
-
-                <p id="confirmationCustomer"></p>
-
-            </div>
+    </div>
 
 
-            <div>
+    <div class="order-number-box">
 
-                <h3>Lieferadresse</h3>
+        <span>
+            TEST-BESTELLNUMMER
+        </span>
 
-                <p id="confirmationAddress"></p>
+        <strong id="orderNumber">
+            –
+        </strong>
 
-            </div>
-
-
-            <div>
-
-                <h3>Zahlungsart</h3>
-
-                <p id="confirmationPayment"></p>
-
-            </div>
+    </div>
 
 
-            <div>
+    <div class="confirmation-grid">
 
-                <h3>Gesamtsumme</h3>
+        <div class="confirmation-box">
 
-                <p>
-                    <strong id="confirmationTotal"></strong>
-                </p>
+            <h3>Kunde</h3>
 
-            </div>
+            <p id="confirmationCustomer"></p>
 
         </div>
 
+
+        <div class="confirmation-box">
+
+            <h3>Lieferadresse</h3>
+
+            <p id="confirmationAddress"></p>
+
+        </div>
+
+
+        <div class="confirmation-box">
+
+            <h3>Zahlungsart</h3>
+
+            <p id="confirmationPayment"></p>
+
+        </div>
+
+
+        <div class="confirmation-box">
+
+            <h3>Gesamtsumme</h3>
+
+            <p class="confirmation-total">
+                <strong id="confirmationTotal"></strong>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="confirmation-items-box">
 
         <h3>Bestellte Artikel</h3>
 
         <div id="confirmationItems"></div>
 
-        <section class="order-thankyou">
+    </div>
 
-    <h3>Vielen Dank für deine Bestellung!</h3>
 
-    <p>
-        Wir haben deine Bestellung erhalten und kümmern uns
-        schnellstmöglich darum.
-    </p>
+    <section class="order-thankyou">
 
-    <p>
-        Sobald es Neuigkeiten zu deiner Bestellung gibt,
-        halten wir dich über den weiteren Ablauf auf dem Laufenden.
-    </p>
+        <p>
+            Wir haben deine Bestellung erhalten und kümmern uns
+            schnellstmöglich darum.
+        </p>
 
-    <p>
-        Falls du Fragen zu deiner Bestellung hast,
-        erreichst du uns gerne über:
-    </p>
+        <p>
+            Sobald es Neuigkeiten zu deiner Bestellung gibt,
+            halten wir dich über den weiteren Ablauf auf dem Laufenden.
+        </p>
 
-    <p>
-        <strong>E-Mail:</strong>
-        <a href="mailto:kontakt@boda-snacks.de">
-            kontakt@boda-snacks.de
-        </a>
-        <br>
+        <p>
+            Falls du Fragen zu deiner Bestellung hast,
+            erreichst du uns gerne unter:
+        </p>
 
-        <strong>Telefon:</strong>
-        <a href="tel:+49XXXXXXXXXX">
-            +49 XX XXXXXXXX
-        </a>
-    </p>
+        <p class="order-contact">
 
-    <p>
-        Vielen Dank für dein Vertrauen in BODA Snacks.
-    </p>
+            <strong>E-Mail:</strong>
+            <a href="mailto:kontakt@boda-snacks.de">
+                kontakt@boda-snacks.de
+            </a>
 
-    <p>
-        <strong>
+            <br>
+
+            <strong>Telefon:</strong>
+            <a href="tel:+49XXXXXXXXXX">
+                +49 XX XXXXXXXX
+            </a>
+
+        </p>
+
+        <p>
+            Vielen Dank für dein Vertrauen in BODA Snacks.
+        </p>
+
+        <p class="order-slogan">
             Du hast den Hunger, wir die Snacks.
-        </strong>
+        </p>
+
+    </section>
+
+
+    <p class="notice order-test-note">
+
+        <strong>TESTMODUS:</strong>
+
+        Es wurde keine echte Bestellung versendet,
+        kein Vertrag geschlossen und kein Geld abgebucht.
+
     </p>
+
+
+    <button
+        type="button"
+        class="btn btn-primary"
+        id="newTestOrder"
+    >
+        Neue Testbestellung
+    </button>
 
 </section>
 
