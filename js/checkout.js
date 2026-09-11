@@ -645,7 +645,18 @@ function validPforzheimAddress(zipCode, city) {
 
             }
 
+if (!validPforzheimAddress(zipCode, city)) {
 
+    warning.textContent =
+        "Die eingegebene Postleitzahl passt nicht zu Pforzheim. " +
+        "Bitte überprüfe deine Lieferadresse.";
+
+    document
+        .getElementById("zip")
+        .focus();
+
+    return;
+}
             /* ---------------------------------------------
                ORT
             --------------------------------------------- */
