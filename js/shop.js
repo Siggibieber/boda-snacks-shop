@@ -1,473 +1,734 @@
 /* =========================================================
    BODA SNACKS SHOP
-   Produktanzeige, Suche, Kategorien und Produktdetails
+   Drei Boxen + Wunschbox-Konfigurator
 ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-    "use strict";
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        "use strict";
 
 
-    /* =====================================================
-       GEMEINSAME FUNKTIONEN UND ELEMENTE
-    ===================================================== */
-
-    const B = window.Boda;
-
-    const grid =
-        document.getElementById("productGrid");
-
-    if (!grid || !B) {
-        return;
-    }
-
-    const search =
-        document.getElementById("searchInput");
-
-    const empty =
-        document.getElementById("emptyProducts");
-
-    const dialog =
-        document.getElementById("productDialog");
-
-    const detail =
-        document.getElementById("productDetails");
-
-    const categories = {
-        alle: "Alle",
-        salzig: "Chips & Salziges",
-        suess: "Süßigkeiten",
-        schokolade: "Schokolade",
-        getraenke: "Getränke",
-        energy: "Energy",
-        boxen: "Snackboxen",
-        angebote: "Snack-Mix"
-    };
-
-    let category = "alle";
+        const B =
+            window.Boda;
 
 
-    /* =====================================================
-       SUCHTEXT VEREINHEITLICHEN
-    ===================================================== */
+        if (!B) {
 
-    const normalizeText = value => {
-        return value
-            .toLocaleLowerCase("de")
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .replace(/ß/g, "ss");
-    };
-
-
-    /* =====================================================
-       PRODUKTE ANZEIGEN
-    ===================================================== */
-
-    function render() {
-        const query = normalizeText(
-            search.value.trim()
-        );
-
-        const matches = BODA_PRODUCTS.filter(p => {
-            const matchesCategory =
-                category === "alle" ||
-                p.category === category;
-
-            const searchableText = normalizeText(
-                `${p.name} ${p.size} ${categories[p.category]}`
-            );
-
-            return (
-                matchesCategory &&
-                searchableText.includes(query)
-            );
-        });
-
-        grid.innerHTML = matches.map(p => {
-            const price = B.money(
-                Math.round(p.price * 100)
-            );
-
-            const basePrice =
-                B.basePrice(p) ||
-                "Zusammenstellung noch offen";
-
-            const depositNotice =
-                p.depositCents == null
-                    ? `
-                        <p class="product-note">
-                            Pfandangabe noch offen
-                        </p>
-                    `
-                    : "";
-
-            return `
-                <article class="product">
-
-                    <div class="product-art">
-                        ${B.artwork(p)}
-                    </div>
-
-                    <p class="product-meta">
-                        Musterprodukt
-                    </p>
-
-                    <h3>
-                        ${B.escape(p.name)}
-                    </h3>
-
-                    <p class="sub">
-                        ${B.escape(p.size)}
-                    </p>
-
-                    <div class="price-row">
-
-                        <strong class="price">
-                            ${price}
-                        </strong>
-
-                        <span>
-                            Testpreis
-                        </span>
-
-                    </div>
-
-                    <p class="base-price">
-                        ${basePrice}
-                    </p>
-
-                    ${depositNotice}
-
-                    <button
-                        class="product-detail-button"
-                        type="button"
-                        data-product-id="${p.id}"
-                        aria-label="Details zu ${B.escape(p.name)}"
-                    >
-                        Produktdetails
-                    </button>
-
-                    <button
-                        class="btn btn-primary add-product"
-                        type="button"
-                        data-add-id="${p.id}"
-                        aria-label="${B.escape(p.name)} in den Testwarenkorb"
-                    >
-                        In den Testwarenkorb
-                    </button>
-
-                </article>
-            `;
-        }).join("");
-
-
-        /* LEERZUSTAND */
-
-        empty.hidden = matches.length !== 0;
-
-        empty.style.display =
-            matches.length ? "none" : "block";
-
-
-        /* ANZAHL DER TREFFER */
-
-        const resultLabel =
-            matches.length === 1
-                ? "Produkt"
-                : "Produkte";
-
-        document.getElementById(
-            "productResultCount"
-        ).textContent =
-            `${matches.length} ${resultLabel} · ` +
-            categories[category];
-
-
-        /* AKTIVE KATEGORIE MARKIEREN */
-
-        document
-            .querySelectorAll("[data-category]")
-            .forEach(element => {
-                const active =
-                    element.dataset.category === category;
-
-                element.classList.toggle(
-                    "active",
-                    active
-                );
-
-                if (element.tagName === "BUTTON") {
-                    element.setAttribute(
-                        "aria-pressed",
-                        String(active)
-                    );
-                }
-            });
-    }
-
-
-    /* =====================================================
-       PRODUKTDETAILS ÖFFNEN
-    ===================================================== */
-
-    function showProduct(id) {
-        const p = B.product(id);
-
-        if (!p) {
             return;
+
         }
 
-        const price = Math.round(
-            p.price * 100
-        );
 
-        const box = [
-            "boxen",
-            "angebote"
-        ].includes(p.category);
+        const grid =
+            document.getElementById(
+                "builderGrid"
+            );
 
-        const basePrice = B.basePrice(p);
+        const count =
+            document.getElementById(
+                "builderCount"
+            );
 
-        const informationTitle =
-            box
-                ? "Was ist enthalten?"
-                : "Lebensmittelinformationen";
+        const status =
+            document.getElementById(
+                "builderStatus"
+            );
 
-        const informationText =
-            box
-                ? (
-                    "Die einzelnen Artikel und Mengen sind " +
-                    "noch nicht festgelegt. Es wird keine " +
-                    "bestimmte Zusammenstellung zugesagt."
-                )
-                : (
-                    "Die genaue Marke, Zutatenliste, " +
-                    "hervorgehobenen Allergene, Nährwerte " +
-                    "und Angaben zum verantwortlichen " +
-                    "Lebensmittelunternehmen liegen noch " +
-                    "nicht vor."
+        const progress =
+            document.getElementById(
+                "builderProgress"
+            );
+
+        const summary =
+            document.getElementById(
+                "builderSummary"
+            );
+
+        const addWishBox =
+            document.getElementById(
+                "addWishBox"
+            );
+
+        const clearWishBox =
+            document.getElementById(
+                "clearWishBox"
+            );
+
+        const toast =
+            document.getElementById(
+                "toast"
+            );
+
+
+        let category =
+            "alle";
+
+        let toastTimer;
+
+
+        /* =================================================
+           KURZE MELDUNG
+        ================================================= */
+
+        function message(text) {
+
+            if (!toast) {
+
+                return;
+
+            }
+
+
+            clearTimeout(
+                toastTimer
+            );
+
+
+            toast.textContent =
+                text;
+
+
+            toast.classList.add(
+                "show"
+            );
+
+
+            toastTimer =
+                setTimeout(
+                    () => {
+
+                        toast.classList.remove(
+                            "show"
+                        );
+
+                    },
+                    3200
                 );
 
-        const energyNotice =
-            p.category === "energy"
-                ? `
-                    <p>
-                        Koffeingehalt und erforderliche
-                        Warnhinweise müssen anhand des
-                        tatsächlichen Produkts ergänzt werden.
-                    </p>
-                `
-                : "";
+        }
 
-        const depositNotice =
-            p.depositCents == null
-                ? `
-                    <p>
-                        Pfand: noch zu klären.
-                        In der Demo-Summe ist kein
-                        unbekanntes Pfand enthalten.
-                    </p>
-                `
-                : "";
 
-        const minimumNotice =
-            price < B.config.minimumCents && box
-                ? `
-                    <p>
-                        Für die Testübersicht fehlen mit
-                        dieser Box allein noch
-                        ${
-                            B.money(
-                                B.config.minimumCents - price
+        /* =================================================
+           AKTUELLE AUSWAHL
+        ================================================= */
+
+        function selection() {
+
+            return B.readWishSelection();
+
+        }
+
+
+        /* =================================================
+           AUSWAHL GRUPPIEREN
+        ================================================= */
+
+        function groupedSelection(ids) {
+
+            const map =
+                new Map();
+
+
+            ids.forEach(id => {
+
+                map.set(
+                    id,
+                    (map.get(id) || 0) + 1
+                );
+
+            });
+
+
+            return map;
+
+        }
+
+
+        /* =================================================
+           BUILDER ANZEIGEN
+        ================================================= */
+
+        function renderBuilder() {
+
+            if (!grid) {
+
+                return;
+
+            }
+
+
+            const selected =
+                selection();
+
+
+            const grouped =
+                groupedSelection(
+                    selected
+                );
+
+
+            const products =
+                BODA_PRODUCTS.filter(
+                    p => {
+
+                        return (
+
+                            p.builder &&
+
+                            (
+                                category === "alle" ||
+                                p.category === category
                             )
+
+                        );
+
+                    }
+                );
+
+
+            grid.innerHTML =
+                products
+                    .map(p => {
+
+                        const selectedCount =
+                            grouped.get(p.id) || 0;
+
+
+                        const full =
+                            selected.length >=
+                            B.config.wishBoxSize;
+
+
+                        let categoryLabel =
+                            "SÜSS";
+
+
+                        if (
+                            p.category ===
+                            "salzig"
+                        ) {
+
+                            categoryLabel =
+                                "SALZIG";
+
                         }
-                        Warenwert.
-                    </p>
-                `
-                : "";
 
-        detail.innerHTML = `
-            <p class="eyebrow">
-                Musterprodukt · Nicht bestellbar
-            </p>
 
-            <h2 id="detailTitle">
-                ${B.escape(p.name)}
-            </h2>
+                        if (
+                            p.category ===
+                            "schokolade"
+                        ) {
 
-            <p>
-                ${B.escape(p.size)} ·
+                            categoryLabel =
+                                "SCHOKOLADE";
 
-                <strong>
-                    ${B.money(price)}
-                </strong>
+                        }
 
-                Testpreis
-            </p>
 
-            ${
-                basePrice
-                    ? `<p>${basePrice}</p>`
-                    : ""
+                        return `
+                            <article class="builder-product">
+
+                                <div class="builder-product-art">
+
+                                    ${B.artwork(
+                                        p,
+                                        "builder-mini-pack"
+                                    )}
+
+                                </div>
+
+
+                                <div class="builder-product-copy">
+
+                                    <p class="builder-product-category">
+                                        ${categoryLabel}
+                                    </p>
+
+                                    <h3>
+                                        ${B.escape(p.name)}
+                                    </h3>
+
+                                    <p>
+                                        ${B.escape(p.size)}
+                                    </p>
+
+                                </div>
+
+
+                                <div class="builder-qty">
+
+                                    <button
+                                        type="button"
+                                        data-builder-minus="${p.id}"
+                                        aria-label="${B.escape(p.name)} einmal entfernen"
+                                        ${selectedCount ? "" : "disabled"}
+                                    >
+                                        −
+                                    </button>
+
+
+                                    <strong>
+                                        ${selectedCount}
+                                    </strong>
+
+
+                                    <button
+                                        type="button"
+                                        data-builder-plus="${p.id}"
+                                        aria-label="${B.escape(p.name)} einmal auswählen"
+                                        ${full ? "disabled" : ""}
+                                    >
+                                        +
+                                    </button>
+
+                                </div>
+
+                            </article>
+                        `;
+
+                    })
+                    .join("");
+
+
+            const current =
+                selected.length;
+
+
+            const missing =
+                B.config.wishBoxSize -
+                current;
+
+
+            count.textContent =
+                `${current} von ${B.config.wishBoxSize} ausgewählt`;
+
+
+            progress.style.width =
+                `${Math.min(
+                    100,
+                    current /
+                    B.config.wishBoxSize *
+                    100
+                )}%`;
+
+
+            if (current === 0) {
+
+                status.textContent =
+                    "Wähle deine ersten Snacks aus.";
+
             }
 
-            <p>
-                Die Abbildung ist ein Platzhalter.
-                Dieses Produkt dient zum Ausprobieren
-                des Shops.
-            </p>
+            else if (missing > 0) {
 
-            <h3>
-                ${informationTitle}
-            </h3>
+                status.textContent =
 
-            <p>
-                ${informationText}
-            </p>
+                    `Noch ${missing} ` +
 
-            <p>
-                Diese Vorschau eignet sich nicht zur
-                Beurteilung von Allergien oder
-                Ernährungsanforderungen.
-            </p>
+                    `${
+                        missing === 1
+                            ? "Snack"
+                            : "Snacks"
+                    } ` +
 
-            ${energyNotice}
+                    `bis deine Wunschbox voll ist.`;
 
-            ${depositNotice}
+            }
 
-            <p data-shop-conditions>
-                ${B.escape(B.conditions())}
-            </p>
+            else {
 
-            ${minimumNotice}
+                status.textContent =
+                    "Deine Wunschbox ist komplett. 😎";
 
-            <button
-                class="btn btn-primary"
-                type="button"
-                data-add-id="${p.id}"
-            >
-                In den Testwarenkorb
-            </button>
-        `;
+            }
 
-        dialog.showModal();
+
+            if (!current) {
+
+                summary.textContent =
+                    "Noch keine Snacks ausgewählt.";
+
+            }
+
+            else {
+
+                summary.textContent =
+
+                    [...grouped.entries()]
+
+                        .map(
+                            ([id, qty]) => {
+
+                                const p =
+                                    B.product(id);
+
+
+                                return (
+                                    `${qty}× ${p.name}`
+                                );
+
+                            }
+                        )
+
+                        .join(" · ");
+
+            }
+
+
+            const complete =
+                current ===
+                B.config.wishBoxSize;
+
+
+            addWishBox.disabled =
+                !complete;
+
+
+            addWishBox.textContent =
+                complete
+
+                    ? "Wunschbox in den Warenkorb"
+
+                    : (
+                        `Erst ${missing} ` +
+
+                        `${
+                            missing === 1
+                                ? "Snack"
+                                : "Snacks"
+                        } auswählen`
+                    );
+
+
+            document
+                .querySelectorAll(
+                    "[data-builder-category]"
+                )
+                .forEach(
+                    button => {
+
+                        button.classList.toggle(
+
+                            "active",
+
+                            button.dataset
+                                .builderCategory ===
+                                category
+
+                        );
+
+                    }
+                );
+
+        }
+
+
+        /* =================================================
+           SNACK HINZUFÜGEN
+        ================================================= */
+
+        function addSelection(id) {
+
+            const p =
+                B.product(id);
+
+
+            if (
+                !p ||
+                !p.builder
+            ) {
+
+                return;
+
+            }
+
+
+            const selected =
+                selection();
+
+
+            if (
+                selected.length >=
+                B.config.wishBoxSize
+            ) {
+
+                message(
+                    "Deine Wunschbox ist bereits voll."
+                );
+
+                return;
+
+            }
+
+
+            selected.push(
+                p.id
+            );
+
+
+            B.saveWishSelection(
+                selected
+            );
+
+        }
+
+
+        /* =================================================
+           SNACK ENTFERNEN
+        ================================================= */
+
+        function removeSelection(id) {
+
+            const selected =
+                selection();
+
+
+            const index =
+                selected.lastIndexOf(
+                    Number(id)
+                );
+
+
+            if (index === -1) {
+
+                return;
+
+            }
+
+
+            selected.splice(
+                index,
+                1
+            );
+
+
+            B.saveWishSelection(
+                selected
+            );
+
+        }
+
+
+        /* =================================================
+           KLICKS
+        ================================================= */
+
+        document.addEventListener(
+            "click",
+            event => {
+
+                const fixedBox =
+                    event.target.closest(
+                        ".add-fixed-box"
+                    );
+
+
+                const plus =
+                    event.target.closest(
+                        "[data-builder-plus]"
+                    );
+
+
+                const minus =
+                    event.target.closest(
+                        "[data-builder-minus]"
+                    );
+
+
+                const filter =
+                    event.target.closest(
+                        "[data-builder-category]"
+                    );
+
+
+                if (fixedBox) {
+
+                    const id =
+                        Number(
+                            fixedBox.dataset.addId
+                        );
+
+
+                    if (
+                        window.bodaAddToCart
+                    ) {
+
+                        window.bodaAddToCart(
+                            id
+                        );
+
+                    }
+
+
+                    return;
+
+                }
+
+
+                if (plus) {
+
+                    addSelection(
+
+                        Number(
+                            plus.dataset.builderPlus
+                        )
+
+                    );
+
+
+                    return;
+
+                }
+
+
+                if (minus) {
+
+                    removeSelection(
+
+                        Number(
+                            minus.dataset.builderMinus
+                        )
+
+                    );
+
+
+                    return;
+
+                }
+
+
+                if (filter) {
+
+                    category =
+                        filter.dataset
+                            .builderCategory;
+
+
+                    renderBuilder();
+
+                }
+
+            }
+        );
+
+
+        /* =================================================
+           AUSWAHL LEEREN
+        ================================================= */
+
+        clearWishBox
+            ?.addEventListener(
+                "click",
+                () => {
+
+                    B.saveWishSelection(
+                        []
+                    );
+
+
+                    const cart =
+                        B.getCart()
+                            .filter(
+                                row => {
+
+                                    return (
+                                        row.id !==
+                                        B.config
+                                            .wishBoxProductId
+                                    );
+
+                                }
+                            );
+
+
+                    B.save(
+                        cart
+                    );
+
+
+                    message(
+                        "Wunschbox-Auswahl wurde geleert."
+                    );
+
+                }
+            );
+
+
+        /* =================================================
+           WUNSCHBOX IN WARENKORB
+        ================================================= */
+
+        addWishBox
+            ?.addEventListener(
+                "click",
+                () => {
+
+                    if (
+                        !B.wishSelectionIsComplete()
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const cart =
+                        B.getCart()
+                            .filter(
+                                row => {
+
+                                    return (
+                                        row.id !==
+                                        B.config
+                                            .wishBoxProductId
+                                    );
+
+                                }
+                            );
+
+
+                    cart.push({
+
+                        id:
+                            B.config
+                                .wishBoxProductId,
+
+                        quantity:
+                            1
+
+                    });
+
+
+                    B.save(
+                        cart
+                    );
+
+
+                    message(
+                        "Deine Wunschbox ist im Warenkorb. 😎"
+                    );
+
+                }
+            );
+
+
+        /* =================================================
+           ÄNDERUNGEN
+        ================================================= */
+
+        window.addEventListener(
+            "boda:wishchange",
+            renderBuilder
+        );
+
+
+        /* =================================================
+           START
+        ================================================= */
+
+        renderBuilder();
+
     }
-
-
-    /* =====================================================
-       KLICKS AUF KATEGORIEN UND PRODUKTE
-    ===================================================== */
-
-    document.addEventListener("click", event => {
-        const filter = event.target.closest(
-            "[data-category]"
-        );
-
-        const productButton = event.target.closest(
-            "[data-product-id]"
-        );
-
-        const addButton = event.target.closest(
-            "[data-add-id]"
-        );
-
-
-        /* KATEGORIE AUSWÄHLEN */
-
-        if (
-            filter &&
-            Object.hasOwn(
-                categories,
-                filter.dataset.category
-            )
-        ) {
-            event.preventDefault();
-
-            category = filter.dataset.category;
-
-            search.value = "";
-
-            render();
-
-            document
-                .getElementById("sortiment")
-                .scrollIntoView({
-                    block: "start"
-                });
-        }
-
-
-        /* PRODUKTDETAILS ANZEIGEN */
-
-        else if (productButton) {
-            showProduct(
-                productButton.dataset.productId
-            );
-        }
-
-
-        /* PRODUKT IN DEN TESTWARENKORB LEGEN */
-
-        else if (
-            addButton &&
-            window.bodaAddToCart
-        ) {
-            if (dialog.open) {
-                dialog.close();
-            }
-
-            window.bodaAddToCart(
-                Number(addButton.dataset.addId)
-            );
-        }
-    });
-
-
-    /* =====================================================
-       PRODUKTDETAILS SCHLIESSEN
-    ===================================================== */
-
-    document
-        .getElementById("closeProduct")
-        .addEventListener("click", () => {
-            dialog.close();
-        });
-
-
-    /* =====================================================
-       SUCHFORMULAR
-    ===================================================== */
-
-    document
-        .getElementById("searchForm")
-        .addEventListener("submit", event => {
-            event.preventDefault();
-
-            category = "alle";
-
-            render();
-
-            document
-                .getElementById("sortiment")
-                .scrollIntoView({
-                    block: "start"
-                });
-        });
-
-
-    /* SUCHE BEREITS WÄHREND DER EINGABE */
-
-    search.addEventListener("input", () => {
-        category = "alle";
-
-        render();
-    });
-
-
-    /* =====================================================
-       START
-    ===================================================== */
-
-    render();
-
-});
+);
