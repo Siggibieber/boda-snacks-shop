@@ -1,39 +1,58 @@
 /* =========================================================
    BODA SNACKS SHOP
-   Gemeinsame Warenkorb- und Preislogik
-
-   Alle Berechnungen erfolgen in ganzen Cent.
-   Diese Datei gehört zur Testversion.
+   Warenkorb-, Wunschbox- und Preislogik
 ========================================================= */
 
 (() => {
+
     "use strict";
 
 
-    /* =====================================================
-       GEMEINSAME EINSTELLUNGEN
-    ===================================================== */
-
     const config = Object.freeze({
-        storageKey: "bodaShopCart",
 
-        minimumCents: 2500,
-        freeShippingCents: 4900,
-        shippingCents: 499,
+        storageKey:
+            "bodaShopCart",
 
-        maxQuantity: 99
+        wishStorageKey:
+            "bodaWishBoxSelection",
+
+        minimumCents:
+            2500,
+
+        freeShippingCents:
+            4900,
+
+        shippingCents:
+            499,
+
+        maxQuantity:
+            20,
+
+        wishBoxProductId:
+            14,
+
+        wishBoxSize:
+            10
+
     });
 
 
     /* =====================================================
-       PREISE FORMATIEREN
+       GELD FORMATIEREN
     ===================================================== */
 
     const money = cents => {
-        return new Intl.NumberFormat("de-DE", {
-            style: "currency",
-            currency: "EUR"
-        }).format(cents / 100);
+
+        return new Intl.NumberFormat(
+            "de-DE",
+            {
+                style: "currency",
+                currency: "EUR"
+            }
+        ).format(
+            cents / 100
+        );
+
     };
 
 
@@ -42,44 +61,65 @@
     ===================================================== */
 
     const product = id => {
+
         return BODA_PRODUCTS.find(
-            item => item.id === Number(id)
+            item =>
+                item.id === Number(id)
         );
+
     };
 
 
     /* =====================================================
-       TEXTE FÜR HTML MASKIEREN
+       HTML SICHER AUSGEBEN
     ===================================================== */
 
     const escape = value => {
+
         const replacements = {
+
             "&": "&amp;",
             "<": "&lt;",
             ">": "&gt;",
             '"': "&quot;",
             "'": "&#39;"
+
         };
 
-        return String(value ?? "").replace(
+
+        return String(
+            value ?? ""
+        ).replace(
+
             /[&<>"']/g,
-            character => replacements[character]
+
+            character =>
+                replacements[character]
+
         );
+
     };
 
 
     /* =====================================================
-       WARENKORB PRÜFEN UND BEREINIGEN
+       WARENKORB NORMALISIEREN
     ===================================================== */
 
     function normalize(value) {
+
         if (!Array.isArray(value)) {
+
             return [];
+
         }
 
-        const merged = new Map();
+
+        const merged =
+            new Map();
+
 
         for (const row of value) {
+
             if (
                 !row ||
                 !Number.isInteger(row.id) ||
@@ -87,24 +127,51 @@
                 !Number.isSafeInteger(row.quantity) ||
                 row.quantity <= 0
             ) {
+
                 continue;
+
             }
+
 
             const previousQuantity =
                 merged.get(row.id) || 0;
 
-            const quantity = Math.min(
-                config.maxQuantity,
-                previousQuantity + row.quantity
+
+            const maxForProduct =
+                row.id ===
+                config.wishBoxProductId
+
+                    ? 1
+                    : config.maxQuantity;
+
+
+            const quantity =
+                Math.min(
+
+                    maxForProduct,
+
+                    previousQuantity +
+                    row.quantity
+
+                );
+
+
+            merged.set(
+                row.id,
+                quantity
             );
 
-            merged.set(row.id, quantity);
         }
 
-        return [...merged].map(([id, quantity]) => ({
-            id,
-            quantity
-        }));
+
+        return [...merged]
+            .map(
+                ([id, quantity]) => ({
+                    id,
+                    quantity
+                })
+            );
+
     }
 
 
@@ -114,20 +181,38 @@
 
     let persistenceOK = true;
 
+
     function read() {
+
         try {
+
             const saved =
-                localStorage.getItem(config.storageKey);
+                localStorage.getItem(
+                    config.storageKey
+                );
+
 
             return normalize(
-                JSON.parse(saved || "[]")
+
+                JSON.parse(
+                    saved || "[]"
+                )
+
             );
-        } catch {
-            return [];
+
         }
+
+        catch {
+
+            return [];
+
+        }
+
     }
 
-    let cart = read();
+
+    let cart =
+        read();
 
 
     /* =====================================================
@@ -135,24 +220,179 @@
     ===================================================== */
 
     function save(value) {
-        cart = normalize(value);
+
+        cart =
+            normalize(value);
+
 
         try {
+
             localStorage.setItem(
+
                 config.storageKey,
-                JSON.stringify(cart)
+
+                JSON.stringify(
+                    cart
+                )
+
             );
 
+
             persistenceOK = true;
-        } catch {
-            persistenceOK = false;
+
         }
 
+        catch {
+
+            persistenceOK = false;
+
+        }
+
+
         window.dispatchEvent(
-            new CustomEvent("boda:cartchange")
+
+            new CustomEvent(
+                "boda:cartchange"
+            )
+
         );
 
+
         return persistenceOK;
+
+    }
+
+
+    /* =====================================================
+       WUNSCHBOX AUSWAHL NORMALISIEREN
+    ===================================================== */
+
+    function normalizeWishSelection(value) {
+
+        if (!Array.isArray(value)) {
+
+            return [];
+
+        }
+
+
+        return value
+
+            .map(Number)
+
+            .filter(id => {
+
+                const p =
+                    product(id);
+
+
+                return Boolean(
+                    p &&
+                    p.builder
+                );
+
+            })
+
+            .slice(
+                0,
+                config.wishBoxSize
+            );
+
+    }
+
+
+    /* =====================================================
+       WUNSCHBOX LADEN
+    ===================================================== */
+
+    function readWishSelection() {
+
+        try {
+
+            return normalizeWishSelection(
+
+                JSON.parse(
+
+                    localStorage.getItem(
+                        config.wishStorageKey
+                    ) || "[]"
+
+                )
+
+            );
+
+        }
+
+        catch {
+
+            return [];
+
+        }
+
+    }
+
+
+    /* =====================================================
+       WUNSCHBOX SPEICHERN
+    ===================================================== */
+
+    function saveWishSelection(value) {
+
+        const normalized =
+            normalizeWishSelection(
+                value
+            );
+
+
+        try {
+
+            localStorage.setItem(
+
+                config.wishStorageKey,
+
+                JSON.stringify(
+                    normalized
+                )
+
+            );
+
+
+            persistenceOK = true;
+
+        }
+
+        catch {
+
+            persistenceOK = false;
+
+        }
+
+
+        window.dispatchEvent(
+
+            new CustomEvent(
+                "boda:wishchange"
+            )
+
+        );
+
+
+        return normalized;
+
+    }
+
+
+    /* =====================================================
+       IST WUNSCHBOX KOMPLETT?
+    ===================================================== */
+
+    function wishSelectionIsComplete() {
+
+        return (
+            readWishSelection().length ===
+            config.wishBoxSize
+        );
+
     }
 
 
@@ -161,107 +401,122 @@
     ===================================================== */
 
     function totals(value = cart) {
-        const rows = normalize(value);
 
-        const subtotal = rows.reduce((sum, row) => {
-            const currentProduct = product(row.id);
+        const rows =
+            normalize(value);
 
-            const unitPriceCents = Math.round(
-                currentProduct.price * 100
+
+        const subtotal =
+            rows.reduce(
+                (sum, row) => {
+
+                    const currentProduct =
+                        product(row.id);
+
+
+                    const unitPriceCents =
+                        Math.round(
+                            currentProduct.price *
+                            100
+                        );
+
+
+                    return (
+                        sum +
+                        unitPriceCents *
+                        row.quantity
+                    );
+
+                },
+                0
             );
 
-            return sum + unitPriceCents * row.quantity;
-        }, 0);
 
         const shipping =
+
             subtotal > 0 &&
-            subtotal < config.freeShippingCents
+            subtotal <
+                config.freeShippingCents
+
                 ? config.shippingCents
                 : 0;
 
-        /*
-         * Unbekanntes Pfand ist nicht gleich pfandfrei.
-         * Deshalb wird zusätzlich ein Hinweis ausgegeben.
-         */
 
-        const unknownDeposit = rows.some(row => {
-            return product(row.id).depositCents == null;
-        });
+        const deposit =
+            rows.reduce(
+                (sum, row) => {
 
-        const deposit = rows.reduce((sum, row) => {
-            const depositCents =
-                product(row.id).depositCents || 0;
+                    const depositCents =
+                        product(row.id)
+                            .depositCents || 0;
 
-            return sum + depositCents * row.quantity;
-        }, 0);
 
-        const count = rows.reduce((sum, row) => {
-            return sum + row.quantity;
-        }, 0);
+                    return (
+                        sum +
+                        depositCents *
+                        row.quantity
+                    );
+
+                },
+                0
+            );
+
+
+        const count =
+            rows.reduce(
+                (sum, row) =>
+                    sum + row.quantity,
+                0
+            );
+
 
         return {
-            subtotal,
-            shipping,
-            deposit,
-            unknownDeposit,
 
-            total: subtotal + shipping + deposit,
+            subtotal,
+
+            shipping,
+
+            deposit,
+
+            total:
+                subtotal +
+                shipping +
+                deposit,
 
             count,
 
-            missing: Math.max(
-                0,
-                config.minimumCents - subtotal
-            )
+            missing:
+                Math.max(
+                    0,
+                    config.minimumCents -
+                    subtotal
+                )
+
         };
+
     }
 
 
     /* =====================================================
-       GRUNDPREIS BERECHNEN
-    ===================================================== */
-
-    function basePrice(currentProduct) {
-        if (
-            !(currentProduct.netQuantity > 0) ||
-            !["g", "ml"].includes(
-                currentProduct.quantityUnit
-            )
-        ) {
-            return "";
-        }
-
-        const basePriceCents = Math.round(
-            currentProduct.price *
-            100 *
-            1000 /
-            currentProduct.netQuantity
-        );
-
-        const unit =
-            currentProduct.quantityUnit === "g"
-                ? "kg"
-                : "l";
-
-        return `${money(basePriceCents)} / ${unit}`;
-    }
-
-
-    /* =====================================================
-       PRODUKTBILD ODER MUSTERABBILDUNG
+       PRODUKTBILD / PLATZHALTER
     ===================================================== */
 
     function artwork(
         currentProduct,
         className = "mini-pack"
     ) {
+
         const allowedImagePath =
             /^(https?:\/\/|\.?\.?\/|[a-zA-Z0-9_-]+\/)/;
 
+
         if (
             currentProduct.image &&
-            allowedImagePath.test(currentProduct.image)
+            allowedImagePath.test(
+                currentProduct.image
+            )
         ) {
+
             return `
                 <img
                     src="${escape(currentProduct.image)}"
@@ -269,17 +524,31 @@
                     loading="lazy"
                 >
             `;
+
         }
 
-        const validColor = /^#[0-9a-f]{6}$/i;
 
-        const color = validColor.test(currentProduct.color)
-            ? currentProduct.color
-            : "#20383b";
+        const validColor =
+            /^#[0-9a-f]{6}$/i;
 
-        const ink = validColor.test(currentProduct.textColor)
-            ? currentProduct.textColor
-            : "#ffffff";
+
+        const color =
+            validColor.test(
+                currentProduct.color
+            )
+
+                ? currentProduct.color
+                : "#20383b";
+
+
+        const ink =
+            validColor.test(
+                currentProduct.textColor
+            )
+
+                ? currentProduct.textColor
+                : "#ffffff";
+
 
         return `
             <div
@@ -287,88 +556,137 @@
                 style="--c:${color};--t:${ink}"
                 aria-hidden="true"
             >
-                <span>MUSTER</span>
+                <span>BODA</span>
+
                 <strong>
                     ${escape(currentProduct.packText)}
                 </strong>
             </div>
         `;
+
     }
 
 
     /* =====================================================
-       EINHEITLICHER KONDITIONENHINWEIS
+       TEST-KONDITIONEN
     ===================================================== */
 
     const conditions = () => {
+
         return (
-            `Demo-Konditionen: ` +
+
+            `Test-Konditionen: ` +
+
             `${money(config.minimumCents)} Mindestwarenwert · ` +
+
             `${money(config.shippingCents)} Versand · ` +
-            `ab ${money(config.freeShippingCents)} ` +
-            `Warenwert versandfrei.`
+
+            `ab ${money(config.freeShippingCents)} Warenwert versandfrei.`
+
         );
+
     };
 
 
     /* =====================================================
-       FUNKTIONEN FÜR SHOP UND KASSE BEREITSTELLEN
+       GLOBAL BEREITSTELLEN
     ===================================================== */
 
-    window.Boda = Object.freeze({
-        config,
+    window.Boda =
+        Object.freeze({
 
-        money,
-        product,
-        escape,
+            config,
 
-        normalize,
-        totals,
-        basePrice,
-        artwork,
+            money,
 
-        conditions,
-        read,
-        save,
+            product,
 
-        getCart: () => {
-            return cart.map(row => ({
-                ...row
-            }));
-        },
+            escape,
 
-        canPersist: () => persistenceOK
-    });
+            normalize,
+
+            totals,
+
+            artwork,
+
+            conditions,
+
+            read,
+
+            save,
+
+
+            getCart: () => {
+
+                return cart.map(
+                    row => ({
+                        ...row
+                    })
+                );
+
+            },
+
+
+            readWishSelection,
+
+            saveWishSelection,
+
+            wishSelectionIsComplete,
+
+
+            canPersist:
+                () =>
+                    persistenceOK
+
+        });
 
 
     /* =====================================================
-       ÄNDERUNGEN AUS ANDEREN BROWSER-TABS ÜBERNEHMEN
+       ANDERE BROWSER-TABS
     ===================================================== */
 
-    window.addEventListener("storage", event => {
-        if (
-            event.key === config.storageKey ||
-            event.key === null
-        ) {
-            cart = read();
+    window.addEventListener(
+        "storage",
+        event => {
 
-            window.dispatchEvent(
-                new CustomEvent("boda:cartchange")
-            );
+            if (
+                event.key ===
+                    config.storageKey ||
+                event.key === null
+            ) {
+
+                cart =
+                    read();
+
+
+                window.dispatchEvent(
+
+                    new CustomEvent(
+                        "boda:cartchange"
+                    )
+
+                );
+
+            }
+
+
+            if (
+                event.key ===
+                    config.wishStorageKey ||
+                event.key === null
+            ) {
+
+                window.dispatchEvent(
+
+                    new CustomEvent(
+                        "boda:wishchange"
+                    )
+
+                );
+
+            }
+
         }
-    });
-
-
-    /* =====================================================
-       KONDITIONEN AUF DER SEITE ANZEIGEN
-    ===================================================== */
-
-    document.addEventListener("DOMContentLoaded", () => {
-        document
-            .querySelectorAll("[data-shop-conditions]")
-            .forEach(element => {
-                element.textContent = conditions();
-            });
-    });
+    );
 
 })();
