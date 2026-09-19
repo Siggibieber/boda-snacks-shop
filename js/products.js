@@ -1,19 +1,17 @@
 /* =========================================================
    BODA SNACKS SHOP
-   Zentrale Produktdaten – Testversion
+   Zentrale Produktdaten – Boxen-Testversion
 
-   price: Preis in Euro
-   netQuantity: Nettomenge in Gramm oder Millilitern
-   quantityUnit: "g" oder "ml"
-   depositCents: Pfand in Cent; null = noch unbekannt
-
-   Fehlende Lebensmittelangaben bleiben ausdrücklich offen.
+   WICHTIG:
+   - Preise sind Testpreise.
+   - Einzelne Snacks sind nur für die Wunschbox.
+   - Pflichtangaben kommen vor dem echten Verkaufsstart.
 ========================================================= */
 
 const BODA_PRODUCTS = [
 
     /* =====================================================
-       CHIPS & SALZIGES
+       SNACKS FÜR DIE WUNSCHBOX
     ===================================================== */
 
     {
@@ -21,13 +19,13 @@ const BODA_PRODUCTS = [
         name: "Chips Paprika",
         brand: "BODA Auswahl",
         category: "salzig",
+        builder: true,
         price: 2.49,
         size: "150 g",
         image: "",
         color: "#df5b63",
         textColor: "#ffffff",
         packText: "PAPRIKA",
-        badge: "",
         demo: true,
         netQuantity: 150,
         quantityUnit: "g",
@@ -35,8 +33,7 @@ const BODA_PRODUCTS = [
         ingredients: null,
         allergens: null,
         nutrition: null,
-        foodOperator: null,
-        contents: null
+        foodOperator: null
     },
 
     {
@@ -44,13 +41,13 @@ const BODA_PRODUCTS = [
         name: "Chips Gesalzen",
         brand: "BODA Auswahl",
         category: "salzig",
+        builder: true,
         price: 2.39,
         size: "150 g",
         image: "",
         color: "#e5bd4b",
         textColor: "#20383b",
         packText: "SALTED",
-        badge: "",
         demo: true,
         netQuantity: 150,
         quantityUnit: "g",
@@ -58,8 +55,7 @@ const BODA_PRODUCTS = [
         ingredients: null,
         allergens: null,
         nutrition: null,
-        foodOperator: null,
-        contents: null
+        foodOperator: null
     },
 
     {
@@ -67,13 +63,13 @@ const BODA_PRODUCTS = [
         name: "Salzstangen",
         brand: "BODA Auswahl",
         category: "salzig",
+        builder: true,
         price: 1.79,
         size: "250 g",
         image: "",
         color: "#168b87",
         textColor: "#ffffff",
         packText: "STICKS",
-        badge: "",
         demo: true,
         netQuantity: 250,
         quantityUnit: "g",
@@ -81,8 +77,7 @@ const BODA_PRODUCTS = [
         ingredients: null,
         allergens: null,
         nutrition: null,
-        foodOperator: null,
-        contents: null
+        foodOperator: null
     },
 
     {
@@ -90,13 +85,13 @@ const BODA_PRODUCTS = [
         name: "Erdnüsse geröstet",
         brand: "BODA Auswahl",
         category: "salzig",
+        builder: true,
         price: 2.29,
         size: "200 g",
         image: "",
         color: "#c98752",
         textColor: "#ffffff",
         packText: "NUTS",
-        badge: "",
         demo: true,
         netQuantity: 200,
         quantityUnit: "g",
@@ -104,27 +99,21 @@ const BODA_PRODUCTS = [
         ingredients: null,
         allergens: null,
         nutrition: null,
-        foodOperator: null,
-        contents: null
+        foodOperator: null
     },
-
-
-    /* =====================================================
-       SÜSSIGKEITEN
-    ===================================================== */
 
     {
         id: 5,
         name: "Fruchtgummi Mix",
         brand: "BODA Auswahl",
         category: "suess",
+        builder: true,
         price: 1.99,
         size: "175 g",
         image: "",
         color: "#e95e76",
         textColor: "#ffffff",
         packText: "SWEET",
-        badge: "",
         demo: true,
         netQuantity: 175,
         quantityUnit: "g",
@@ -132,8 +121,7 @@ const BODA_PRODUCTS = [
         ingredients: null,
         allergens: null,
         nutrition: null,
-        foodOperator: null,
-        contents: null
+        foodOperator: null
     },
 
     {
@@ -141,13 +129,13 @@ const BODA_PRODUCTS = [
         name: "Saure Fruchtgummis",
         brand: "BODA Auswahl",
         category: "suess",
+        builder: true,
         price: 2.19,
         size: "175 g",
         image: "",
         color: "#70b96a",
         textColor: "#20383b",
         packText: "SOUR",
-        badge: "",
         demo: true,
         netQuantity: 175,
         quantityUnit: "g",
@@ -155,27 +143,21 @@ const BODA_PRODUCTS = [
         ingredients: null,
         allergens: null,
         nutrition: null,
-        foodOperator: null,
-        contents: null
+        foodOperator: null
     },
-
-
-    /* =====================================================
-       SCHOKOLADE
-    ===================================================== */
 
     {
         id: 7,
         name: "Schoko Riegel",
         brand: "BODA Auswahl",
         category: "schokolade",
+        builder: true,
         price: 1.49,
         size: "50 g",
         image: "",
         color: "#714737",
         textColor: "#ffffff",
         packText: "CHOCO",
-        badge: "",
         demo: true,
         netQuantity: 50,
         quantityUnit: "g",
@@ -183,8 +165,7 @@ const BODA_PRODUCTS = [
         ingredients: null,
         allergens: null,
         nutrition: null,
-        foodOperator: null,
-        contents: null
+        foodOperator: null
     },
 
     {
@@ -192,13 +173,13 @@ const BODA_PRODUCTS = [
         name: "Vollmilch Schokolade",
         brand: "BODA Auswahl",
         category: "schokolade",
+        builder: true,
         price: 2.29,
         size: "100 g",
         image: "",
         color: "#8a5a47",
         textColor: "#ffffff",
         packText: "MILK",
-        badge: "",
         demo: true,
         netQuantity: 100,
         quantityUnit: "g",
@@ -206,213 +187,160 @@ const BODA_PRODUCTS = [
         ingredients: null,
         allergens: null,
         nutrition: null,
-        foodOperator: null,
-        contents: null
+        foodOperator: null
     },
-
-
-    /* =====================================================
-       GETRÄNKE
-    ===================================================== */
 
     {
         id: 9,
-        name: "Cola",
+        name: "Butterkekse",
         brand: "BODA Auswahl",
-        category: "getraenke",
+        category: "suess",
+        builder: true,
         price: 1.99,
-        size: "0,5 l",
+        size: "200 g",
         image: "",
-        color: "#292929",
-        textColor: "#ffffff",
-        packText: "COLA",
-        badge: "",
+        color: "#d7ae66",
+        textColor: "#20383b",
+        packText: "COOKIES",
         demo: true,
-        netQuantity: 500,
-        quantityUnit: "ml",
-        depositCents: null,
+        netQuantity: 200,
+        quantityUnit: "g",
+        depositCents: 0,
         ingredients: null,
         allergens: null,
         nutrition: null,
-        foodOperator: null,
-        contents: null
+        foodOperator: null
     },
 
     {
         id: 10,
-        name: "Orangenlimonade",
+        name: "Waffel Snack",
         brand: "BODA Auswahl",
-        category: "getraenke",
-        price: 1.89,
-        size: "0,5 l",
+        category: "suess",
+        builder: true,
+        price: 1.79,
+        size: "100 g",
         image: "",
-        color: "#ee973d",
+        color: "#e6c6a0",
         textColor: "#20383b",
-        packText: "ORANGE",
-        badge: "",
+        packText: "WAFER",
         demo: true,
-        netQuantity: 500,
-        quantityUnit: "ml",
-        depositCents: null,
+        netQuantity: 100,
+        quantityUnit: "g",
+        depositCents: 0,
         ingredients: null,
         allergens: null,
         nutrition: null,
-        foodOperator: null,
-        contents: null
+        foodOperator: null
     },
-
-
-    /* =====================================================
-       ENERGY
-    ===================================================== */
 
     {
         id: 11,
-        name: "Energy Drink Classic",
+        name: "Popcorn",
         brand: "BODA Auswahl",
-        category: "energy",
-        price: 2.49,
-        size: "250 ml",
+        category: "salzig",
+        builder: true,
+        price: 1.99,
+        size: "100 g",
         image: "",
-        color: "#1c393c",
-        textColor: "#ffffff",
-        packText: "ENERGY",
-        badge: "",
+        color: "#f0cf64",
+        textColor: "#20383b",
+        packText: "POPCORN",
         demo: true,
-        netQuantity: 250,
-        quantityUnit: "ml",
-        depositCents: null,
+        netQuantity: 100,
+        quantityUnit: "g",
+        depositCents: 0,
         ingredients: null,
         allergens: null,
         nutrition: null,
-        foodOperator: null,
-        contents: null
+        foodOperator: null
     },
 
     {
         id: 12,
-        name: "Energy Drink Zero",
+        name: "Cracker",
         brand: "BODA Auswahl",
-        category: "energy",
-        price: 2.49,
-        size: "250 ml",
+        category: "salzig",
+        builder: true,
+        price: 1.89,
+        size: "150 g",
         image: "",
-        color: "#8fd5ce",
+        color: "#dcae72",
         textColor: "#20383b",
-        packText: "ZERO",
-        badge: "",
+        packText: "CRACKER",
         demo: true,
-        netQuantity: 250,
-        quantityUnit: "ml",
-        depositCents: null,
+        netQuantity: 150,
+        quantityUnit: "g",
+        depositCents: 0,
         ingredients: null,
         allergens: null,
         nutrition: null,
-        foodOperator: null,
-        contents: null
+        foodOperator: null
     },
 
 
     /* =====================================================
-       SNACKBOXEN
+       DIE DREI BODA BOXEN
     ===================================================== */
 
     {
         id: 13,
-        name: "Movie Night Box",
+        name: "BODA Mix Box",
         brand: "BODA Snacks",
         category: "boxen",
-        price: 19.90,
+        builder: false,
+        price: 24.90,
         size: "1 Box",
         image: "",
         color: "#168b87",
         textColor: "#ffffff",
-        packText: "MOVIE",
-        badge: "",
+        packText: "MIX",
         demo: true,
         netQuantity: null,
         quantityUnit: null,
-        depositCents: null,
-        ingredients: null,
-        allergens: null,
-        nutrition: null,
-        foodOperator: null,
-        contents: null
+        depositCents: 0,
+        description:
+            "Gemischte Snackbox aus süßen und salzigen Artikeln. Zusammenstellung kann variieren."
     },
 
     {
         id: 14,
-        name: "Party Snack Box",
+        name: "BODA Wunschbox",
         brand: "BODA Snacks",
         category: "boxen",
+        builder: false,
         price: 29.90,
-        size: "1 Box",
+        size: "10 Snacks",
         image: "",
-        color: "#df5b63",
-        textColor: "#ffffff",
-        packText: "PARTY",
-        badge: "",
+        color: "#d6ad3d",
+        textColor: "#20383b",
+        packText: "WUNSCH",
         demo: true,
         netQuantity: null,
         quantityUnit: null,
-        depositCents: null,
-        ingredients: null,
-        allergens: null,
-        nutrition: null,
-        foodOperator: null,
-        contents: null
+        depositCents: 0,
+        description:
+            "10 Snacks aus der verfügbaren Wunschbox-Auswahl selbst zusammenstellen."
     },
 
     {
         id: 15,
-        name: "Büro Vorratsbox",
+        name: "BODA Büro Box",
         brand: "BODA Snacks",
         category: "boxen",
-        price: 34.90,
-        size: "1 Box",
+        builder: false,
+        price: 39.90,
+        size: "1 große Box",
         image: "",
-        color: "#d6ad3d",
-        textColor: "#20383b",
-        packText: "OFFICE",
-        badge: "",
-        demo: true,
-        netQuantity: null,
-        quantityUnit: null,
-        depositCents: null,
-        ingredients: null,
-        allergens: null,
-        nutrition: null,
-        foodOperator: null,
-        contents: null
-    },
-
-
-    /* =====================================================
-       SNACK-MIX
-       Interner Kategoriename bleibt "angebote".
-    ===================================================== */
-
-    {
-        id: 16,
-        name: "Snack Mix",
-        brand: "BODA Snacks",
-        category: "angebote",
-        price: 9.90,
-        size: "5 Artikel",
-        image: "",
-        color: "#dc5e65",
+        color: "#20383b",
         textColor: "#ffffff",
-        packText: "MIX",
-        badge: "",
+        packText: "OFFICE",
         demo: true,
         netQuantity: null,
         quantityUnit: null,
-        depositCents: null,
-        ingredients: null,
-        allergens: null,
-        nutrition: null,
-        foodOperator: null,
-        contents: null
+        depositCents: 0,
+        description:
+            "Größere gemischte Box für Büro, Aufenthaltsraum oder Team."
     }
 
 ];
